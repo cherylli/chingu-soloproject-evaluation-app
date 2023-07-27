@@ -12,5 +12,6 @@ export type FilteredFields = {
     "Evaluation Status": string
     "Evaluator": string
     "Evaluation Feedback": string
+    "Voyage Role (from Applications link)": "Software Developer"|"UI / UX Designer"|"Data Scientist"|"Product Owner"
 }
 

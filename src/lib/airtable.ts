@@ -13,7 +13,8 @@ const fields = [
     "Deployed App URL",
     "Evaluation Status",
     "Evaluator",
-    "Evaluation Feedback"
+    "Evaluation Feedback",
+    "Voyage Role (from Applications link)"
 ]
 
 const transformData = (records:Records<FieldSet>) => {

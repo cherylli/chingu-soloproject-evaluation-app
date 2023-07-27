@@ -7,6 +7,7 @@ const ProjectSubmissionList = ({records}:{records:Submission[]}) => {
             <thead>
                 <tr>
                     <th className="border-b-2">Discord name</th>
+                    <th className="border-b-2">Role</th>
                     <th className="border-b-2">Tier</th>
                     <th className="border-b-2">Evaluator</th>
                 </tr>
