@@ -10,11 +10,11 @@ const getAllWaitingSoloProjects = async () => {
 
 export default async function Home() {
     const records = await getAllWaitingSoloProjects()
-    return <div>
+    return <>
         <ProjectSubmissionList records={records}/>
         <Link
             href={'https://github.com/chingu-voyages/soloproject-evaluation'}
         >Solo Project Evaluation Conditions and Feedback
         </Link>
-    </div>
+    </>
 }

@@ -8,8 +8,10 @@ import {fetcher} from "@/lib/fetcher";
 import {Button} from "@/components/ui/button";
 import {Textarea} from "@/components/ui/textarea";
 import {roleColors} from "@/styles/roles";
+import {PencilLine} from "lucide-react";
 
 const SoloProjectSingleEntry = ({params}: { params: { id: string } }) => {
+    const [evaluator, setEvaluator] = useState('')
     const [evalNotes, setEvalNotes] = useState('');
     const {data: record, error} = useSWR<Submission, Error>(
         `${process.env.NEXT_PUBLIC_API_BASEURL}/soloprojects/${params.id}`,
@@ -20,6 +22,7 @@ const SoloProjectSingleEntry = ({params}: { params: { id: string } }) => {
     useEffect(() => {
         if (record) {
             setEvalNotes(record.fields['Evaluation Feedback']);
+            setEvaluator(record.fields.Evaluator)
         }
     }, [record]);
 
@@ -37,6 +40,21 @@ const SoloProjectSingleEntry = ({params}: { params: { id: string } }) => {
         })
             .then((res) => res.json())
             .then((json) => alert(`Record updated: ${json[0].id}`));
+    }
+
+    // TODO: temp value, this will be obtained from current logged in user info
+    // Evaluator must be an option already available in airtable
+    const handleSetEvaluator = () => {
+        fetch(`${process.env.NEXT_PUBLIC_API_BASEURL}/soloprojects/${params.id}`, {
+            method: 'PATCH',
+            body: JSON.stringify({
+                fields: {
+                    'Evaluator': 'webmaster@cherylli.com',
+                },
+            }),
+        })
+            .then((res) => res.json())
+            .then((json) => setEvaluator(json[0].fields.Evaluator));
     }
 
     return <div>
@@ -70,14 +88,25 @@ const SoloProjectSingleEntry = ({params}: { params: { id: string } }) => {
                         >{record.fields["GitHub Repo URL"]}</Link>
                     </td>
                 </tr>
+                <tr>
+                    <td>Evaluator: </td>
+                    <td className="px-4">{evaluator}</td>
+                </tr>
             </table>
-
+            <Button className="bg-green-700 light:text-white-200 hover:bg-green-900 disabled:bg-gray-500"
+                    disabled={!!evaluator}
+                    onClick={handleSetEvaluator}
+            >
+                <PencilLine className="mr-2 h-4 w-4"/>
+                Evaluate This
+            </Button>
             <Textarea
                 className="h-[500px]"
                 value={evalNotes}
                 onChange={e => setEvalNotes(e.target.value)}
             />
             <br/>
+            <div>{record.fields["Evaluation Status"]}</div>
             <Button onClick={handleSave}>Save</Button>
         </section>
         <Link href={"/"}>Back to List</Link>

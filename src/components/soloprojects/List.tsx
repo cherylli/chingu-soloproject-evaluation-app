@@ -1,23 +1,24 @@
 import SoloProjectsListItem from "@/components/soloprojects/ListItem";
 import {Submission} from "@/types/SoloProjectTypes";
+import {Table, TableBody, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 
 const ProjectSubmissionList = ({records}:{records:Submission[]}) => {
     return(
-        <table className="table-auto">
-            <thead>
-                <tr>
-                    <th className="border-b-2">Discord name</th>
-                    <th className="border-b-2">Role</th>
-                    <th className="border-b-2">Tier</th>
-                    <th className="border-b-2">Evaluator</th>
-                </tr>
-            </thead>
-            <tbody>
+        <Table>
+            <TableHeader>
+                <TableRow>
+                    <TableHead className="border-b-2">Discord name</TableHead>
+                    <TableHead className="border-b-2">Role</TableHead>
+                    <TableHead className="border-b-2">Tier</TableHead>
+                    <TableHead className="border-b-2">Evaluator</TableHead>
+                </TableRow>
+            </TableHeader>
+            <TableBody>
                 {records.map(r=>(
                     <SoloProjectsListItem key={r.id} fields={r.fields} id={r.id} />
                 ))}
-            </tbody>
-        </table>
+            </TableBody>
+        </Table>
     )
  }
 
