@@ -5,3 +5,6 @@ reddit.com/r/typescript/comments/vgrdjm/how_do_you_create_an_interface_for_an_ap
 
 My submission http://localhost:3014/solo-project/recE0bK9sMfG49kRx
 
+Prop `id` did not match. - should be fixed soon. fix is currently in the canary version
+https://github.com/shadcn-ui/ui/issues/992
+

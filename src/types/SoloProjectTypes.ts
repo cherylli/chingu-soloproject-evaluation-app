@@ -9,9 +9,19 @@ export type FilteredFields = {
     "Tier": string
     "GitHub Repo URL": string
     "Deployed App URL": string
-    "Evaluation Status": string
+    "Evaluation Status":
+        | "Waiting Eval"
+        | "Passed"
+        | "Not in Discord"
+        | "Requested Changes"
+        | "Pending"
+        | "No Pass"
     "Evaluator": string
     "Evaluation Feedback": string
-    "Voyage Role (from Applications link)": "Software Developer"|"UI / UX Designer"|"Data Scientist"|"Product Owner"
+    "Voyage Role (from Applications link)":
+        | "Software Developer"
+        | "UI / UX Designer"
+        | "Data Scientist"
+        | "Product Owner"
 }
 
