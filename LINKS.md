@@ -8,3 +8,4 @@ My submission http://localhost:3014/solo-project/recE0bK9sMfG49kRx
 Prop `id` did not match. - should be fixed soon. fix is currently in the canary version
 https://github.com/shadcn-ui/ui/issues/992
 
+auth: https://www.youtube.com/watch?v=w2h54xz6Ndw&ab_channel=DaveGray
