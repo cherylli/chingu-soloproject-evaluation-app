@@ -5,6 +5,9 @@ Features:
 TODO: 
 - [ ] Add a better display for save success
 - [ ] Add auth
+  - [ ] Add Evaluator Email to auth context
   - [ ] (Possibly) Role based auth
+- [ ] Protect API routes
+- [ ] Show and add comments
 - Copy and paste line for discord "ring-the-bell"
 - Imports feedback from github repo and make it searchable 
