@@ -1,9 +1,10 @@
 import Airtable, {FieldSet, Record, Records} from "airtable";
 
 const base = new Airtable({apiKey: process.env.AIRTABLE_PAT})
-    .base(process.env.AIRTABLE_BASEID!)
+    .base(process.env.AIRTABLE_BASEID as string)
 
-const table = base(process.env.AIRTABLE_TABLEID!)
+const table = base(process.env.AIRTABLE_TABLEID as string)
+const userTable = base(process.env.AIRTABLE_USERS_TABLEID as string)
 
 const fields = [
     "Discord Name",
@@ -33,4 +34,10 @@ const transformDataSingleRecord = (record:Record<FieldSet>) => {
         }
 }
 
-export {table,fields, transformData, transformDataSingleRecord}
+export {
+    table,
+    userTable,
+    fields,
+    transformData,
+    transformDataSingleRecord
+}

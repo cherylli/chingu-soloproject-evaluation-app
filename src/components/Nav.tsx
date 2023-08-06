@@ -12,7 +12,7 @@ const Nav = () => {
             redirect('/api/auth/signin?callbackUrl=/')
         }
     })
-    console.log(session)
+    console.log("Nav - session", session)
     return(
         <div className="flex justify-between">
             <ModeToggle/>

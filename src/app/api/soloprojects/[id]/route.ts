@@ -10,7 +10,6 @@ export async function GET(request: NextRequest, {params}: { params: { id: string
 
 export async function PATCH(request: NextRequest, {params}: { params: { id: string } }) {
     const data = await request.json()
-    console.log(data)
     const updatedRecord = await table.update([
         {
             "id":params.id,

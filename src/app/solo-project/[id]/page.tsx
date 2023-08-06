@@ -53,7 +53,7 @@ const SoloProjectSingleEntry = ({params}: { params: { id: string } }) => {
             .then(json => console.log(json))
     }
 
-    // TODO: temp value, this will be obtained from current logged in user info
+    // TODO: temp value, this will be obtained from current logged in users info
     // Evaluator must be an option already available in airtable
     const handleSetEvaluator = () => {
         fetch(`${process.env.NEXT_PUBLIC_API_BASEURL}/soloprojects/${params.id}`, {
