@@ -10,13 +10,13 @@ import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem} from "@/components/ui/command";
 import {evalStatusValues} from "@/lib/options";
 import {cn} from "@/lib/utils";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {fields} from "@/lib/airtable";
 
 interface ProjectDetailProps {
     record: Submission,
     handleSave: (evalNotes: string, evalStatus: string) => void
-    handleSetEvaluator: (evaluator: string) => void
+    handleSetEvaluator: () => void
 }
 
 const ProjectSubmissionDetail = (
@@ -26,6 +26,14 @@ const ProjectSubmissionDetail = (
     const [evalNotes, setEvalNotes] = useState('');
     const [statusOpen, setStatusOpen] = useState(false)
     const [evalStatus, setEvalStatus] = useState('')
+
+    useEffect(() => {
+        if (record) {
+            setEvalNotes(record.fields['Evaluation Feedback']);
+            setEvaluator(record.fields.Evaluator)
+            setEvalStatus(record.fields["Evaluation Status"])
+        }
+    }, [record]);
 
     return <div>
         <section className="flex flex-col gap-5 w-[90%] mx-auto">
@@ -67,7 +75,7 @@ const ProjectSubmissionDetail = (
             </table>
             <Button className="bg-green-700 light:text-white-200 hover:bg-green-900 disabled:bg-gray-500"
                     disabled={!!evaluator}
-                    onClick={()=>handleSetEvaluator(evaluator)}
+                    onClick={()=>handleSetEvaluator()}
             >
                 <PencilLine className="mr-2 h-4 w-4"/>
                 Evaluate This

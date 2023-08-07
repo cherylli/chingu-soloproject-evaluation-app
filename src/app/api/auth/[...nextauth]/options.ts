@@ -22,7 +22,6 @@ export const options: NextAuthOptions = {
             console.log("signin callback - ", appUser)
             // TODO: put appUser.fields["evaluator email"] into Auth context
             return true
-
         }
     }
 }

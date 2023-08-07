@@ -1,5 +1,4 @@
 import {getSoloProjectById} from "@/services/soloProjects";
-import {EvaluationStatus, FilteredFields} from "@/types/SoloProjectTypes";
 import ProjectSubmissionDetail from "@/components/soloprojects/Details";
 
 const SoloProjectPage = async ({params}: { params: { id: string } }) => {
@@ -8,9 +7,10 @@ const SoloProjectPage = async ({params}: { params: { id: string } }) => {
         'use server'
         console.log("save...", evalNotes, evalStatus)
     }
-    const handleSetEvaluator = async (evaluator:string) => {
+    const handleSetEvaluator = async () => {
         'use server'
-        console.log("set Evaluator", evaluator)
+        // TODO: evaluator email will be obtained from auth context (to be setup)
+        console.log("set Evaluator")
     }
     return(
         <div>
