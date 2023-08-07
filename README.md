@@ -11,6 +11,7 @@ TODO:
 - [ ] Protect API routes
 - [ ] Show and add comments
 - [ ] refactor to fetch data directly, instead of using internal API routes
-- Copy and paste line for discord "ring-the-bell"
-- Imports feedback from github repo and make it searchable 
-- To eliminate internal API routes, Single project page `solo-project/[id]/page.tsx` will need to be restructured to have a server component fetching data with a client component displaying the data (so we don't have to expose the airtable API key in frontend)
+- [ ] Copy and paste line for discord "ring-the-bell"
+- [ ] Imports feedback from github repo and make it searchable 
+- [ ] To eliminate internal API routes, single project page `solo-project/[id]/page.tsx` will need to be restructured to have a server component fetching data with a client component displaying the data (so we don't have to expose the airtable API key in frontend)
+- [ ] Add context for functions like setEvaluator, update record instead of passing as props
