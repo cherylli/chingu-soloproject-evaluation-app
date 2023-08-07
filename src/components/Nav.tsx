@@ -6,12 +6,14 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Nav = () => {
+
     const {data: session} = useSession({
         required: true,
         onUnauthenticated() {
             redirect('/api/auth/signin?callbackUrl=/')
         }
     })
+
     console.log("Nav - session", session)
     return(
         <div className="flex justify-between">

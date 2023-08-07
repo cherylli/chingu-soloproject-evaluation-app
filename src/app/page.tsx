@@ -1,15 +1,9 @@
 import ProjectSubmissionList from "@/components/soloprojects/List";
 import Link from "next/link";
-
-const getAllWaitingSoloProjects = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASEURL}/soloprojects/waiting`,
-        {cache:"no-store"}
-    )
-    return res.json()
-}
+import {getSoloProjectsByStatus} from "@/services/soloProjects";
 
 export default async function Home() {
-    const records = await getAllWaitingSoloProjects()
+    const records = await getSoloProjectsByStatus("Waiting Eval")
     return <>
         <ProjectSubmissionList records={records}/>
         <Link
