@@ -45,6 +45,20 @@ const ProjectSubmissionDetail = (
             </div>
             <div>{record.fields["Timestamp"].toString()}</div>
             <div>{record.fields.Tier}</div>
+            {record.fields["Instructions"] ?
+                <div>
+                    <div className="text-gray-500">Instructions:</div>
+                    <div>{record.fields["Instructions"]} </div>
+                </div>
+                : null
+            }
+            {record.fields["Addl. Comments"] ?
+                <div>
+                    <div className="text-gray-500">Additional Comments:</div>
+                    <div>{record.fields["Addl. Comments"]} </div>
+                </div>
+                : null
+            }
             <table className="table-auto">
                 <tbody>
                 <tr>
@@ -67,8 +81,9 @@ const ProjectSubmissionDetail = (
                         >{record.fields["GitHub Repo URL"]}</Link>
                     </td>
                 </tr>
+
                 <tr>
-                    <td>Evaluator: </td>
+                    <td className="pt-4">Evaluator: </td>
                     <td className="px-4">{evaluator}</td>
                 </tr>
                 </tbody>

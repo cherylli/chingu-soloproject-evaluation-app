@@ -16,6 +16,8 @@ const fields = [
     "Evaluation Status",
     "Evaluator",
     "Evaluation Feedback",
+    "Instructions",
+    "Addl. Comments",
     "Voyage Role (from Applications link)"
 ]
 
@@ -32,6 +34,8 @@ const transformData = (records:Records<FieldSet>): Submission[] => {
                 "Evaluation Status": record.fields["Evaluation Status"] as EvaluationStatus,
                 "Evaluator": record.fields["Evaluator"] as string,
                 "Evaluation Feedback": record.fields["Evaluation Feedback"] as string,
+                "Instructions": record.fields["Instructions"] as string,
+                "Addl. Comments": record.fields["Addl. Comments"] as string,
                 "Voyage Role (from Applications link)": record.fields["Voyage Role (from Applications link)"] as VoyageRole
             }
         }
@@ -51,6 +55,8 @@ const transformDataSingleRecord = (record:Record<FieldSet>) => {
            "Evaluation Status": record.fields["Evaluation Status"] as EvaluationStatus,
            "Evaluator": record.fields["Evaluator"] as string,
            "Evaluation Feedback": record.fields["Evaluation Feedback"] as string,
+           "Instructions": record.fields["Instructions"] as string,
+           "Addl. Comments": record.fields["Addl. Comments"] as string,
            "Voyage Role (from Applications link)": record.fields["Voyage Role (from Applications link)"] as VoyageRole
        }
    }

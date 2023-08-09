@@ -1,5 +1,3 @@
-import {FieldSet} from "airtable";
-
 export type Submission = {
     id: string
     fields: FilteredFields
@@ -28,6 +26,8 @@ export type FilteredFields = {
     "Evaluation Status":EvaluationStatus
     "Evaluator": string
     "Evaluation Feedback": string
+    "Instructions": string
+    "Addl. Comments": string
     "Voyage Role (from Applications link)": VoyageRole
 }
 
