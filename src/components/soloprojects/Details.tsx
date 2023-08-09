@@ -12,6 +12,7 @@ import {evalStatusValues} from "@/lib/options";
 import {cn} from "@/lib/utils";
 import {useEffect, useState} from "react";
 import {fields} from "@/lib/airtable";
+import {setEvaluatorOnDb} from "@/services/soloProjects";
 
 interface ProjectDetailProps {
     record: Submission,

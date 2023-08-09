@@ -1,5 +1,11 @@
+"use server"
 import {fields, table, transformData, transformDataSingleRecord} from "@/lib/airtable";
-import {FilteredFields, Submission} from "@/types/SoloProjectTypes";
+import {Submission} from "@/types/SoloProjectTypes";
+import {ActionResponse, ActionResponseWithData} from "@/types";
+import {getServerSession} from "next-auth";
+import {options} from "@/app/api/auth/[...nextauth]/options";
+import AirtableError from "airtable/lib/airtable_error";
+import {FieldSet} from "airtable";
 
 export const getAllSoloProjects = async (): Promise<Submission[]> => {
     const records =  await table.select({}).firstPage()
@@ -20,7 +26,64 @@ export const getSoloProjectById = async (id: string): Promise<Submission> => {
     return transformDataSingleRecord(record)
 }
 
-export const updateSoloProjectById = async (id: string, fields: FilteredFields)=> {
-    // TODO: check response type and update
+export const setEvaluatorOnDb = async (id: string): Promise<ActionResponse> => {
+    const sessionData = await getServerSession(options)
+    try{
+        const record = await table.find(id)
+        if(record.fields["Evaluator"]){
+            return {
+                success: false,
+                message: `Evaluator is already set. ${record.fields["Evaluator"]} is already evaluating this solo project submission. `
+            }
+        }else{
+            if(sessionData){
+                const updatedRecord = await table.update([
+                    {
+                        id,
+                        fields: {
+                            "Evaluator": sessionData.user.evaluatorEmail
+                        }
+                    }
+                ])
+                console.log(updatedRecord)
+                return {
+                    success: true,
+                    message: `Evaluator is set to ${updatedRecord[0].fields["Evaluator"]}.`
+                }
+            }
+            return {
+                success: false,
+                message: `You're not logged in.`
+            }
+        }
+    }catch (e){
+        if (e instanceof AirtableError){
+            if (e.error === 'INVALID_MULTIPLE_CHOICE_OPTIONS')
+            return {
+                success: false,
+                message: `Airtable error: Your email ${sessionData?.user.evaluatorEmail} has not been added to the evaluator list. Please contact an administrator.`
+            }
+        }
+        return {
+            success: false,
+            message: `Error: ${e}`
+        }
+    }
 
+}
+
+export const updateSoloProjectById = async (id: string, fields: FieldSet)
+    :Promise<ActionResponseWithData> => {
+    const updatedRecord = await table.update([
+        {
+            id,
+            fields
+        }
+    ])
+    //console.log("updated record - solorpoject services", updatedRecord)
+    return {
+        success: true,
+        message: `update success`,
+        data: transformData(updatedRecord)[0]
+    }
 }

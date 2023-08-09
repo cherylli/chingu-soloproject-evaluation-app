@@ -14,3 +14,7 @@ auth: https://www.youtube.com/watch?v=w2h54xz6Ndw&ab_channel=DaveGray
 airtable with typescript example (not very good)
 https://akoskm.com/create-a-job-board-with-nextjs-13-and-airtable
 https://github.com/akoskm/job-board/blob/main/src/app/jobs/%5Bid%5D/page.tsx
+
+toast from server components?
+https://stackoverflow.com/questions/76393897/how-to-call-a-notification-toast-after-a-server-action-in-nextjs13
+

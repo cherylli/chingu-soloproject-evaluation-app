@@ -1,16 +1,22 @@
-import {getSoloProjectById} from "@/services/soloProjects";
+import {getSoloProjectById, setEvaluatorOnDb, updateSoloProjectById} from "@/services/soloProjects";
 import ProjectSubmissionDetail from "@/components/soloprojects/Details";
 
 const SoloProjectPage = async ({params}: { params: { id: string } }) => {
     const record = await getSoloProjectById(params.id)
-    const handleSave = async (evalNotes: string, evalStatus: string) => {
+    const handleSave = async (evalFeedback: string, evalStatus: string) => {
         'use server'
-        console.log("save...", evalNotes, evalStatus)
+        const updatedRecord = await updateSoloProjectById(params.id, {
+            "Evaluation Feedback": evalFeedback,
+            "Evaluation Status":evalStatus,
+        })
+        // TODO: display this somewhere
+        // console.log(updatedRecord)
     }
     const handleSetEvaluator = async () => {
         'use server'
-        // TODO: evaluator email will be obtained from auth context (to be setup)
-        console.log("set Evaluator")
+        const res = await setEvaluatorOnDb(params.id)
+        // TODO: display this somewhere
+        // console.log(res)
     }
     return(
         <div>
