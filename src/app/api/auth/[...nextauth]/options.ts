@@ -1,10 +1,20 @@
 import type { NextAuthOptions} from "next-auth";
-import GithubProvider from 'next-auth/providers/github'
+import GithubProvider, {GithubProfile} from 'next-auth/providers/github'
 import {transformData, userTable} from "@/lib/airtable";
 
 export const options: NextAuthOptions = {
     providers: [
         GithubProvider({
+            profile(profile:GithubProfile){
+                return {
+                    ...profile,
+                    id: profile.id.toString(),
+                    image: profile.avatar_url ?? '/avatar.svg',
+                    // get role and evaluator email from airtable in signin callback
+                    role: null,
+                    evaluatorEmail:null
+                }
+            },
             clientId: process.env.GITHUB_ID as string,
             clientSecret: process.env.GITHUB_SECRET as string
         })
@@ -18,10 +28,23 @@ export const options: NextAuthOptions = {
             if (appUserRes.length===0) {
                 return false
             }
-            const appUser = transformData(appUserRes)
-            console.log("signin callback - ", appUser)
-            // TODO: put appUser.fields["evaluator email"] into Auth context
+            user.role = appUserRes[0].fields.role as string ?? "not found"
+            user.evaluatorEmail = appUserRes[0].fields['evaluator email'] as string ?? "not found"
             return true
-        }
+        },
+        async jwt({ token, user }) {
+            if (user) {
+                token.role = user.role as string
+                token.evaluatorEmail = user.evaluatorEmail as string
+            }
+            return token
+        },
+        async session({ session, token }) {
+            if (session?.user) {
+                session.user.role = token.role
+                session.user.evaluatorEmail = token.evaluatorEmail
+            }
+            return session
+        },
     }
 }

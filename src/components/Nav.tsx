@@ -20,7 +20,7 @@ const Nav = () => {
             <ModeToggle/>
             {session?.user
                 ?<div className="flex items-center">
-                    <div>{session?.user?.email}</div>
+                    <div>{session?.user?.evaluatorEmail}</div>
                     <Image src={session?.user?.image!} height={25} width={25} alt="avatar"/>
                     <Link href={'/api/auth/signout?callbackUrl=/'}>Sign Out</Link>
                 </div>
