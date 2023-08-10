@@ -19,7 +19,7 @@ import {ActionResponse} from "@/types";
 interface ProjectDetailProps {
     record: Submission,
     handleSave: (evalNotes: string, evalStatus: string) => void
-    handleSetEvaluator: () => ActionResponse
+    handleSetEvaluator: () => Promise<ActionResponse>
 }
 
 const ProjectSubmissionDetail = (
@@ -29,7 +29,7 @@ const ProjectSubmissionDetail = (
     const [evalNotes, setEvalNotes] = useState('');
     const [statusOpen, setStatusOpen] = useState(false)
     const [evalStatus, setEvalStatus] = useState('')
-   
+
 
     useEffect(() => {
         if (record) {
@@ -95,7 +95,7 @@ const ProjectSubmissionDetail = (
 
                 <tr>
                     <td className="pt-4">Evaluator: </td>
-                    <td className="px-4">{evaluator}</td>
+                    <td className="px-4 pt-4">{evaluator}</td>
                 </tr>
                 </tbody>
             </table>

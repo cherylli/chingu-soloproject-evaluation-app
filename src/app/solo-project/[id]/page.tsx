@@ -1,6 +1,7 @@
 import {getSoloProjectById, setEvaluatorOnDb, updateSoloProjectById} from "@/services/soloProjects";
 import ProjectSubmissionDetail from "@/components/soloprojects/Details";
 import {ActionResponse} from "@/types";
+import Comments from "@/components/comments";
 
 const SoloProjectPage = async ({params}: { params: { id: string } }) => {
     const record = await getSoloProjectById(params.id)
@@ -27,6 +28,7 @@ const SoloProjectPage = async ({params}: { params: { id: string } }) => {
                 record={record}
                 handleSave={handleSave}
                 handleSetEvaluator={handleSetEvaluator} />
+            <Comments/>
         </div>
     )
  }
