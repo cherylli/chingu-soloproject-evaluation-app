@@ -1,6 +1,8 @@
 import type { NextAuthOptions} from "next-auth";
 import GithubProvider, {GithubProfile} from 'next-auth/providers/github'
 import {transformData, userTable} from "@/lib/airtable";
+import {getUserfromDb} from "@/services/users";
+import {ChinguAppRole} from "@/types/UserTypes";
 
 export const options: NextAuthOptions = {
     providers: [
@@ -22,15 +24,13 @@ export const options: NextAuthOptions = {
     callbacks: {
         // check users.email against airtable, to make sure this person is authorized
         async signIn({user}){
-            const appUserRes = await userTable.select({
-                filterByFormula: `{github email} = \"${user.email}\"`
-            }).firstPage()
-            if (appUserRes.length===0) {
-                return false
+            const userFromDb = await getUserfromDb(user.email!!)
+            if(userFromDb.userFound){
+                user.role = userFromDb.role as ChinguAppRole
+                user.evaluatorEmail = userFromDb.evaluatorEmail as string
             }
-            user.role = appUserRes[0].fields.role as string ?? "not found"
-            user.evaluatorEmail = appUserRes[0].fields['evaluator email'] as string ?? "not found"
-            return true
+
+            return userFromDb.userFound
         },
         async jwt({ token, user }) {
             if (user) {
