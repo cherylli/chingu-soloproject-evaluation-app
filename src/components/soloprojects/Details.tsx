@@ -13,11 +13,13 @@ import {cn} from "@/lib/utils";
 import {useEffect, useState} from "react";
 import {fields} from "@/lib/airtable";
 import {setEvaluatorOnDb} from "@/services/soloProjects";
+import { useRouter } from 'next/navigation'
+import {ActionResponse} from "@/types";
 
 interface ProjectDetailProps {
     record: Submission,
     handleSave: (evalNotes: string, evalStatus: string) => void
-    handleSetEvaluator: () => void
+    handleSetEvaluator: () => ActionResponse
 }
 
 const ProjectSubmissionDetail = (
@@ -27,6 +29,7 @@ const ProjectSubmissionDetail = (
     const [evalNotes, setEvalNotes] = useState('');
     const [statusOpen, setStatusOpen] = useState(false)
     const [evalStatus, setEvalStatus] = useState('')
+   
 
     useEffect(() => {
         if (record) {
@@ -36,10 +39,17 @@ const ProjectSubmissionDetail = (
         }
     }, [record]);
 
+    const handleSetEvaluatorLocal = async () => {
+        const res = await handleSetEvaluator()
+        if (res.success){
+            setEvaluator(res.data?.fields.Evaluator as string)
+        }
+    }
+
     return <div>
         <section className="flex flex-col gap-5 w-[90%] mx-auto">
             <h1 className="text-2xl text-center mt-5">
-                {record.fields["Discord Name"]}
+                {record.fields["Discord Name"]??"Discord ID not Provided"}
             </h1>
             <div className={`text-center ${roleColors[record.fields["Voyage Role (from Applications link)"]].bg} py-1`}>
                 {record.fields["Voyage Role (from Applications link)"]}
@@ -91,7 +101,7 @@ const ProjectSubmissionDetail = (
             </table>
             <Button className="bg-green-700 light:text-white-200 hover:bg-green-900 disabled:bg-gray-500"
                     disabled={!!evaluator}
-                    onClick={()=>handleSetEvaluator()}
+                    onClick={handleSetEvaluatorLocal}
             >
                 <PencilLine className="mr-2 h-4 w-4"/>
                 Evaluate This
@@ -142,7 +152,16 @@ const ProjectSubmissionDetail = (
                     </PopoverContent>
                 </Popover>
             </div>
-            <Button onClick={()=>handleSave(evalNotes, evalStatus)}>Save</Button>
+            {evalStatus==="Passed"
+                ? <div>
+                    Congratulations @{record.fields["Discord Name"]} on successfully completing your Solo Project !!! :tada:
+                </div>
+                : null
+            }
+            <Button className="disabled:bg-gray-500"
+                onClick={()=>handleSave(evalNotes, evalStatus)}
+                disabled={!evaluator}
+            >Save</Button>
         </section>
         <Link href={"/"}>Back to List</Link>
     </div>

@@ -1,7 +1,7 @@
 "use server"
 import {fields, table, transformData, transformDataSingleRecord} from "@/lib/airtable";
 import {Submission} from "@/types/SoloProjectTypes";
-import {ActionResponse, ActionResponseWithData} from "@/types";
+import {ActionResponse} from "@/types";
 import {getServerSession} from "next-auth";
 import {options} from "@/app/api/auth/[...nextauth]/options";
 import AirtableError from "airtable/lib/airtable_error";
@@ -45,10 +45,11 @@ export const setEvaluatorOnDb = async (id: string): Promise<ActionResponse> => {
                         }
                     }
                 ])
-                console.log(updatedRecord)
+                //console.log(updatedRecord)
                 return {
                     success: true,
-                    message: `Evaluator is set to ${updatedRecord[0].fields["Evaluator"]}.`
+                    message: `Evaluator is set to ${updatedRecord[0].fields["Evaluator"]}.`,
+                    data: transformData(updatedRecord)[0]
                 }
             }
             return {
@@ -73,14 +74,13 @@ export const setEvaluatorOnDb = async (id: string): Promise<ActionResponse> => {
 }
 
 export const updateSoloProjectById = async (id: string, fields: FieldSet)
-    :Promise<ActionResponseWithData> => {
+    :Promise<ActionResponse> => {
     const updatedRecord = await table.update([
         {
             id,
             fields
         }
     ])
-    //console.log("updated record - solorpoject services", updatedRecord)
     return {
         success: true,
         message: `update success`,

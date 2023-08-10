@@ -3,8 +3,5 @@ import {Submission} from "@/types/SoloProjectTypes";
 export type ActionResponse = {
     success: boolean
     message: string
+    data?: Submission
 }
-
-export type ActionResponseWithData = {
-    data: Submission
-} & ActionResponse

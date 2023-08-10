@@ -1,5 +1,6 @@
 import {getSoloProjectById, setEvaluatorOnDb, updateSoloProjectById} from "@/services/soloProjects";
 import ProjectSubmissionDetail from "@/components/soloprojects/Details";
+import {ActionResponse} from "@/types";
 
 const SoloProjectPage = async ({params}: { params: { id: string } }) => {
     const record = await getSoloProjectById(params.id)
@@ -12,11 +13,13 @@ const SoloProjectPage = async ({params}: { params: { id: string } }) => {
         // TODO: display this somewhere
         // console.log(updatedRecord)
     }
-    const handleSetEvaluator = async () => {
+    const handleSetEvaluator = async (): Promise<ActionResponse>  => {
         'use server'
-        const res = await setEvaluatorOnDb(params.id)
+        return await setEvaluatorOnDb(params.id)
+
         // TODO: display this somewhere
         // console.log(res)
+
     }
     return(
         <div>
