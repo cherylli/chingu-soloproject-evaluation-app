@@ -1,5 +1,5 @@
 import {Comment} from "@/types/CommentTypes";
-import {Card, CardContent, CardFooter} from "@/components/ui/card";
+import {Card, CardContent} from "@/components/ui/card";
 
 const CommentItem = ({comment}: { comment: Comment }) => {
     return <Card>
@@ -14,9 +14,7 @@ const CommentItem = ({comment}: { comment: Comment }) => {
                         {`${comment.createdTime.toString()} - ${comment.author.name}`}
                     </div>
             }
-
         </CardContent>
-
     </Card>
 }
 

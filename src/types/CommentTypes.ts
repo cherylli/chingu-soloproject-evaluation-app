@@ -13,7 +13,7 @@ export type Comment = {
     lastUpdatedTime: Date | null,
 }
 
-export type CommentsAPIResponse = {
+export type CommentsAPIResponseAT = {
     comments: Comment[]
     offset: string | null
 }
