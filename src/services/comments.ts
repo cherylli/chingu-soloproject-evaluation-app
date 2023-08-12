@@ -28,7 +28,7 @@ export const getCommentsByRecordId = async (id:string): Promise<CommentsApiRespo
         const data = await res.json()
         return {
             success:true,
-            data: data.comments
+            data: data.comments.reverse()
         }
     }
     return {
@@ -52,7 +52,7 @@ export const addCommentByRecordId = async (id:string, content:string) => {
         const data = await res.json()
         return {
             success:true,
-            data: data.comments
+            data
         }
     }
     return {

@@ -1,6 +1,6 @@
 'use client'
 
-import {EvaluationStatus, FilteredFields, Submission} from "@/types/SoloProjectTypes";
+import {Submission} from "@/types/SoloProjectTypes";
 import {roleColors} from "@/styles/roles";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
@@ -11,9 +11,6 @@ import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem} from "@/
 import {evalStatusValues} from "@/lib/options";
 import {cn} from "@/lib/utils";
 import {useEffect, useState} from "react";
-import {fields} from "@/lib/airtable";
-import {setEvaluatorOnDb} from "@/services/soloProjects";
-import { useRouter } from 'next/navigation'
 import {ActionResponse} from "@/types";
 
 interface ProjectDetailProps {

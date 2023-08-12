@@ -28,7 +28,7 @@ const SoloProjectPage = async ({params}: { params: { id: string } }) => {
                 record={record}
                 handleSave={handleSave}
                 handleSetEvaluator={handleSetEvaluator} />
-            <Comments/>
+            <Comments recordId={params.id}/>
         </div>
     )
  }

@@ -2,15 +2,19 @@
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
 import {useState} from "react";
-import {addCommentByRecordId} from "@/services/comments";
 
-const CommentForm = () => {
+interface CommentFormProps {
+    handleAddComment: (comment:string) => void
+}
+
+const CommentForm = ({handleAddComment}:CommentFormProps) => {
     const [newComment, setNewComment] = useState('')
 
-    const handleAddComment = async () => {
-        const res = await addCommentByRecordId("recE0bK9sMfG49kRx", newComment)
-        console.log(res)
+    const handlePostButtonClick = async() => {
+        await handleAddComment(newComment)
+        setNewComment('')
     }
+
     return(
         <>
             <Textarea
@@ -18,7 +22,7 @@ const CommentForm = () => {
                 value={newComment}
                 onChange={e => setNewComment(e.target.value)}
             />
-            <Button onClick={handleAddComment}>Post</Button>
+            <Button onClick={handlePostButtonClick}>Post</Button>
         </>
 
     )

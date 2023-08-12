@@ -1,23 +1,18 @@
+/*
+    The purpose of this app is just to fetch data (comments)
+    and feed it to a client component,
+    as client components do not support async fetching
+*/
 import {getCommentsByRecordId} from "@/services/comments";
-import CommentItem from "@/components/comments/CommentItem";
-import {Collapsible, CollapsibleContent, CollapsibleTrigger} from "@/components/ui/collapsible";
-import CommentForm from "@/components/comments/CommentForm";
+import CommentsClient from "@/components/comments/CommentsClient";
 
-const Comments = async() => {
-    const comments = await getCommentsByRecordId("recE0bK9sMfG49kRx")
-    return(
-        <Collapsible className="m-5 ">
-            <CollapsibleTrigger>{`Comments (${comments.data?.length})`}</CollapsibleTrigger>
-            <CollapsibleContent>
-                {comments.data?
-                    comments.data.map(comment=>(
-                        <CommentItem key={comment.id} comment={comment}/>)
-                    ):null
-                }
-            </CollapsibleContent>
-            <CommentForm/>
-        </Collapsible>
+const Comments = async ({recordId}:{recordId:string}) => {
+    const comments = await getCommentsByRecordId(recordId)
+    return (
+        comments.data ?
+            <CommentsClient recordId={recordId} comments={comments.data}/>
+            : null
     )
- }
+}
 
- export default Comments
+export default Comments
