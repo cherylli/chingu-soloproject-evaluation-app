@@ -19,7 +19,10 @@ export const getCommentsByRecordId = async (id:string): Promise<CommentsApiRespo
         headers: {
             Authorization: `Bearer ${pat}`
         },
-        cache: "no-store"
+        cache: "no-store",
+        next: {
+            tags: ['comments']
+        }
     })
     if(res.ok){
         const data = await res.json()
@@ -47,7 +50,6 @@ export const addCommentByRecordId = async (id:string, content:string) => {
     })
     if(res.ok){
         const data = await res.json()
-        console.log(data)
         return {
             success:true,
             data: data.comments
