@@ -29,6 +29,7 @@ export const options: NextAuthOptions = {
                 user.role = userFromDb.role as ChinguAppRole
                 user.evaluatorEmail = userFromDb.evaluatorEmail as string
             }
+            console.log("userFromDb", userFromDb)
             return userFromDb.userFound
         },
         async jwt({ token, user }) {
