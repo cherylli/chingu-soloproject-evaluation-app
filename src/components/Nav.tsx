@@ -9,10 +9,10 @@ const Nav = () => {
 
 
     const {data: session} = useSession({
-        required: false,
-        //onUnauthenticated() {
-        //    redirect('/api/auth/signin?callbackUrl=/')
-        //}
+        required: true,
+        onUnauthenticated() {
+            redirect('/api/auth/signin?callbackUrl=/')
+        }
     })
 
     return(
