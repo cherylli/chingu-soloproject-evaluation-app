@@ -7,11 +7,12 @@ import Link from "next/link";
 
 const Nav = () => {
 
+
     const {data: session} = useSession({
-        required: true,
-        onUnauthenticated() {
-            redirect('/api/auth/signin?callbackUrl=/')
-        }
+        required: false,
+        //onUnauthenticated() {
+        //    redirect('/api/auth/signin?callbackUrl=/')
+        //}
     })
 
     return(
