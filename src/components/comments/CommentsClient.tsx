@@ -12,8 +12,7 @@ const CommentsClient = ({recordId, comments}: { recordId: string, comments: Comm
     const handleAddComment = async (newComment:string) => {
         const res = await addCommentByRecordId(recordId, newComment)
         if(res.success){
-            const newCommentArray = localComments.concat(res.data)
-            setLocalComments(newCommentArray)
+            setLocalComments(localComments.concat(res.data))
         }
     }
 

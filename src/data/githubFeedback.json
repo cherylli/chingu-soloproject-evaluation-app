@@ -1,0 +1,27 @@
+{
+  "categories": [
+    {
+      "name": "Project Evaluation Results",
+      "content": [
+        {
+          "condition": "Passed",
+          "feedback": "Hi @  Congratulations on your hard work and dedication. Your Voyage 46 Solo Project has been accepted and you are advancing to the Voyage Phase starting on October 2nd. Watch the <#1026584387569078373> channel for more information. <br/><br/> ```**_If you haven't yet signed up for Voyage 46 complete this form so you don't miss out _** ``` —> https://forms.gle/DajSfXQCX4qbMAu8A <br/><br/>I’m looking forward to seeing what you and your team will be creating in your Voyage! <br/><br/>https://c.tenor.com/bDxOr4tSm7kAAAAC/spongebob-high-five.gif <br/><br/>Here is some more specific feedback which I hope will be helpful: </br>"
+        },
+        {
+          "condition": "Requested Changes",
+          "feedback": "Hi @  Your app shows that you’ve invested a considerable amount of thought and effort in its design & implementation. <br/><br/>Please make the following change and then open a ticket in <#1105911757177888908> when you are ready for me to look at it again. ``` **_This is the only change you are required to make._** ``` <br/><br/> ```__**Requested changes**__``` <br/> 1. ... <br/><br/>```**_Here’s additional feedback that I hope will be helpful_**```."
+        }
+      ]
+    },
+    {
+      "name": "Readme",
+      "content": [
+        {
+          "condition": "Good readme",
+          "importance": "High",
+          "feedback": "```* Your repo includes a good readme. Here’s additional info to show how to structure a well-written readme. You can use this to improve your readme in future projects https://medium.com/chingu/keys-to-a-well-written-readme-55c53d34fe6d.```"
+        }
+      ]
+    }
+  ]
+}

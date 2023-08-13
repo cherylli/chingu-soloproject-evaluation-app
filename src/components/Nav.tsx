@@ -14,7 +14,6 @@ const Nav = () => {
         }
     })
 
-    console.log("Nav - session", session)
     return(
         <div className="flex justify-between">
             <ModeToggle/>
