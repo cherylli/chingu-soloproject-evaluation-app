@@ -43,18 +43,34 @@ const FeedbackCategory = ({category}: { category: FeedbackCategoryType }) => {
 
 const GithubFeedback = () => {
     const [searchTerm, setSearchTerm] = useState('')
-    /*
-    const filteredFeedback = feedbackData.categories.filter(
-        feedback=>{
-            return feedback.content. toLowerCase().includes(searchTerm.toLowerCase())
-        }
-    )
 
-     */
+    const filteredFeedback = () : FeedbackCategoryType[]=> {
+        const feedbackArray = [] as FeedbackCategoryType[]
+        for (const category of feedbackData.categories) {
+            const filteredContent = category.content
+                .filter(item => item.feedback.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                item.condition.toLowerCase().includes(searchTerm.toLowerCase()));
+            if (filteredContent.length > 0) {
+                feedbackArray.push({
+                    name: category.name,
+                    content: filteredContent.map(item => ({
+                        condition: item.condition,
+                        feedback: item.feedback
+                    }))
+                });
+            }
+        }
+        return feedbackArray
+    }
+
     return (
         <div>
-            <Input type="search" placeholder="Search"/>
-            {feedbackData.categories.map(c => (
+            <Input
+                type="search"
+                placeholder="Search"
+                onChange={(e)=>setSearchTerm(e.target.value)}
+            />
+            {filteredFeedback().map(c => (
                 <FeedbackCategory
                     key={c.name}
                     category={c}
