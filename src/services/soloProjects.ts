@@ -6,6 +6,7 @@ import {getServerSession} from "next-auth";
 import {options} from "@/app/api/auth/[...nextauth]/options";
 import AirtableError from "airtable/lib/airtable_error";
 import {FieldSet} from "airtable";
+import {getDate} from "@/lib/getDate";
 
 export const getAllSoloProjects = async (): Promise<Submission[]> => {
     const records =  await table.select({}).firstPage()
@@ -41,6 +42,7 @@ export const setEvaluatorOnDb = async (id: string): Promise<ActionResponse> => {
                     {
                         id,
                         fields: {
+                            "Evaluation Date": getDate(),
                             "Evaluator": sessionData.user.evaluatorEmail
                         }
                     }
