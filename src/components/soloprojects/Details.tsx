@@ -15,7 +15,7 @@ import {ActionResponse} from "@/types";
 
 interface ProjectDetailProps {
     record: Submission,
-    handleSave: (evalNotes: string, evalStatus: string) => void
+    handleSave: (evalNotes: string, evalStatus: string) => Promise<ActionResponse>
     handleSetEvaluator: () => Promise<ActionResponse>
 }
 
@@ -27,7 +27,6 @@ const ProjectSubmissionDetail = (
     const [statusOpen, setStatusOpen] = useState(false)
     const [evalStatus, setEvalStatus] = useState('')
 
-
     useEffect(() => {
         if (record) {
             setEvalNotes(record.fields['Evaluation Feedback']);
@@ -36,10 +35,18 @@ const ProjectSubmissionDetail = (
         }
     }, [record]);
 
+    const handleSaveLocal = async () => {
+        const res = await handleSave(evalNotes,evalStatus)
+        if (res.success) {
+            alert(`Saved. Status: ${res.data?.fields["Evaluation Status"]}`)
+        }
+    }
+
     const handleSetEvaluatorLocal = async () => {
         const res = await handleSetEvaluator()
         if (res.success){
             setEvaluator(res.data?.fields.Evaluator as string)
+            alert(`Evaluator set to ${res.data?.fields.Evaluator}`)
         }
     }
 
@@ -156,7 +163,7 @@ const ProjectSubmissionDetail = (
                 : null
             }
             <Button className="disabled:bg-gray-500"
-                onClick={()=>handleSave(evalNotes, evalStatus)}
+                onClick={handleSaveLocal}
                 disabled={!evaluator}
             >Save</Button>
         </section>
