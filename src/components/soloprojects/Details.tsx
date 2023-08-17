@@ -162,9 +162,8 @@ const ProjectSubmissionDetail = (
                 </div>
                 : null
             }
-            <Button className="disabled:bg-gray-500"
+            <Button
                 onClick={handleSaveLocal}
-                disabled={!evaluator}
             >Save</Button>
         </section>
         <Link href={"/"}>Back to List</Link>
