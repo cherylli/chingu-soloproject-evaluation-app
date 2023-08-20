@@ -168,7 +168,6 @@ const ProjectSubmissionDetail = (
         </section>
         <Link href={"/"}>Back to List</Link>
     </div>
-
  }
 
  export default ProjectSubmissionDetail

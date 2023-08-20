@@ -3,24 +3,21 @@ import feedbackData from '@/data/githubFeedback.json'
 import {Input} from "@/components/ui/input";
 import {FeedbackCategory as FeedbackCategoryType, FeedbackContent} from "@/types/FeedbackType";
 import {Table, TableBody, TableCell, TableRow} from "@/components/ui/table";
-import ReactMarkdown from "react-markdown";
 import {useState} from "react";
 
 const formatContent = (content:string) => {
     return content.replaceAll('<br/>','\n')
 }
 
-// TODO: replace @ with github username
+// TODO: replace @ with feedback username
 
 const FeedbackItem = ({content}: { content: FeedbackContent }) => {
     return <TableBody>
         <TableRow>
-            <TableCell>{content.condition}</TableCell>
+            <TableCell className="text-gray-500">{content.condition}</TableCell>
             {content.importance ? <TableCell>{content.importance}</TableCell> : null}
-            <TableCell >
-                <ReactMarkdown className="whitespace-pre-wrap">
-                    {formatContent(content.feedback)}
-                </ReactMarkdown>
+            <TableCell className="whitespace-pre-wrap">
+                {formatContent(content.feedback)}
             </TableCell>
         </TableRow>
     </TableBody>
@@ -28,7 +25,7 @@ const FeedbackItem = ({content}: { content: FeedbackContent }) => {
 
 const FeedbackCategory = ({category}: { category: FeedbackCategoryType }) => {
     return <div>
-        <h1>{category.name}</h1>
+        <h1 className="text-xl m-4 text-orange-500">{category.name}</h1>
         <Table>
             {category.content.map((c, i) => (
                 <FeedbackItem
@@ -37,7 +34,6 @@ const FeedbackCategory = ({category}: { category: FeedbackCategoryType }) => {
                 />
             ))}
         </Table>
-
     </div>
 }
 
@@ -69,13 +65,17 @@ const GithubFeedback = () => {
                 type="search"
                 placeholder="Search"
                 onChange={(e)=>setSearchTerm(e.target.value)}
+                className="sticky top-0 text-2xl"
             />
-            {filteredFeedback().map(c => (
-                <FeedbackCategory
-                    key={c.name}
-                    category={c}
-                />
-            ))}
+            <section>
+                {filteredFeedback().map(c => (
+                    <FeedbackCategory
+                        key={c.name}
+                        category={c}
+                    />
+                ))}
+            </section>
+
         </div>
     )
 }

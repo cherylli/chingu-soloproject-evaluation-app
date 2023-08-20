@@ -13,5 +13,12 @@ export default async function Home() {
             >Solo Project Evaluation Conditions and Feedback
             </Link>
         </div>
+        <div> Feedback:
+            <Link className="ml-3 text-blue-500 hover:underline"
+                  href={'/feedback'}
+                  target="_blank" rel="noopener noreferrer"
+            >Searchable Feedback
+            </Link>
+        </div>
     </>
 }

@@ -9,7 +9,7 @@ type UserReturnType = {
 /**
  *  Returns users "Evaluator" email, and role, from airtable
  *
- *  @param githubEmail - Users github email returned by next-auth github provider
+ *  @param githubEmail - Users feedback email returned by next-auth feedback provider
  */
 export const getUserfromDb = async(
     githubEmail:string
