@@ -9,21 +9,25 @@ const formatContent = (content:string) => {
     return content.replaceAll('<br/>','\n')
 }
 
-// TODO: replace @ with feedback username
-
-const FeedbackItem = ({content}: { content: FeedbackContent }) => {
+const FeedbackItem = ({content, discordName}: {
+    content: FeedbackContent,
+    discordName: string
+}) => {
     return <TableBody>
         <TableRow>
             <TableCell className="text-gray-500">{content.condition}</TableCell>
             {content.importance ? <TableCell>{content.importance}</TableCell> : null}
             <TableCell className="whitespace-pre-wrap">
-                {formatContent(content.feedback)}
+                {formatContent(content.feedback).replace(/\s@\s/g,` @${discordName} `)}
             </TableCell>
         </TableRow>
     </TableBody>
 }
 
-const FeedbackCategory = ({category}: { category: FeedbackCategoryType }) => {
+const FeedbackCategory = ({category, discordName}: {
+    category: FeedbackCategoryType,
+    discordName:string
+}) => {
     return <div>
         <h1 className="text-xl m-4 text-orange-500">{category.name}</h1>
         <Table>
@@ -31,13 +35,14 @@ const FeedbackCategory = ({category}: { category: FeedbackCategoryType }) => {
                 <FeedbackItem
                     key={`${category.name}-${i}`}
                     content={c}
+                    discordName={discordName}
                 />
             ))}
         </Table>
     </div>
 }
 
-const GithubFeedback = () => {
+const GithubFeedback = ({discordName}:{discordName:string}) => {
     const [searchTerm, setSearchTerm] = useState('')
 
     const filteredFeedback = () : FeedbackCategoryType[]=> {
@@ -72,6 +77,7 @@ const GithubFeedback = () => {
                     <FeedbackCategory
                         key={c.name}
                         category={c}
+                        discordName={discordName}
                     />
                 ))}
             </section>
