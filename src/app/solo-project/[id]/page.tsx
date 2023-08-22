@@ -18,15 +18,15 @@ const SoloProjectPage = async ({params}: { params: { id: string } }) => {
         return await setEvaluatorOnDb(params.id)
     }
     return(
-        <div className="flex flex-col lg:flex-row-reverse justify-between">
-            <div className="basis-0.5 grow">
+        <div className="flex flex-col lg:flex-row-reverse justify-between h-screen">
+            <div className="lg:w-1/2 lg:overflow-y-auto">
                 <ProjectSubmissionDetail
                     record={record}
                     handleSave={handleSave}
                     handleSetEvaluator={handleSetEvaluator} />
                 <Comments recordId={params.id}/>
             </div>
-            <div className="basis-0.5 lg:visible invisible">
+            <div className="hidden lg:block lg:w-1/2 lg:max-h-screen lg:overflow-y-auto">
                 <GithubFeedback discordName={record.fields["Discord Name"]}/>
             </div>
         </div>

@@ -4,6 +4,9 @@ import {Input} from "@/components/ui/input";
 import {FeedbackCategory as FeedbackCategoryType, FeedbackContent} from "@/types/FeedbackType";
 import {Table, TableBody, TableCell, TableRow} from "@/components/ui/table";
 import {useState} from "react";
+import {CopyToClipboard} from 'react-copy-to-clipboard'
+import {Button} from "@/components/ui/button";
+import {Copy} from "lucide-react";
 
 const formatContent = (content:string) => {
     return content.replaceAll('<br/>','\n')
@@ -13,12 +16,22 @@ const FeedbackItem = ({content, discordName}: {
     content: FeedbackContent,
     discordName: string
 }) => {
+    const fbCellContent = discordName?
+        formatContent(content.feedback).replace(/\s@\s/g,` @${discordName} `):
+        formatContent(content.feedback)
     return <TableBody>
         <TableRow>
             <TableCell className="text-gray-500">{content.condition}</TableCell>
             {content.importance ? <TableCell>{content.importance}</TableCell> : null}
+            <TableCell>
+                <CopyToClipboard text={fbCellContent}>
+                    <Button variant="outline" size="icon" className="ml-2 h-8 w-8">
+                        <Copy className="h-4 w-4"/>
+                    </Button>
+                </CopyToClipboard>
+            </TableCell>
             <TableCell className="whitespace-pre-wrap">
-                {formatContent(content.feedback).replace(/\s@\s/g,` @${discordName} `)}
+                {fbCellContent}
             </TableCell>
         </TableRow>
     </TableBody>
@@ -44,18 +57,21 @@ const FeedbackCategory = ({category, discordName}: {
 
 const GithubFeedback = ({discordName}:{discordName:string}) => {
     const [searchTerm, setSearchTerm] = useState('')
+    const categories = feedbackData.categories as FeedbackCategoryType[]
 
     const filteredFeedback = () : FeedbackCategoryType[]=> {
         const feedbackArray = [] as FeedbackCategoryType[]
-        for (const category of feedbackData.categories) {
+        for (const category of categories) {
             const filteredContent = category.content
                 .filter(item => item.feedback.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                item.condition.toLowerCase().includes(searchTerm.toLowerCase()));
+                item.condition.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                category.name.toLowerCase().includes(searchTerm.toLowerCase()));
             if (filteredContent.length > 0) {
                 feedbackArray.push({
                     name: category.name,
                     content: filteredContent.map(item => ({
                         condition: item.condition,
+                        importance: item?.importance,
                         feedback: item.feedback
                     }))
                 });

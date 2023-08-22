@@ -10,14 +10,18 @@ Development Log / Notes
 - 12/8/23 - use revalidate api doesn't work as user has to refresh the page to update
 
 TODO: 
-- [ ] Add a better display for save success
-- [ ] Add auth
-  - [ ] Add Evaluator Email to auth context, through session callback
+- [x] Add a better display for save success
+- [x] Add auth
+  - [x] Add Evaluator Email to auth context, through session callback
   - [ ] (Possibly) Role based auth
 - [ ] Protect API routes
-- [ ] Show and add comments
-- [ ] refactor to fetch data directly, instead of using internal API routes
+- [x] Show and add comments
+- [x] refactor to fetch data directly, instead of using internal API routes
 - [x] Copy and paste line for discord "ring-the-bell"
-- [ ] Imports feedback from github repo and make it searchable 
+- [x] Imports feedback from github repo and make it searchable 
 - [x] To eliminate internal API routes, single project page `solo-project/[id]/page.tsx` will need to be restructured to have a server component fetching data with a client component displaying the data (so we don't have to expose the airtable API key in frontend)
 - [ ] Add context for functions like setEvaluator, update record instead of passing as props
+- [x] Feedback page
+  - [ ] don't substitute @ when there's no githubName or set a default
+  - [ ] set fixed height/width when embedded in the solo project detail page
+- [ ] Menu bar 
