@@ -11,7 +11,7 @@ const SoloProjectsListItem = ({fields, id}:{fields:FilteredFields, id:string}) =
                     {fields["Discord Name"]}
                 </Link>
             </TableCell>
-            <TableCell className={`${roleColors[fields["Voyage Role (from Applications link)"]].text}`}>
+            <TableCell className={`${roleColors[fields["Voyage Role (from Applications link)"]]?.text}`}>
                 {fields["Voyage Role (from Applications link)"]}
             </TableCell>
             <TableCell>{fields.Tier.substring(0,7)}</TableCell>
