@@ -166,7 +166,6 @@ const ProjectSubmissionDetail = (
                 onClick={handleSaveLocal}
             >Save</Button>
         </section>
-        <Link href={"/"}>Back to List</Link>
     </div>
  }
 
