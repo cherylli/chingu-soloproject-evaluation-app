@@ -4,10 +4,9 @@ import { useSession } from "next-auth/react";
 import {redirect} from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import {Home} from "lucide-react";
 
 const Nav = () => {
-
-
     const {data: session} = useSession({
         required: true,
         onUnauthenticated() {
@@ -17,6 +16,9 @@ const Nav = () => {
 
     return(
         <div className="flex justify-between">
+            <Link href={'/'}>
+                <Home/>
+            </Link>
             <ModeToggle/>
             {session?.user
                 ?<div className="flex items-center">
