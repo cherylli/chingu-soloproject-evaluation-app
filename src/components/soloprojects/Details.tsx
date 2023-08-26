@@ -4,7 +4,7 @@ import {Submission} from "@/types/SoloProjectTypes";
 import {roleColors} from "@/styles/roles";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
-import {Check, ChevronsUpDown, PencilLine} from "lucide-react";
+import {Check, ChevronsUpDown, Github, PencilLine} from "lucide-react";
 import {Textarea} from "@/components/ui/textarea";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem} from "@/components/ui/command";
@@ -52,12 +52,21 @@ const ProjectSubmissionDetail = (
 
     return <div>
         <section className="flex flex-col gap-5 w-[90%] mx-auto">
-            <h1 className="text-2xl text-center mt-5">
-                {record.fields["Discord Name"]??"Discord ID not Provided"}
-            </h1>
-            <div className={`text-center ${roleColors[record.fields["Voyage Role (from Applications link)"]].bg} py-1`}>
-                {record.fields["Voyage Role (from Applications link)"]}
-            </div>
+            <header className="flex flex-col">
+                <h1 className="text-2xl text-center mt-5">
+                    {record.fields["Discord Name"]??"Discord ID not Provided"}
+                </h1>
+                {record.fields["GitHub ID"]?
+                    <p className="flex">
+                        <Github className="mr-2"/>{record.fields["GitHub ID"]}
+                    </p>:
+                    null
+                }
+                <div className={`text-center ${roleColors[record.fields["Voyage Role (from Applications link)"]].bg} py-1 mt-3`}>
+                    {record.fields["Voyage Role (from Applications link)"]}
+                </div>
+            </header>
+
             <div>{record.fields["Timestamp"].toString()}</div>
             <div>{record.fields.Tier}</div>
             {record.fields["Instructions"] ?

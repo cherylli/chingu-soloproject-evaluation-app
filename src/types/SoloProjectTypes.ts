@@ -19,6 +19,7 @@ export type VoyageRole =
 
 export type FilteredFields = {
     "Discord Name": string
+    "GitHub ID": string
     "Timestamp": Date | string
     "Tier": string
     "GitHub Repo URL": string
