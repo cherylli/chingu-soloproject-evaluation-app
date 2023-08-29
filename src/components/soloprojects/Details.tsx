@@ -4,7 +4,7 @@ import {Submission} from "@/types/SoloProjectTypes";
 import {roleColors} from "@/styles/roles";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
-import {Check, ChevronsUpDown, Github, PencilLine} from "lucide-react";
+import {Check, ChevronsUpDown, Copy, Github, PencilLine} from "lucide-react";
 import {Textarea} from "@/components/ui/textarea";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem} from "@/components/ui/command";
@@ -12,6 +12,7 @@ import {evalStatusValues} from "@/lib/options";
 import {cn} from "@/lib/utils";
 import {useEffect, useState} from "react";
 import {ActionResponse} from "@/types";
+import {CopyToClipboard} from "react-copy-to-clipboard";
 
 interface ProjectDetailProps {
     record: Submission,
@@ -26,6 +27,7 @@ const ProjectSubmissionDetail = (
     const [evalNotes, setEvalNotes] = useState('');
     const [statusOpen, setStatusOpen] = useState(false)
     const [evalStatus, setEvalStatus] = useState('')
+    const [ringTheBellText, setRingTheBellText] = useState('')
 
     useEffect(() => {
         if (record) {
@@ -36,15 +38,19 @@ const ProjectSubmissionDetail = (
     }, [record]);
 
     const handleSaveLocal = async () => {
-        const res = await handleSave(evalNotes,evalStatus)
+        const res = await handleSave(evalNotes, evalStatus)
         if (res.success) {
             alert(`Saved. Status: ${res.data?.fields["Evaluation Status"]}`)
         }
     }
 
+    const onPassSelect = () => {
+        setRingTheBellText(`Congratulations @${record.fields["Discord Name"]} on successfully completing your Solo Project !!! :tada:`)
+    }
+
     const handleSetEvaluatorLocal = async () => {
         const res = await handleSetEvaluator()
-        if (res.success){
+        if (res.success) {
             setEvaluator(res.data?.fields.Evaluator as string)
             alert(`Evaluator set to ${res.data?.fields.Evaluator}`)
         }
@@ -53,16 +59,24 @@ const ProjectSubmissionDetail = (
     return <div>
         <section className="flex flex-col gap-5 w-[90%] mx-auto">
             <header className="flex flex-col">
-                <h1 className="text-2xl text-center mt-5">
-                    {record.fields["Discord Name"]??"Discord ID not Provided"}
-                </h1>
-                {record.fields["GitHub ID"]?
+                <div className="flex flex-row items-center justify-center m-2">
+                    <h1 className="text-2xl">
+                        {record.fields["Discord Name"] ?? "Discord ID not Provided"}
+                    </h1>
+                    <CopyToClipboard text={record.fields["Discord Name"]}>
+                        <Button variant="outline" size="icon" className="ml-2 h-8 w-8">
+                            <Copy className="h-4 w-4"/>
+                        </Button>
+                    </CopyToClipboard>
+                </div>
+                {record.fields["GitHub ID"] ?
                     <p className="flex">
                         <Github className="mr-2"/>{record.fields["GitHub ID"]}
-                    </p>:
+                    </p> :
                     null
                 }
-                <div className={`text-center ${roleColors[record.fields["Voyage Role (from Applications link)"]].bg} py-1 mt-3`}>
+                <div
+                    className={`text-center ${roleColors[record.fields["Voyage Role (from Applications link)"]].bg} py-1 mt-3`}>
                     {record.fields["Voyage Role (from Applications link)"]}
                 </div>
             </header>
@@ -86,7 +100,7 @@ const ProjectSubmissionDetail = (
             <table className="table-auto">
                 <tbody>
                 <tr>
-                    <td>Deployed App URL: </td>
+                    <td>Deployed App URL:</td>
                     <td className="px-4 text-blue-500 hover:underline">
                         <Link
                             href={record.fields["Deployed App URL"]}
@@ -96,7 +110,7 @@ const ProjectSubmissionDetail = (
                     </td>
                 </tr>
                 <tr>
-                    <td>Github Repo URL: </td>
+                    <td>Github Repo URL:</td>
                     <td className="px-4 text-blue-500 hover:underline">
                         <Link
                             href={record.fields["GitHub Repo URL"]}
@@ -107,7 +121,7 @@ const ProjectSubmissionDetail = (
                 </tr>
 
                 <tr>
-                    <td className="pt-4">Evaluator: </td>
+                    <td className="pt-4">Evaluator:</td>
                     <td className="px-4 pt-4">{evaluator}</td>
                 </tr>
                 </tbody>
@@ -135,12 +149,12 @@ const ProjectSubmissionDetail = (
                             className="w-[200px] justify-between"
                         >
                             {evalStatus}
-                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50"/>
                         </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-[200px] p-0">
                         <Command>
-                            <CommandInput placeholder="Search status..." />
+                            <CommandInput placeholder="Search status..."/>
                             <CommandEmpty>No status found.</CommandEmpty>
                             <CommandGroup>
                                 {evalStatusValues.map((status) => (
@@ -148,6 +162,9 @@ const ProjectSubmissionDetail = (
                                         key={status.value}
                                         onSelect={(_) => {
                                             setEvalStatus(status.value)
+                                            if(status.value==="Passed") {
+                                                onPassSelect()
+                                            }
                                             setStatusOpen(false)
                                         }}
                                     >
@@ -165,9 +182,14 @@ const ProjectSubmissionDetail = (
                     </PopoverContent>
                 </Popover>
             </div>
-            {evalStatus==="Passed"
+            {evalStatus === "Passed"
                 ? <div>
-                    Congratulations @{record.fields["Discord Name"]} on successfully completing your Solo Project !!! :tada:
+                    {ringTheBellText}
+                    <CopyToClipboard text={ringTheBellText}>
+                        <Button variant="outline" size="icon" className="ml-2 h-8 w-8">
+                            <Copy className="h-4 w-4"/>
+                        </Button>
+                    </CopyToClipboard>
                 </div>
                 : null
             }
@@ -176,6 +198,6 @@ const ProjectSubmissionDetail = (
             >Save</Button>
         </section>
     </div>
- }
+}
 
- export default ProjectSubmissionDetail
+export default ProjectSubmissionDetail
