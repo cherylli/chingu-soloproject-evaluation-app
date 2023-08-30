@@ -209,6 +209,7 @@ See the [open issues](https://github.com/cherylli/chingu-soloproject-evaluation-
 <!-- LICENSE -->
 ## License
 
+[GNU General Public License V3](https://www.gnu.org/licenses/gpl-3.0)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -237,7 +238,7 @@ Project Link: [https://github.com/cherylli/chingu-soloproject-evaluation-app](ht
 [issues-shield]: https://img.shields.io/github/issues/cherylli/chingu-soloproject-evaluation-app.svg?style=for-the-badge
 [issues-url]: https://github.com/cherylli/chingu-soloproject-evaluation-app/issues
 [license-shield]: https://img.shields.io/github/license/cherylli/chingu-soloproject-evaluation-app.svg?style=for-the-badge
-[license-url]: https://github.com/cherylli/chingu-soloproject-evaluation-app/blob/master/LICENSE.txt
+[license-url]: https://github.com/cherylli/chingu-soloproject-evaluation-app/blob/master/LICENSE.md
 [product-screenshot]: images/screenshot.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
