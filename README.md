@@ -183,7 +183,8 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 ## Roadmap
 
 - [x] Authentication with github, so we don't have to store user credentials
-- [ ] A better confirmation display for action (save, set evaluator) 
+- [ ] A better confirmation display for actions (save, set evaluator) 
+- [ ] Add Loading state to actions (e.g. save, set evaluator)
 - [ ] (Possibly) role based auth for additional admin features 
 - [ ] Auto scrape feedback repo every x days
 - [ ] Save evaluation text in context so progress is not lose on page navigation
