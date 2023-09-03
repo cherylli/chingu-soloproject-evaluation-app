@@ -28,6 +28,7 @@ const ProjectSubmissionDetail = (
     const [statusOpen, setStatusOpen] = useState(false)
     const [evalStatus, setEvalStatus] = useState('')
     const [ringTheBellText, setRingTheBellText] = useState('')
+    const [selectionLen, setSelectionLen] = useState(0)
 
     useEffect(() => {
         if (record) {
@@ -46,6 +47,15 @@ const ProjectSubmissionDetail = (
 
     const onPassSelect = () => {
         setRingTheBellText(`Congratulations @${record.fields["Discord Name"]} on successfully completing your Solo Project !!! :tada:`)
+    }
+
+    const onSelectText = () => {
+        const selection = window.getSelection()?.toString()
+        if(selection && selection !==''){
+            setSelectionLen(selection.length)
+        }else{
+            setSelectionLen(0)
+        }
     }
 
     const handleSetEvaluatorLocal = async () => {
@@ -137,7 +147,12 @@ const ProjectSubmissionDetail = (
                 className="h-[500px]"
                 value={evalNotes}
                 onChange={e => setEvalNotes(e.target.value)}
+                onMouseUp={onSelectText}
             />
+            <div className="text-right text-gray-500">
+                {selectionLen}/{evalNotes?.length??'0'}
+            </div>
+
             <div className="flex gap-5 items-center">
                 <div>Evaluation Status</div>
                 <Popover open={statusOpen} onOpenChange={setStatusOpen}>
