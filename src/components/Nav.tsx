@@ -11,6 +11,9 @@ import {
     NavigationMenuList,
     NavigationMenuTrigger, navigationMenuTriggerStyle
 } from "@/components/ui/navigation-menu";
+import {
+    Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger
+} from "@/components/ui/menubar"
 
 const Nav = () => {
     const {data: session} = useSession({
@@ -22,9 +25,27 @@ const Nav = () => {
 
     return(
         <div className="flex justify-between items-center p-2">
-            <Link href={'/'}>
-                <Home/>
-            </Link>
+            <div className="flex flex-row items-center gap-5">
+                <Link href={'/'}>
+                    <Home/>
+                </Link>
+                <Menubar>
+                    <MenubarMenu>
+                        <MenubarTrigger>Status</MenubarTrigger>
+                        <MenubarContent>
+                            <MenubarItem>
+                                <Link href={'/status/waiting-eval'}>Waiting Eval</Link>
+                            </MenubarItem>
+                            <MenubarItem>
+                                <Link href={'/status/not-in-discord'}>Not In Discord</Link>
+                            </MenubarItem>
+                            <MenubarItem>
+                                <Link href={'/status/requested-changes'}>Requested Changes</Link>
+                            </MenubarItem>
+                        </MenubarContent>
+                    </MenubarMenu>
+                </Menubar>
+            </div>
             {session?.user
                 ?<div className="flex items-center">
                     <ModeToggle/>
