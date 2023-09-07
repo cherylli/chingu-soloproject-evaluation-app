@@ -18,6 +18,10 @@ export const getSoloProjectsByStatus = async (status:string): Promise<Submission
     const records = await table.select({
         filterByFormula: filter,
         fields: fields,
+        sort:[{
+            field:"Timestamp",
+            direction: "desc"
+        }]
     }).firstPage()
     return transformData(records)
 }
