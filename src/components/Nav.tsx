@@ -26,9 +26,9 @@ const Nav = () => {
     return(
         <div className="flex justify-between items-center p-2">
             <div className="flex flex-row items-center gap-5">
-                <Link href={'/'}>
+                <a href={'/'}>
                     <Home/>
-                </Link>
+                </a>
                 <Menubar>
                     <MenubarMenu>
                         <MenubarTrigger>Status</MenubarTrigger>
