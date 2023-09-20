@@ -18,3 +18,4 @@ https://github.com/akoskm/job-board/blob/main/src/app/jobs/%5Bid%5D/page.tsx
 toast from server components?
 https://stackoverflow.com/questions/76393897/how-to-call-a-notification-toast-after-a-server-action-in-nextjs13
 
+Json schema
