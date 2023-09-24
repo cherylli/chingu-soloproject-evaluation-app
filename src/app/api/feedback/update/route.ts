@@ -63,7 +63,7 @@ const runScraper = async () => {
 
 export async function GET() {
     const feedback = await runScraper()
-    const filePath = path.join(process.cwd(), '/src/data/githubFeedback.json');
+    const filePath = path.resolve(process.cwd(), '/src/data/githubFeedback.json');
     await fsPromises.writeFile(filePath,JSON.stringify(feedback))
     return NextResponse.json({"message": "Feedback data updated"})
 }
