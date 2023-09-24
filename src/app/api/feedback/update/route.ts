@@ -1,5 +1,7 @@
 import {NextResponse} from "next/server";
 import puppeteer from "puppeteer";
+import fsPromises from "fs/promises";
+import path from "path";
 
 type Row = {
     [key: string]: string
@@ -44,7 +46,7 @@ const runScraper = async () => {
             for (let i = 0; i < data.length; i = i + col) {
                 const row: Row = {};
                 for (let j = 0; j < col; j++) {
-                    row[headers[j]] = data[i + j];
+                    row[headers[j].toLowerCase()] = data[i + j];
                 }
                 rows.push(row);
             }
@@ -61,5 +63,7 @@ const runScraper = async () => {
 
 export async function GET() {
     const feedback = await runScraper()
-    return NextResponse.json(feedback)
+    const filePath = path.join(process.cwd(), '/src/data/githubFeedback.json');
+    await fsPromises.writeFile(filePath,JSON.stringify(feedback))
+    return NextResponse.json({"message": "Feedback data updated"})
 }
