@@ -85,10 +85,13 @@ const ProjectSubmissionDetail = (
                     </p> :
                     null
                 }
-                <div
-                    className={`text-center ${roleColors[record.fields["Voyage Role (from Applications link)"]].bg} py-1 mt-3`}>
-                    {record.fields["Voyage Role (from Applications link)"]}
-                </div>
+                {record.fields["Voyage Role (from Applications link)"] ?
+                    <div
+                        className={`text-center ${roleColors[record.fields["Voyage Role (from Applications link)"]].bg} py-1 mt-3`}>
+                        {record.fields["Voyage Role (from Applications link)"]}
+                    </div>:
+                    <div className="text-center text-gray-800 bg-gray-300 py-1 mt-3">No Role Selected</div>
+                }
             </header>
 
             <div>{record.fields["Timestamp"].toString()}</div>
