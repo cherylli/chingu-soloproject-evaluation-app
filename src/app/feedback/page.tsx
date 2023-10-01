@@ -1,105 +1,31 @@
-'use client'
-import feedbackData from '@/data/githubFeedback.json'
-import {Input} from "@/components/ui/input";
-import {FeedbackCategory as FeedbackCategoryType, FeedbackContent} from "@/types/FeedbackType";
-import {Table, TableBody, TableCell, TableRow} from "@/components/ui/table";
-import {useState} from "react";
-import {CopyToClipboard} from 'react-copy-to-clipboard'
-import {Button} from "@/components/ui/button";
-import {Copy} from "lucide-react";
+import FeedbackList from "@/components/feedback/FeedbackList";
+import {FeedbackCategory as FeedbackCategoryType} from "@/types/FeedbackType";
+import {initializeApp} from "@firebase/app";
+import {getDownloadURL, getStorage, getStream, ref} from "@firebase/storage";
 
-const formatContent = (content:string) => {
-    return content.replaceAll('<br/>','\n')
+const firebaseConfig = {
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
 }
 
-const FeedbackItem = ({content, discordName}: {
-    content: FeedbackContent,
-    discordName: string
-}) => {
-    const fbCellContent = discordName?
-        formatContent(content.feedback).replace(/\s@\s/g,` @${discordName} `):
-        formatContent(content.feedback)
-    return <TableBody>
-        <TableRow>
-            <TableCell className="text-gray-500">{content.condition}</TableCell>
-            {content.importance ? <TableCell>{content.importance}</TableCell> : null}
-            <TableCell>
-                <CopyToClipboard text={fbCellContent}>
-                    <Button variant="outline" size="icon" className="ml-2 h-8 w-8">
-                        <Copy className="h-4 w-4"/>
-                    </Button>
-                </CopyToClipboard>
-            </TableCell>
-            <TableCell className="whitespace-pre-wrap">
-                {fbCellContent}
-            </TableCell>
-        </TableRow>
-    </TableBody>
-}
+const app = initializeApp(firebaseConfig);
+const storage = getStorage(app);
 
-const FeedbackCategory = ({category, discordName}: {
-    category: FeedbackCategoryType,
-    discordName:string
-}) => {
-    return <div>
-        <h1 className="text-xl m-4 text-orange-500">{category.name}</h1>
-        <Table>
-            {category.content.map((c, i) => (
-                <FeedbackItem
-                    key={`${category.name}-${i}`}
-                    content={c}
-                    discordName={discordName}
-                />
-            ))}
-        </Table>
-    </div>
-}
+const getData = async () => {
+    const url = await getDownloadURL(ref(storage, 'feedback.json'))
+    const res = await fetch(url, {next: {tags: ['feedback']}})
 
-const GithubFeedback = ({discordName}:{discordName:string}) => {
-    const [searchTerm, setSearchTerm] = useState('')
-    const categories = feedbackData.categories as FeedbackCategoryType[]
-
-    const filteredFeedback = () : FeedbackCategoryType[]=> {
-        const feedbackArray = [] as FeedbackCategoryType[]
-        for (const category of categories) {
-            const filteredContent = category.content
-                .filter(item => item.feedback.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                item.condition.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                category.name.toLowerCase().includes(searchTerm.toLowerCase()));
-            if (filteredContent.length > 0) {
-                feedbackArray.push({
-                    name: category.name,
-                    content: filteredContent.map(item => ({
-                        condition: item.condition,
-                        importance: item?.importance,
-                        feedback: item.feedback
-                    }))
-                });
-            }
-        }
-        return feedbackArray
+    if (!res.ok) {
+        throw new Error('Failed to fetch data')
     }
 
-    return (
-        <div>
-            <Input
-                type="search"
-                placeholder="Search"
-                onChange={(e)=>setSearchTerm(e.target.value)}
-                className="sticky top-0 text-2xl"
-            />
-            <section>
-                {filteredFeedback().map(c => (
-                    <FeedbackCategory
-                        key={c.name}
-                        category={c}
-                        discordName={discordName}
-                    />
-                ))}
-            </section>
-
-        </div>
-    )
+    return res.json()
 }
 
-export default GithubFeedback
+const Feedback = async ({discordName}: { discordName: string }) => {
+    const feedbackData = await getData()
+    const categories = feedbackData.categories as FeedbackCategoryType[]
+    return (
+        <FeedbackList discordName={discordName} categories={categories}/>
+    )
+}
+export default Feedback
