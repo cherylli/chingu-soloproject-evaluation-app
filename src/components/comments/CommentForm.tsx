@@ -22,7 +22,7 @@ const CommentForm = ({handleAddComment}:CommentFormProps) => {
                 value={newComment}
                 onChange={e => setNewComment(e.target.value)}
             />
-            <Button onClick={handlePostButtonClick}>Post</Button>
+            <Button onClick={handlePostButtonClick} className="my-5 mr-5">Post</Button>
         </>
 
     )
