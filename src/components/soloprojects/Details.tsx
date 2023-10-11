@@ -4,7 +4,7 @@ import {Submission} from "@/types/SoloProjectTypes";
 import {roleColors} from "@/styles/roles";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
-import {Check, ChevronsUpDown, Copy, Github, PencilLine} from "lucide-react";
+import {AtSign, Check, ChevronsUpDown, Copy, Github, PencilLine} from "lucide-react";
 import {Textarea} from "@/components/ui/textarea";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem} from "@/components/ui/command";
@@ -79,12 +79,24 @@ const ProjectSubmissionDetail = (
                         </Button>
                     </CopyToClipboard>
                 </div>
+                {record.fields["Discord ID"] ?
+                    <p className="flex">
+                        <AtSign className="mr-2"/>{record.fields["Discord ID"]}
+                        <CopyToClipboard text={`<@${record.fields["Discord ID"]}>`}>
+                            <Button variant="outline" size="icon" className="ml-2 h-8 w-8">
+                                <Copy className="h-4 w-4"/>
+                            </Button>
+                        </CopyToClipboard>
+                    </p> :
+                    null
+                }
                 {record.fields["GitHub ID"] ?
                     <p className="flex">
                         <Github className="mr-2"/>{record.fields["GitHub ID"]}
                     </p> :
                     null
                 }
+
                 {record.fields["Voyage Role (from Applications link)"] ?
                     <div
                         className={`text-center ${roleColors[record.fields["Voyage Role (from Applications link)"]].bg} py-1 mt-3`}>

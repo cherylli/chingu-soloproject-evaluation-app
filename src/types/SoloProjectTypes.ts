@@ -30,5 +30,6 @@ export type FilteredFields = {
     "Instructions": string
     "Addl. Comments": string
     "Voyage Role (from Applications link)": VoyageRole
+    "Discord ID": string
 }
 

@@ -19,7 +19,8 @@ const fields = [
     "Evaluation Feedback",
     "Instructions",
     "Addl. Comments",
-    "Voyage Role (from Applications link)"
+    "Voyage Role (from Applications link)",
+    "Discord ID"
 ]
 
 const transformData = (records:Records<FieldSet>): Submission[] => {
@@ -38,7 +39,8 @@ const transformData = (records:Records<FieldSet>): Submission[] => {
                 "Evaluation Feedback": record.fields["Evaluation Feedback"] as string,
                 "Instructions": record.fields["Instructions"] as string,
                 "Addl. Comments": record.fields["Addl. Comments"] as string,
-                "Voyage Role (from Applications link)": record.fields["Voyage Role (from Applications link)"] as VoyageRole
+                "Voyage Role (from Applications link)": record.fields["Voyage Role (from Applications link)"] as VoyageRole,
+                "Discord ID": record.fields["Discord ID"] as string
             }
         }
     })
@@ -60,7 +62,8 @@ const transformDataSingleRecord = (record:Record<FieldSet>) => {
            "Evaluation Feedback": record.fields["Evaluation Feedback"] as string,
            "Instructions": record.fields["Instructions"] as string,
            "Addl. Comments": record.fields["Addl. Comments"] as string,
-           "Voyage Role (from Applications link)": record.fields["Voyage Role (from Applications link)"] as VoyageRole
+           "Voyage Role (from Applications link)": record.fields["Voyage Role (from Applications link)"] as VoyageRole,
+           "Discord ID": record.fields["Discord ID"] as string
        }
    }
 }
