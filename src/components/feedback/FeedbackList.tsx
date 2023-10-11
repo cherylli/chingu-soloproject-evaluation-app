@@ -59,8 +59,6 @@ const GithubFeedback = (
     {discordName, categories}:{discordName:string, categories:FeedbackCategoryType[]}
 ) => {
     const [searchTerm, setSearchTerm] = useState('')
-    //const categories = feedbackData.categories as FeedbackCategoryType[]
-    console.log(JSON.stringify(categories))
     const filteredFeedback = () : FeedbackCategoryType[]=> {
         const feedbackArray = [] as FeedbackCategoryType[]
         for (const category of categories) {

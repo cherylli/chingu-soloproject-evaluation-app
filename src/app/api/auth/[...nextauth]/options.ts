@@ -1,6 +1,5 @@
 import type { NextAuthOptions} from "next-auth";
 import GithubProvider, {GithubProfile} from 'next-auth/providers/github'
-import {transformData, userTable} from "@/lib/airtable";
 import {getUserfromDb} from "@/services/users";
 import {ChinguAppRole} from "@/types/UserTypes";
 
