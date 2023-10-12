@@ -7,6 +7,7 @@ import {useState} from "react";
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import {Button} from "@/components/ui/button";
 import {Copy} from "lucide-react";
+import {toast} from "react-hot-toast";
 
 const formatContent = (content:string) => {
     return content.replaceAll('<br/>','\n')
@@ -25,7 +26,12 @@ const FeedbackItem = ({content, discordName}: {
             {content.importance ? <TableCell>{content.importance}</TableCell> : null}
             <TableCell>
                 <CopyToClipboard text={fbCellContent}>
-                    <Button variant="outline" size="icon" className="ml-2 h-8 w-8">
+                    <Button
+                        variant="outline"
+                        size="icon"
+                        className="ml-2 h-8 w-8"
+                        onClick={()=>toast('Copied!')}
+                    >
                         <Copy className="h-4 w-4"/>
                     </Button>
                 </CopyToClipboard>

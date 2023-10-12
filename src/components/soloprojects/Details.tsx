@@ -13,6 +13,7 @@ import {cn} from "@/lib/utils";
 import {useEffect, useState} from "react";
 import {ActionResponse} from "@/types";
 import {CopyToClipboard} from "react-copy-to-clipboard";
+import {toast, Toaster} from "react-hot-toast";
 
 interface ProjectDetailProps {
     record: Submission,
@@ -39,10 +40,27 @@ const ProjectSubmissionDetail = (
     }, [record]);
 
     const handleSaveLocal = async () => {
+        const savingToast = toast.loading('Saving...')
         const res = await handleSave(evalNotes, evalStatus)
         if (res.success) {
-            alert(`Saved. Status: ${res.data?.fields["Evaluation Status"]}`)
+            // alert(`Saved. Status: ${res.data?.fields["Evaluation Status"]}`)
+            toast.success(`Saved. Status: ${res.data?.fields["Evaluation Status"]}`)
+        } else{
+            toast.error(`Error Saving: ${res.message}`)
         }
+        toast.dismiss(savingToast)
+    }
+
+    const handleSetEvaluatorLocal = async () => {
+        const setEvaluatorToast = toast.loading('Setting Evaluator...')
+        const res = await handleSetEvaluator()
+        if (res.success) {
+            setEvaluator(res.data?.fields.Evaluator as string)
+            toast.success(`Evaluator set to ${res.data?.fields.Evaluator}`)
+        } else {
+            toast.error(`Set Evaluator FAILED: ${res.message}`)
+        }
+        toast.dismiss(setEvaluatorToast)
     }
 
     const onPassSelect = () => {
@@ -58,17 +76,10 @@ const ProjectSubmissionDetail = (
         }
     }
 
-    const handleSetEvaluatorLocal = async () => {
-        const res = await handleSetEvaluator()
-        if (res.success) {
-            setEvaluator(res.data?.fields.Evaluator as string)
-            alert(`Evaluator set to ${res.data?.fields.Evaluator}`)
-        } else {
-            alert(`Set Evaluator FAILED: ${res.message}`)
-        }
-    }
+
 
     return <div>
+
         <section className="flex flex-col gap-5 w-[90%] mx-auto">
             <header className="flex flex-col">
                 <div className="flex flex-row items-center justify-center m-2">
@@ -76,7 +87,11 @@ const ProjectSubmissionDetail = (
                         {record.fields["Discord Name"] ?? "Discord ID not Provided"}
                     </h1>
                     <CopyToClipboard text={record.fields["Discord Name"]}>
-                        <Button variant="outline" size="icon" className="ml-2 h-8 w-8">
+                        <Button variant="outline"
+                                size="icon"
+                                className="ml-2 h-8 w-8"
+                                onClick={()=>toast('Copied!')}
+                        >
                             <Copy className="h-4 w-4"/>
                         </Button>
                     </CopyToClipboard>
@@ -85,7 +100,12 @@ const ProjectSubmissionDetail = (
                     <p className="flex">
                         <AtSign className="mr-2"/>{record.fields["Discord ID"]}
                         <CopyToClipboard text={`<@${record.fields["Discord ID"]}>`}>
-                            <Button variant="outline" size="icon" className="ml-2 h-8 w-8">
+                            <Button
+                                variant="outline"
+                                size="icon"
+                                className="ml-2 h-8 w-8"
+                                onClick={()=>toast('Copied!')}
+                            >
                                 <Copy className="h-4 w-4"/>
                             </Button>
                         </CopyToClipboard>
@@ -217,8 +237,13 @@ const ProjectSubmissionDetail = (
             {evalStatus === "Passed"
                 ? <div>
                     {ringTheBellText}
-                    <CopyToClipboard text={ringTheBellText}>
-                        <Button variant="outline" size="icon" className="ml-2 h-8 w-8">
+                    <CopyToClipboard text={ringTheBellText} >
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            className="ml-2 h-8 w-8"
+                            onClick={()=>toast('Copied!')}
+                        >
                             <Copy className="h-4 w-4"/>
                         </Button>
                     </CopyToClipboard>

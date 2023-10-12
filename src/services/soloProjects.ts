@@ -51,7 +51,6 @@ export const setEvaluatorOnDb = async (id: string): Promise<ActionResponse> => {
                         }
                     }
                 ])
-                //console.log(updatedRecord)
                 return {
                     success: true,
                     message: `Evaluator is set to ${updatedRecord[0].fields["Evaluator"]}.`,

@@ -5,6 +5,7 @@ import {ThemeProvider} from "@/components/theme-provider";
 import Nav from "@/components/Nav";
 import AuthProvider from "@/context/AuthProvider";
 import Maintenance from "@/components/Maintenance";
+import {Toaster} from "react-hot-toast";
 
 const inter = Inter({subsets: ['latin']})
 
@@ -25,6 +26,26 @@ export default function RootLayout({children}: {
         <AuthProvider>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                 <Nav/>
+                <Toaster
+                    toastOptions={{
+                        style: {
+                            background: '#4d7fff',
+                            color: '#ddd'
+                        },
+                        success: {
+                            style: {
+                                background: '#b3fcc1',
+                                color: '#000'
+                            }
+                        },
+                        error: {
+                            style: {
+                                background: '#fcb3b3',
+                                color: '#000'
+                            }
+                        },
+                    }}
+                />
                 {children}
             </ThemeProvider>
         </AuthProvider>
