@@ -177,7 +177,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
+![flowchart.png](docs/images/flowchart.png)
 
 <!-- ROADMAP -->
 ## Roadmap
