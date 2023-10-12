@@ -173,7 +173,6 @@ Note: Comments can also be added if necessary. Due to the limitations of the air
 
 ![comments.png](docs/images/comments.png)
 
-_For more examples, please refer to the [Documentation](https://example.com)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -183,10 +182,10 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 ## Roadmap
 
 - [x] Authentication with github, so we don't have to store user credentials
-- [ ] A better confirmation display for actions (save, set evaluator) 
+- [ ] A better confirmation display for actions (save, set evaluator), an alert box is used currently
 - [ ] Add Loading state to actions (e.g. save, set evaluator)
 - [ ] (Possibly) role based auth for additional admin features 
-- [ ] Auto scrape feedback repo every x days
+- [x] Auto scrape feedback repo every x days -> added this but autoscrape every time the feedback repo is updated
 - [ ] Save evaluation text in context so progress is not lose on page navigation
 - [ ] Comments
   - [x] Show comments
