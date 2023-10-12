@@ -63,6 +63,8 @@ const ProjectSubmissionDetail = (
         if (res.success) {
             setEvaluator(res.data?.fields.Evaluator as string)
             alert(`Evaluator set to ${res.data?.fields.Evaluator}`)
+        } else {
+            alert(`Set Evaluator FAILED: ${res.message}`)
         }
     }
 

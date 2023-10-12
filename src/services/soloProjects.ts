@@ -38,7 +38,7 @@ export const setEvaluatorOnDb = async (id: string): Promise<ActionResponse> => {
         if(record.fields["Evaluator"]){
             return {
                 success: false,
-                message: `Evaluator is already set. ${record.fields["Evaluator"]} is already evaluating this solo project submission. `
+                message: `${record.fields["Evaluator"]} is already evaluating this solo project submission. `
             }
         }else{
             if(sessionData){
