@@ -9,6 +9,28 @@ export default async function Home() {
     const records = await getSoloProjectsByStatus("Waiting Eval")
     return <>
         <ProjectSubmissionList records={records}/>
+        <div className="m-5">
+            <p>We want our feedback to achieve these goals:</p>
+            <ul className="list-disc m-5">
+                <li>
+                    Provide feedback to help our Members become better Developers.
+                </li>
+                <li>
+                    Provide feedback to help our Members correct issues,
+                    but also to encourage practices we find that they are doing well.
+                </li>
+                <li>
+                    Provide feedback that is consistent & fair, regardless of who performs the Solo Project evaluation.
+                </li>
+            </ul>
+            <p>
+                Keep in mind that we don't do strict, university-style evaluations.
+                We don't expect Solo Projects to be perfect apps.&nbsp;
+                <b className="underline">We actually want members to pass</b> if their project has a readme and works properly,
+                even though it may contain minor flaws.
+            </p>
+
+        </div>
         <div className="ml-5">
             <div className="mt-5"> Feedback Github Repo:
                 <Link className="ml-3 text-blue-500 hover:underline"
