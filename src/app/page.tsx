@@ -24,8 +24,8 @@ export default async function Home() {
                 </li>
             </ul>
             <p>
-                Keep in mind that we don't do strict, university-style evaluations.
-                We don't expect Solo Projects to be perfect apps.&nbsp;
+                Keep in mind that we don&apos;t do strict, university-style evaluations.
+                We don&apos;t expect Solo Projects to be perfect apps.&nbsp;
                 <b className="underline">We actually want members to pass</b> if their project has a readme and works properly,
                 even though it may contain minor flaws.
             </p>
