@@ -159,6 +159,8 @@ This is an example of how to list things you need to use the software and how to
 
 3. Enter your feedback in the textarea
 
+Here are some sample feedback (https://github.com/chingu-voyages/soloproject-evaluation#example-feedback)
+Note: we don't include feedback with "requested changes" now, as most of the time we don't get a response from them
 
 4. Select the appropriate 'Evaluation Status', and click `Save`. This will save the feedback into the `Evaluation Feedback` field in airtable, and a save confirmation should be displayed on success. (browser alert at this stage)
 
