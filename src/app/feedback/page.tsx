@@ -1,7 +1,7 @@
 import FeedbackList from "@/components/feedback/FeedbackList";
 import {FeedbackCategory as FeedbackCategoryType} from "@/types/FeedbackType";
 import {initializeApp} from "@firebase/app";
-import {getDownloadURL, getStorage, getStream, ref} from "@firebase/storage";
+import {getDownloadURL, getStorage, ref} from "@firebase/storage";
 
 const firebaseConfig = {
     storageBucket: process.env.FIREBASE_STORAGE_BUCKET,

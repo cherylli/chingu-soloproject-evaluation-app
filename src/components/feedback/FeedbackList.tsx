@@ -1,5 +1,4 @@
 'use client'
-import feedbackData from '@/data/githubFeedback.json'
 import {Input} from "@/components/ui/input";
 import {FeedbackCategory as FeedbackCategoryType, FeedbackContent} from "@/types/FeedbackType";
 import {Table, TableBody, TableCell, TableRow} from "@/components/ui/table";

@@ -41,11 +41,17 @@ export default async function Home() {
 
         </div>
         <div className="ml-5">
-            <div className="mt-5"> Feedback Github Repo:
+            <div className="mt-5 flex"> Feedback Github Repo:
                 <Link className="ml-3 text-blue-500 hover:underline"
                       href={'https://github.com/chingu-voyages/soloproject-evaluation'}
                       target="_blank" rel="noopener noreferrer"
                 >Solo Project Evaluation Conditions and Feedback
+                </Link>
+                <div className="mx-3 text-blue-300">|</div>
+                <Link className="text-blue-500 hover:underline"
+                      href={'https://github.com/chingu-voyages/soloproject-evaluation#example-feedback'}
+                      target="_blank" rel="noopener noreferrer"
+                >(Examples)
                 </Link>
             </div>
             <div> Feedback:
