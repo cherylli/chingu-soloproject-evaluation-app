@@ -43,7 +43,6 @@ const ProjectSubmissionDetail = (
         const savingToast = toast.loading('Saving...')
         const res = await handleSave(evalNotes, evalStatus)
         if (res.success) {
-            // alert(`Saved. Status: ${res.data?.fields["Evaluation Status"]}`)
             toast.success(`Saved. Status: ${res.data?.fields["Evaluation Status"]}`)
         } else{
             toast.error(`Error Saving: ${res.message}`)
