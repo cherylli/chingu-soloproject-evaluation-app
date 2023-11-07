@@ -121,27 +121,9 @@ Feedback are shown side-by-side in the desktop view
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-* airtable account (todo: include schema for test database)
-* an entry in the chingu admin airtable to be able to login with github account
-
-### Installation
-
-1. Get all required API keys 
-2. Clone the repo
-   ```sh
-   git clone https://github.com/cherylli/chingu-soloproject-evaluation-app
-   ```
-3. Install NPM packages
-   ```sh
-   yarn install
-   ```
-4. Rename `.env.example` to `.env.local` and add API keys
-5. Setup test airtable tables if required. Airtable structures can be found [here](/docs/AIRTABLE.md)
+To be able to login, you will need (please contact a Chingu admin)
+* an entry in the chingu admin airtable to be able to login with your github account
+* an existing option in the Evaluation dropdown on airtable
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -206,6 +188,21 @@ See the [open issues](https://github.com/cherylli/chingu-soloproject-evaluation-
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Contribution
+
+1. Setup required API keys 
+2. Clone the repo
+   ```sh
+   git clone https://github.com/cherylli/chingu-soloproject-evaluation-app
+   ```
+3. Install NPM packages
+   ```sh
+   yarn install
+   ```
+4. Rename `.env.example` to `.env.local` and add API keys
+5. Setup test airtable tables if required. Airtable structures can be found [here](/docs/AIRTABLE.md)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 <!-- LICENSE -->
