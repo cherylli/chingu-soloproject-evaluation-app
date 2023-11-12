@@ -14,6 +14,7 @@ import {useEffect, useState} from "react";
 import {ActionResponse} from "@/types";
 import {CopyToClipboard} from "react-copy-to-clipboard";
 import {toast, Toaster} from "react-hot-toast";
+import Comments from "@/components/comments";
 
 interface ProjectDetailProps {
     record: Submission,

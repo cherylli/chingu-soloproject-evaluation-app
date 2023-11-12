@@ -15,7 +15,11 @@ const ProjectSubmissionList = ({records}:{records:Submission[]}) => {
             </TableHeader>
             <TableBody>
                 {records.map(r=>(
-                    <SoloProjectsListItem key={r.id} fields={r.fields} id={r.id} />
+                    <SoloProjectsListItem
+                        key={r.id}
+                        fields={r.fields}
+                        commentCount={r.commentCount}
+                        id={r.id} />
                 ))}
             </TableBody>
         </Table>

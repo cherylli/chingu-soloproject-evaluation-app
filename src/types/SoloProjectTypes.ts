@@ -1,5 +1,6 @@
 export type Submission = {
     id: string
+    commentCount: number
     fields: FilteredFields
 }
 

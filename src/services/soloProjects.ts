@@ -18,6 +18,7 @@ export const getSoloProjectsByStatus = async (status:string): Promise<Submission
     const records = await table.select({
         filterByFormula: filter,
         fields: fields,
+        recordMetadata: ["commentCount"],
         sort:[{
             field:"Timestamp",
             direction: "desc"
