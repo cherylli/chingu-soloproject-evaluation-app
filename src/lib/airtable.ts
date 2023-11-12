@@ -27,7 +27,7 @@ const transformData = (records:Records<FieldSet>): Submission[] => {
     return records.map((record: Record<FieldSet>)=>{
         return {
             id: record.id,
-            commentCount: record.commentCount,
+            commentCount: record.commentCount as number,
             fields: {
                 "Discord Name": record.fields["Discord Name"] as string,
                 "GitHub ID": record.fields["GitHub ID"] as string,
@@ -51,7 +51,7 @@ const transformData = (records:Records<FieldSet>): Submission[] => {
 const transformDataSingleRecord = (record:Record<FieldSet>) => {
    return {
        id: record.id,
-       commentCount: record.commentCount,
+       commentCount: record.commentCount as number,
        fields: {
            "Discord Name": record.fields["Discord Name"] as string,
            "GitHub ID": record.fields["GitHub ID"] as string,

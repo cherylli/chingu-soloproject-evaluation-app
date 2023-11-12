@@ -13,8 +13,8 @@ import {cn} from "@/lib/utils";
 import {useEffect, useState} from "react";
 import {ActionResponse} from "@/types";
 import {CopyToClipboard} from "react-copy-to-clipboard";
-import {toast, Toaster} from "react-hot-toast";
-import Comments from "@/components/comments";
+import {toast} from "react-hot-toast";
+import {getRandomPassMessage} from "@/lib/getRandomPassMessage";
 
 interface ProjectDetailProps {
     record: Submission,
@@ -64,7 +64,7 @@ const ProjectSubmissionDetail = (
     }
 
     const onPassSelect = () => {
-        setRingTheBellText(`Congratulations @${record.fields["Discord Name"]} on successfully completing your Solo Project !!! :tada:`)
+        setRingTheBellText(getRandomPassMessage(record.fields["Discord Name"]))
     }
 
     const onSelectText = () => {
@@ -75,8 +75,6 @@ const ProjectSubmissionDetail = (
             setSelectionLen(0)
         }
     }
-
-
 
     return <div>
 
