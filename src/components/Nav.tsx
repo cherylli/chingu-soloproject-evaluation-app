@@ -47,13 +47,13 @@ const Nav = () => {
                 </Menubar>
             </div>
             {session?.user
-                ?<div className="flex items-center">
+                ?<div className="flex items-center gap-1">
                     <ModeToggle/>
                     <NavigationMenu>
                         <NavigationMenuList>
                             <NavigationMenuItem>
                                 <NavigationMenuTrigger>
-                                    <div className="flex items-center">
+                                    <div className="flex pt-2">
                                         <Image
                                             className="mr-2"
                                             src={session?.user?.image!} height={40} width={40} alt="avatar"
