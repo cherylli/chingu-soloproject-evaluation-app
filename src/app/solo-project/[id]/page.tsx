@@ -2,7 +2,7 @@ import {getSoloProjectById, setEvaluatorOnDb, updateSoloProjectById} from "@/ser
 import ProjectSubmissionDetail from "@/components/soloprojects/Details";
 import {ActionResponse} from "@/types";
 import Comments from "@/components/comments";
-import GithubFeedback from "@/app/feedback/page";
+import FeedbackContainer from "@/components/feedback/FeedbackContainer";
 
 const SoloProjectPage = async ({params}: { params: { id: string } }) => {
     const record = await getSoloProjectById(params.id)
@@ -28,7 +28,7 @@ const SoloProjectPage = async ({params}: { params: { id: string } }) => {
                 <Comments recordId={params.id}/>
             </div>
             <div className="hidden lg:block lg:w-1/2 lg:max-h-screen lg:overflow-y-auto">
-                <GithubFeedback discordName={record.fields["Discord Name"]}/>
+                <FeedbackContainer discordName={record.fields["Discord Name"]}/>
             </div>
         </div>
     )
