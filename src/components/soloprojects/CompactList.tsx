@@ -10,6 +10,7 @@ const CompactList = ({records}:{records:Submission[]}) => {
                     <TableRow key={record.id}>
                         <Link href={`/solo-project/${record.id}`} target="_blank" rel="noopener noreferrer">
                             <TableCell>{record.fields.Timestamp.toString()}</TableCell>
+                            <TableCell>{record.fields.Tier.substring(0,6)}</TableCell>
                             <TableCell>{record.fields["Evaluation Status"]}</TableCell>
                         </Link>
                     </TableRow>
