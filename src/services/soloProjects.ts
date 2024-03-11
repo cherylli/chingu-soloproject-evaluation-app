@@ -32,6 +32,15 @@ export const getSoloProjectById = async (id: string): Promise<Submission> => {
     return transformDataSingleRecord(record)
 }
 
+export const getAllSoloProjectsByUser = async (discordId: string, email: string): Promise<Submission[]> => {
+    const filter = `OR({Discord ID} = "${discordId}", Email = "${email}")`
+    const records = await table.select({
+        filterByFormula: filter,
+        fields,
+    }).all()
+    return transformData(records)
+}
+
 export const setEvaluatorOnDb = async (id: string): Promise<ActionResponse> => {
     const sessionData = await getServerSession(options)
     try{

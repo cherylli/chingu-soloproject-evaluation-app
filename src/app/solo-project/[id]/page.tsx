@@ -1,11 +1,18 @@
-import {getSoloProjectById, setEvaluatorOnDb, updateSoloProjectById} from "@/services/soloProjects";
+import {
+    getAllSoloProjectsByUser,
+    getSoloProjectById,
+    setEvaluatorOnDb,
+    updateSoloProjectById
+} from "@/services/soloProjects";
 import ProjectSubmissionDetail from "@/components/soloprojects/Details";
 import {ActionResponse} from "@/types";
 import Comments from "@/components/comments";
 import FeedbackContainer from "@/components/feedback/FeedbackContainer";
+import CompactList from "@/components/soloprojects/CompactList";
 
 const SoloProjectPage = async ({params}: { params: { id: string } }) => {
     const record = await getSoloProjectById(params.id)
+    const projects = await getAllSoloProjectsByUser(record.fields["Discord ID"], record.fields.Email)
     const handleSave = async (evalFeedback: string, evalStatus: string): Promise<ActionResponse> => {
         'use server'
         return await updateSoloProjectById(params.id, {
@@ -20,6 +27,7 @@ const SoloProjectPage = async ({params}: { params: { id: string } }) => {
     return(
         <div className="flex flex-col lg:flex-row-reverse justify-between h-screen">
             <div className="lg:w-1/2 lg:overflow-y-auto">
+                {projects.length>1 && <CompactList records={projects}/>}
                 <ProjectSubmissionDetail
                     record={record}
                     handleSave={handleSave}
