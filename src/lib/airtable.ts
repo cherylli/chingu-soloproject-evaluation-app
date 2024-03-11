@@ -24,53 +24,35 @@ const fields = [
     "Discord ID"
 ]
 
-const transformData = (records:Records<FieldSet>): Submission[] => {
-    return records.map((record: Record<FieldSet>)=>{
-        return {
-            id: record.id,
-            commentCount: record.commentCount as number,
-            fields: {
-                "Email": record.fields["Email"] as string,
-                "Discord Name": record.fields["Discord Name"] as string,
-                "GitHub ID": record.fields["GitHub ID"] as string,
-                "Timestamp": record.fields["Timestamp"] as string,
-                "Tier": record.fields["Tier"] as string,
-                "GitHub Repo URL": record.fields["GitHub Repo URL"] as string,
-                "Deployed App URL": record.fields["Deployed App URL"] as string,
-                "Evaluation Status": record.fields["Evaluation Status"] as EvaluationStatus,
-                "Evaluator": record.fields["Evaluator"] as string,
-                "Evaluation Feedback": record.fields["Evaluation Feedback"] as string,
-                "Instructions": record.fields["Instructions"] as string,
-                "Addl. Comments": record.fields["Addl. Comments"] as string,
-                "Voyage Role (from Applications link)": record.fields["Voyage Role (from Applications link)"] as VoyageRole,
-                "Discord ID": record.fields["Discord ID"] as string
-            }
+const transformRecord = (record: Record<FieldSet>) => {
+    return {
+        id: record.id,
+        commentCount: record.commentCount as number,
+        fields: {
+            "Email": record.fields["Email"] as string,
+            "Discord Name": record.fields["Discord Name"] as string,
+            "GitHub ID": record.fields["GitHub ID"] as string,
+            "Timestamp": record.fields["Timestamp"] as string,
+            "Tier": record.fields["Tier"] as string,
+            "GitHub Repo URL": record.fields["GitHub Repo URL"] as string,
+            "Deployed App URL": record.fields["Deployed App URL"] as string,
+            "Evaluation Status": record.fields["Evaluation Status"] as EvaluationStatus,
+            "Evaluator": record.fields["Evaluator"] as string,
+            "Evaluation Feedback": record.fields["Evaluation Feedback"] as string,
+            "Instructions": record.fields["Instructions"] as string,
+            "Addl. Comments": record.fields["Addl. Comments"] as string,
+            "Voyage Role (from Applications link)": record.fields["Voyage Role (from Applications link)"] as VoyageRole,
+            "Discord ID": record.fields["Discord ID"] as string
         }
-    })
+    }
 }
 
-// TODO: might be able to refactor the following duplicated code
+const transformData = (records:Records<FieldSet>): Submission[] => {
+    return records.map((record: Record<FieldSet>)=>transformRecord(record))
+}
+
 const transformDataSingleRecord = (record:Record<FieldSet>) => {
-   return {
-       id: record.id,
-       commentCount: record.commentCount as number,
-       fields: {
-           "Email": record.fields["Email"] as string,
-           "Discord Name": record.fields["Discord Name"] as string,
-           "GitHub ID": record.fields["GitHub ID"] as string,
-           "Timestamp": record.fields["Timestamp"] as string,
-           "Tier": record.fields["Tier"] as string,
-           "GitHub Repo URL": record.fields["GitHub Repo URL"] as string,
-           "Deployed App URL": record.fields["Deployed App URL"] as string,
-           "Evaluation Status": record.fields["Evaluation Status"] as EvaluationStatus,
-           "Evaluator": record.fields["Evaluator"] as string,
-           "Evaluation Feedback": record.fields["Evaluation Feedback"] as string,
-           "Instructions": record.fields["Instructions"] as string,
-           "Addl. Comments": record.fields["Addl. Comments"] as string,
-           "Voyage Role (from Applications link)": record.fields["Voyage Role (from Applications link)"] as VoyageRole,
-           "Discord ID": record.fields["Discord ID"] as string
-       }
-   }
+   return transformRecord(record)
 }
 
 export {
