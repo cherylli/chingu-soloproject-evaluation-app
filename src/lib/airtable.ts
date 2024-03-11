@@ -8,6 +8,7 @@ const table = base(process.env.AIRTABLE_TABLEID as string)
 const userTable = base(process.env.AIRTABLE_USERS_TABLEID as string)
 
 const fields = [
+    "Email",
     "Discord Name",
     "GitHub ID",
     "Timestamp",
@@ -29,6 +30,7 @@ const transformData = (records:Records<FieldSet>): Submission[] => {
             id: record.id,
             commentCount: record.commentCount as number,
             fields: {
+                "Email": record.fields["Email"] as string,
                 "Discord Name": record.fields["Discord Name"] as string,
                 "GitHub ID": record.fields["GitHub ID"] as string,
                 "Timestamp": record.fields["Timestamp"] as string,
@@ -53,6 +55,7 @@ const transformDataSingleRecord = (record:Record<FieldSet>) => {
        id: record.id,
        commentCount: record.commentCount as number,
        fields: {
+           "Email": record.fields["Email"] as string,
            "Discord Name": record.fields["Discord Name"] as string,
            "GitHub ID": record.fields["GitHub ID"] as string,
            "Timestamp": record.fields["Timestamp"] as string,

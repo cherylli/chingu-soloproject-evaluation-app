@@ -15,4 +15,8 @@ export const roleColors = {
         text: 'text-red-900',
         bg: 'bg-red-900 text-red-50'
     },
+    "unknown": {
+        text: 'text-gray-500',
+        bg: 'text-gray-500 text-black'
+    }
 }

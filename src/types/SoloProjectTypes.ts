@@ -17,8 +17,10 @@ export type VoyageRole =
     | "UI / UX Designer"
     | "Data Scientist"
     | "Product Owner"
+    | "unknown"
 
 export type FilteredFields = {
+    "Email": string
     "Discord Name": string
     "GitHub ID": string
     "Timestamp": Date | string
