@@ -14,6 +14,7 @@ export type EvaluationStatus =
 
 export type VoyageRole =
     | "Software Developer"
+    | "Developer"
     | "UI / UX Designer"
     | "Data Scientist"
     | "Product Owner"

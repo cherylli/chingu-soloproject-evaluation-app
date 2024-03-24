@@ -3,6 +3,10 @@ export const roleColors = {
         text: 'text-blue-400',
         bg: 'bg-blue-400 text-black'
     },
+    "Developer": {
+        text: 'text-blue-400',
+        bg: 'bg-blue-400 text-black'
+    },
     "UI / UX Designer": {
         text: 'text-teal-200',
         bg: 'bg-teal-200 text-black'
