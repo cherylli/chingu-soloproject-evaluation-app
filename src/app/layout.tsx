@@ -21,7 +21,7 @@ export default function RootLayout({children}: {
         return <Maintenance/>
     }
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
         <body className={inter.className}>
         <AuthProvider>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
