@@ -19,6 +19,10 @@ export const roleColors = {
         text: 'text-red-900',
         bg: 'bg-red-900 text-red-50'
     },
+    "Scrum Master": {
+        text: 'text-teal-600',
+        bg: 'bg-teal-600 text-black'
+    },
     "unknown": {
         text: 'text-gray-500',
         bg: 'text-gray-500 text-black'

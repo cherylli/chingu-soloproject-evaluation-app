@@ -6,6 +6,7 @@ import {TableCell, TableRow} from "@/components/ui/table";
 const SoloProjectsListItem = (
     {fields, id, commentCount}:{fields:FilteredFields, id:string, commentCount: number}
 ) => {
+    const projectRole = fields["Role"] || fields["Voyage Role (from Applications link)"]
     return(
         <TableRow>
             <TableCell>
@@ -16,8 +17,8 @@ const SoloProjectsListItem = (
                     </span>
                 </Link>
             </TableCell>
-            <TableCell className={`${roleColors[fields["Voyage Role (from Applications link)"]]?.text}`}>
-                {fields["Voyage Role (from Applications link)"]}
+            <TableCell className={`${roleColors[projectRole]?.text}`}>
+                {projectRole}
             </TableCell>
             <TableCell>{fields.Tier.substring(0,7)}</TableCell>
             <TableCell>{fields.Evaluator}</TableCell>

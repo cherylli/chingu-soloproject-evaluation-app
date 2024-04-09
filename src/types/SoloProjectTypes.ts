@@ -18,6 +18,7 @@ export type VoyageRole =
     | "UI / UX Designer"
     | "Data Scientist"
     | "Product Owner"
+    | "Scrum Master"
     | "unknown"
 
 export type FilteredFields = {
@@ -34,6 +35,7 @@ export type FilteredFields = {
     "Instructions": string
     "Addl. Comments": string
     "Voyage Role (from Applications link)": VoyageRole
+    "Role": VoyageRole
     "Discord ID": string
 }
 

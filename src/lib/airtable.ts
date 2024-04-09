@@ -21,6 +21,7 @@ const fields = [
     "Instructions",
     "Addl. Comments",
     "Voyage Role (from Applications link)",
+    "Role",
     "Discord ID"
 ]
 
@@ -42,6 +43,7 @@ const transformRecord = (record: Record<FieldSet>) => {
             "Instructions": record.fields["Instructions"] as string,
             "Addl. Comments": record.fields["Addl. Comments"] as string,
             "Voyage Role (from Applications link)": record.fields["Voyage Role (from Applications link)"] as VoyageRole,
+            "Role": record.fields["Role"] as VoyageRole,
             "Discord ID": record.fields["Discord ID"] as string
         }
     }
