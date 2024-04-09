@@ -2,11 +2,12 @@ import {FilteredFields} from "@/types/SoloProjectTypes";
 import Link from "next/link";
 import {roleColors} from "@/styles/roles";
 import {TableCell, TableRow} from "@/components/ui/table";
+import {getRole} from "@/lib/getRole";
 
 const SoloProjectsListItem = (
     {fields, id, commentCount}:{fields:FilteredFields, id:string, commentCount: number}
 ) => {
-    const projectRole = fields["Role"] || fields["Voyage Role (from Applications link)"]
+    const projectRole = getRole(fields)
     return(
         <TableRow>
             <TableCell>

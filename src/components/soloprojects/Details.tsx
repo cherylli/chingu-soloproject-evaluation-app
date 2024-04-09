@@ -17,6 +17,7 @@ import {getRandomPassMessage} from "@/lib/getRandomPassMessage";
 import {parseRole} from "@/lib/parseRole";
 import DeveloperDetails from "@/components/soloprojects/Developer";
 import {fields} from "@/lib/airtable";
+import {getRole} from "@/lib/getRole";
 
 interface ProjectDetailProps {
     record: Submission,
@@ -119,10 +120,10 @@ const ProjectSubmissionDetail = (
                     null
                 }
 
-                {record.fields["Voyage Role (from Applications link)"] ?
+                {getRole(record.fields) ?
                     <div
-                        className={`text-center ${roleColors[parseRole(record.fields["Voyage Role (from Applications link)"])]?.bg} py-1 mt-3`}>
-                        {parseRole(record.fields["Voyage Role (from Applications link)"])}
+                        className={`text-center ${roleColors[getRole(record.fields)]?.bg} py-1 mt-3`}>
+                        {getRole(record.fields)}
                     </div> :
                     <div className="text-center text-gray-800 bg-gray-300 py-1 mt-3">No Role Selected</div>
                 }
@@ -159,7 +160,7 @@ const ProjectSubmissionDetail = (
                 Evaluate This
             </Button>
 
-            {parseRole(record.fields["Voyage Role (from Applications link)"]) === "Software Developer" ?
+            {getRole(record.fields) === "Software Developer" ?
                 <DeveloperDetails fields={record.fields}/> : null
             }
 
