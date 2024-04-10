@@ -27,7 +27,7 @@ const ScrumMasterDetails = ({fields}: {fields: FilteredFields}) => {
                     <TableCell>{fields["SM: Project Details"]}</TableCell>
                 </TableRow>
                 {smQuestions.map(q=>
-                    <QuizAnswerItem key={q} question={q} userAnswer={fields[q.questionNumber]} />
+                    <QuizAnswerItem key={q.questionNumber} question={q} userAnswer={fields[q.questionNumber as keyof FilteredFields]} />
                 )}
                 <TableRow>
                     <TableCell>SM20: Describe the roles and responsibilities of the Scrum Master, the Product Owner, and the Development Team in a Scrum project.</TableCell>

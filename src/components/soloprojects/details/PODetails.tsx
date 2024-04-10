@@ -27,7 +27,7 @@ const ProductOwnerDetails = ({fields}: {fields: FilteredFields}) => {
                     <TableCell>{fields["PO: Project Details"]}</TableCell>
                 </TableRow>
                 {poQuestions.map(q=>
-                    <QuizAnswerItem key={q.questionNumber} question={q} userAnswer={fields[q.questionNumber]} />
+                    <QuizAnswerItem key={q.questionNumber} question={q} userAnswer={fields[q.questionNumber as keyof FilteredFields]} />
                 )}
                 <TableRow>
                     <TableCell>PO19: Name the Scrum event that is most important to the continuous improvement of the Scrum team and why.</TableCell>

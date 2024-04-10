@@ -89,6 +89,7 @@ type SMFields = {
     "SM19": string,
     "SM20": string,
     "SM21": string,
+    "SM22": string,
 }
 
 export type FilteredFields = BasicFields & POFields & SMFields

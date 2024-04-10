@@ -1,14 +1,15 @@
 import {TableCell, TableRow} from "@/components/ui/table";
 import {Answer} from "@/types/Answer";
 
-const QuizAnswerItem = ({question, userAnswer}: { question: Answer, userAnswer: string }) => {
+const QuizAnswerItem = ({question, userAnswer}: { question: Answer, userAnswer: any }) => {
 
     const isAnswerCorrect = () => {
+        console.log(userAnswer);
         if(userAnswer){
             if (question.answer.length===1) {
-                return question.answer.includes(userAnswer.substring(0,1))
+                return question.answer.includes((userAnswer as string).substring(0,1))
             } else {
-                const userAnswerMap = userAnswer.map(u=> u.substring(0,1))
+                const userAnswerMap = (userAnswer as string[]).map(u=> u.substring(0,1))
                 return question.answer.sort().toString() === userAnswerMap.sort().toString()
             }
         }else {
