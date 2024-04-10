@@ -4,7 +4,7 @@ import {
     setEvaluatorOnDb,
     updateSoloProjectById
 } from "@/services/soloProjects";
-import ProjectSubmissionDetail from "@/components/soloprojects/Details";
+import ProjectSubmissionDetail from "@/components/soloprojects/details/BaseDetails";
 import {ActionResponse} from "@/types";
 import Comments from "@/components/comments";
 import FeedbackContainer from "@/components/feedback/FeedbackContainer";

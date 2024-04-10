@@ -1,6 +1,6 @@
 'use client'
 
-import {Submission} from "@/types/SoloProjectTypes";
+import {Submission, VoyageRole} from "@/types/SoloProjectTypes";
 import {roleColors} from "@/styles/roles";
 import {Button} from "@/components/ui/button";
 import {AtSign, Check, ChevronsUpDown, Copy, Github, PencilLine} from "lucide-react";
@@ -14,8 +14,9 @@ import {ActionResponse} from "@/types";
 import {CopyToClipboard} from "react-copy-to-clipboard";
 import {toast} from "react-hot-toast";
 import {getRandomPassMessage} from "@/lib/getRandomPassMessage";
-import DeveloperDetails from "@/components/soloprojects/Developer";
+import DeveloperDetails from "@/components/soloprojects/details/Developer";
 import {getRole} from "@/lib/getRole";
+import SMDetails from "@/components/soloprojects/details/SMDetails";
 
 interface ProjectDetailProps {
     record: Submission,
@@ -74,6 +75,22 @@ const ProjectSubmissionDetail = (
             setSelectionLen(selection.length)
         } else {
             setSelectionLen(0)
+        }
+    }
+
+    const getRoleComponent = (role:VoyageRole) => {
+        switch (role) {
+            case "Software Developer":
+            case "Developer":
+                return <DeveloperDetails fields={record.fields} />
+            case "Scrum Master":
+                return <SMDetails fields={record.fields}/>
+            case "Product Owner":
+                return <PODetails fields={record.fields}/>
+            case "UI / UX Designer":
+                return <DeveloperDetails fields={record.fields} />
+            case "Data Scientist":
+                return <DeveloperDetails fields={record.fields} />
         }
     }
 
@@ -159,8 +176,8 @@ const ProjectSubmissionDetail = (
                 Evaluate This
             </Button>
 
-            {getRole(record.fields) === "Software Developer" ?
-                <DeveloperDetails fields={record.fields}/> : null
+            {
+                getRoleComponent(getRole(record.fields))
             }
 
             <Textarea
