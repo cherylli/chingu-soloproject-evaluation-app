@@ -2,10 +2,12 @@ import {FilteredFields} from "@/types/SoloProjectTypes";
 import Link from "next/link";
 import {roleColors} from "@/styles/roles";
 import {TableCell, TableRow} from "@/components/ui/table";
+import {getRole} from "@/lib/getRole";
 
 const SoloProjectsListItem = (
     {fields, id, commentCount}:{fields:FilteredFields, id:string, commentCount: number}
 ) => {
+    const projectRole = getRole(fields)
     return(
         <TableRow>
             <TableCell>
@@ -16,8 +18,8 @@ const SoloProjectsListItem = (
                     </span>
                 </Link>
             </TableCell>
-            <TableCell className={`${roleColors[fields["Voyage Role (from Applications link)"]]?.text}`}>
-                {fields["Voyage Role (from Applications link)"]}
+            <TableCell className={`${roleColors[projectRole]?.text}`}>
+                {projectRole}
             </TableCell>
             <TableCell>{fields.Tier.substring(0,7)}</TableCell>
             <TableCell>{fields.Evaluator}</TableCell>

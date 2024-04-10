@@ -4,7 +4,7 @@ import {
     setEvaluatorOnDb,
     updateSoloProjectById
 } from "@/services/soloProjects";
-import ProjectSubmissionDetail from "@/components/soloprojects/Details";
+import ProjectSubmissionDetail from "@/components/soloprojects/details/BaseDetails";
 import {ActionResponse} from "@/types";
 import Comments from "@/components/comments";
 import FeedbackContainer from "@/components/feedback/FeedbackContainer";
@@ -32,7 +32,6 @@ const SoloProjectPage = async ({params}: { params: { id: string } }) => {
                     record={record}
                     handleSave={handleSave}
                     handleSetEvaluator={handleSetEvaluator} />
-                {/* Move to inside project detail page */}
                 <Comments recordId={params.id}/>
             </div>
             <div className="hidden lg:block lg:w-1/2 lg:max-h-screen lg:overflow-y-auto">

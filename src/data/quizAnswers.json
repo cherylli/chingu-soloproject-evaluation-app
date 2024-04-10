@@ -1,0 +1,201 @@
+{
+  "PO": [
+    {
+      "questionNumber": "PO05",
+      "question": "PO05: Which of the following are necessary for the PO to maximize the value delivered by the MVP (select all that apply)?",
+      "answer": [
+        "C", "D"
+      ]
+    },
+    {
+      "questionNumber": "PO06",
+      "question": "PO06: When can the Scrum team interact with stakeholders (select one)?",
+      "answer": [
+        "C"
+      ]
+    },
+    {
+      "questionNumber": "PO07",
+      "question": "PO07: What is the role of the PO during the Daily Standup (select one)?",
+      "answer": [
+        "C"
+      ]
+    },
+    {
+      "questionNumber": "PO08",
+      "question": "PO08: Values are only assumptions until they are validated by users (select one)",
+      "answer": [
+        "A"
+      ]
+    },
+    {
+      "questionNumber": "PO09",
+      "question": "PO09: Sprint durations may be modified when (select one)  ",
+      "answer": [
+        "D"
+      ]
+    },
+    {
+      "questionNumber": "PO10",
+      "question": "PO10: Which of the following are common attributes of a Backlog item (select one)? ",
+      "answer": [
+        "B"
+      ]
+    },
+    {
+      "questionNumber": "PO11",
+      "question": "PO11: How should a PO respond when Developers ask for clarification about a Backlog item (select one)?  ",
+      "answer": [
+        "A"
+      ]
+    },
+    {
+      "questionNumber": "PO12",
+      "question": "PO12: What is Product Backlog grooming (select one)? ",
+      "answer": [
+        "A"
+      ]
+    },
+    {
+      "questionNumber": "PO13",
+      "question": "PO13: Sprints are a technique to limit work in progress (select one)",
+      "answer": [
+        "A"
+      ]
+    },
+    {
+      "questionNumber": "PO14",
+      "question": "PO14: What action should the PO take in the middle of a Sprint when the Developers provide feedback that they will be unable to finish items in the Sprint Backlog (select one)? ",
+      "answer": [
+        "C"
+      ]
+    },
+    {
+      "questionNumber": "PO15",
+      "question": "PO15: Who can add items to the Product Backlog (select one)? ",
+      "answer": [
+        "D"
+      ]
+    },
+    {
+      "questionNumber": "PO16",
+      "question": "PO16: A PBI is (select one)?  ",
+      "answer": [
+        "B"
+      ]
+    },
+    {
+      "questionNumber": "PO17",
+      "question": "PO17: Which team member is responsible for managing the Sprint Backlog (select one)?  ",
+      "answer": [
+        "C"
+      ]
+    },
+    {
+      "questionNumber": "PO18",
+      "question": "PO18: The PO is the creator and owner of the definition of done (select one)",
+      "answer": [
+        "B"
+      ]
+    }
+  ],
+  "SM": [
+    {
+      "questionNumber": "SM05",
+      "question": "SM05: What is the primary role of a Scrum Master?",
+      "answer": [
+        "B"
+      ]
+    },
+    {
+      "questionNumber": "SM06",
+      "question": "SM06: Who is responsible for managing the Product Backlog?",
+      "answer": [
+        "C"
+      ]
+    },
+    {
+      "questionNumber": "SM07",
+      "question": "SM07: What is the time-box for a Daily Scrum?",
+      "answer": [
+        "A"
+      ]
+    },
+    {
+      "questionNumber": "SM08",
+      "question": "SM08: Who determines the definition of “Done”?",
+      "answer": [
+        "C"
+      ]
+    },
+    {
+      "questionNumber": "SM09",
+      "question": "SM09: What is the maximum length of a Sprint?",
+      "answer": [
+        "C"
+      ]
+    },
+    {
+      "questionNumber": "SM10",
+      "question": "SM10: Who has the authority to cancel a Sprint?",
+      "answer": [
+        "C"
+      ]
+    },
+    {
+      "questionNumber": "SM11",
+      "question": "SM11: What is the main reason for the Scrum Master to be at the Daily Scrum?",
+      "answer": [
+        "C"
+      ]
+    },{
+      "questionNumber": "SM12",
+      "question": "SM12: What is the outcome of a Sprint?",
+      "answer": [
+        "A"
+      ]
+    },{
+      "questionNumber": "SM13",
+      "question": "SM13: What is the role of the Product Owner during a Sprint?",
+      "answer": [
+        "B"
+      ]
+    },{
+      "questionNumber": "SM14",
+      "question": "SM14: Who can change the Sprint Backlog during a Sprint?",
+      "answer": [
+        "C"
+      ]
+    },{
+      "questionNumber": "SM15",
+      "question": "SM15: What is a Sprint?",
+      "answer": [
+        "B"
+      ]
+    },{
+      "questionNumber": "SM16",
+      "question": "SM16: What happens when all planned work is completed early in a Sprint?",
+      "answer": [
+        "B"
+      ]
+    },{
+      "questionNumber": "SM17",
+      "question": "SM17: What is the main purpose of the Sprint Retrospective?",
+      "answer": [
+        "A"
+      ]
+    },{
+      "questionNumber": "SM18",
+      "question": "SM18: Who attends the Sprint Retrospective?",
+      "answer": [
+        "A"
+      ]
+    },{
+      "questionNumber": "SM19",
+      "question": "SM19: The PO may delegate the responsibility for sizing a PBI to the SM (select one)",
+      "answer": [
+        "A"
+      ]
+    }
+  ]
+}

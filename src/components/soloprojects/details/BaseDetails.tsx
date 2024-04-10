@@ -1,8 +1,7 @@
 'use client'
 
-import {Submission} from "@/types/SoloProjectTypes";
+import {Submission, VoyageRole} from "@/types/SoloProjectTypes";
 import {roleColors} from "@/styles/roles";
-import Link from "next/link";
 import {Button} from "@/components/ui/button";
 import {AtSign, Check, ChevronsUpDown, Copy, Github, PencilLine} from "lucide-react";
 import {Textarea} from "@/components/ui/textarea";
@@ -15,7 +14,11 @@ import {ActionResponse} from "@/types";
 import {CopyToClipboard} from "react-copy-to-clipboard";
 import {toast} from "react-hot-toast";
 import {getRandomPassMessage} from "@/lib/getRandomPassMessage";
-import {parseRole} from "@/lib/parseRole";
+import {getRole} from "@/lib/getRole";
+import DeveloperDetails from "@/components/soloprojects/details/Developer";
+import SMDetails from "@/components/soloprojects/details/SMDetails";
+import PODetails from "@/components/soloprojects/details/PODetails";
+import UIUXDetails from "@/components/soloprojects/details/UIUXDetails";
 
 interface ProjectDetailProps {
     record: Submission,
@@ -46,7 +49,7 @@ const ProjectSubmissionDetail = (
         const res = await handleSave(evalNotes, evalStatus)
         if (res.success) {
             toast.success(`Saved. Status: ${res.data?.fields["Evaluation Status"]}`)
-        } else{
+        } else {
             toast.error(`Error Saving: ${res.message}`)
         }
         toast.dismiss(savingToast)
@@ -70,10 +73,27 @@ const ProjectSubmissionDetail = (
 
     const onSelectText = () => {
         const selection = window.getSelection()?.toString()
-        if(selection && selection !==''){
+        if (selection && selection !== '') {
             setSelectionLen(selection.length)
-        }else{
+        } else {
             setSelectionLen(0)
+        }
+    }
+
+    const getRoleComponent = (role:VoyageRole) => {
+        switch (role) {
+            case "Software Developer":
+            case "Developer":
+                return <DeveloperDetails fields={record.fields} />
+            case "Scrum Master":
+                return <SMDetails fields={record.fields}/>
+            case "Product Owner":
+                return <PODetails fields={record.fields}/>
+            case "UI/UX Designer":
+            case "UI / UX Designer":
+                return <UIUXDetails fields={record.fields} />
+            case "Data Scientist":
+                return <DeveloperDetails fields={record.fields} />
         }
     }
 
@@ -89,7 +109,7 @@ const ProjectSubmissionDetail = (
                         <Button variant="outline"
                                 size="icon"
                                 className="ml-2 h-8 w-8"
-                                onClick={()=>toast('Copied!')}
+                                onClick={() => toast('Copied!')}
                         >
                             <Copy className="h-4 w-4"/>
                         </Button>
@@ -103,7 +123,7 @@ const ProjectSubmissionDetail = (
                                 variant="outline"
                                 size="icon"
                                 className="ml-2 h-8 w-8"
-                                onClick={()=>toast('Copied!')}
+                                onClick={() => toast('Copied!')}
                             >
                                 <Copy className="h-4 w-4"/>
                             </Button>
@@ -118,11 +138,11 @@ const ProjectSubmissionDetail = (
                     null
                 }
 
-                {record.fields["Voyage Role (from Applications link)"] ?
+                {getRole(record.fields) ?
                     <div
-                        className={`text-center ${roleColors[parseRole(record.fields["Voyage Role (from Applications link)"])]?.bg} py-1 mt-3`}>
-                        {parseRole(record.fields["Voyage Role (from Applications link)"])}
-                    </div>:
+                        className={`text-center ${roleColors[getRole(record.fields)]?.bg} py-1 mt-3`}>
+                        {getRole(record.fields)}
+                    </div> :
                     <div className="text-center text-gray-800 bg-gray-300 py-1 mt-3">No Role Selected</div>
                 }
             </header>
@@ -143,35 +163,13 @@ const ProjectSubmissionDetail = (
                 </div>
                 : null
             }
-            <table className="table-auto">
-                <tbody>
-                <tr>
-                    <td>Deployed App URL:</td>
-                    <td className="px-4 text-blue-500 hover:underline">
-                        <Link
-                            href={record.fields["Deployed App URL"]}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >{record.fields["Deployed App URL"]}</Link>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Github Repo URL:</td>
-                    <td className="px-4 text-blue-500 hover:underline">
-                        <Link
-                            href={record.fields["GitHub Repo URL"]}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >{record.fields["GitHub Repo URL"]}</Link>
-                    </td>
-                </tr>
 
-                <tr>
-                    <td className="pt-4">Evaluator:</td>
-                    <td className="px-4 pt-4">{evaluator}</td>
-                </tr>
-                </tbody>
-            </table>
+            <div className="flex">
+                <div className="mr-3">Evaluator:</div>
+                <div>{evaluator}</div>
+            </div>
+
+
             <Button className="bg-green-700 light:text-white-200 hover:bg-green-900 disabled:bg-gray-500"
                     disabled={!!evaluator}
                     onClick={handleSetEvaluatorLocal}
@@ -179,6 +177,11 @@ const ProjectSubmissionDetail = (
                 <PencilLine className="mr-2 h-4 w-4"/>
                 Evaluate This
             </Button>
+
+            {
+                getRoleComponent(getRole(record.fields))
+            }
+
             <Textarea
                 className="h-[500px]"
                 value={evalNotes}
@@ -186,7 +189,7 @@ const ProjectSubmissionDetail = (
                 onMouseUp={onSelectText}
             />
             <div className="text-right text-gray-500">
-                {selectionLen}/{evalNotes?.length??'0'}
+                {selectionLen}/{evalNotes?.length ?? '0'}
             </div>
 
             <div className="flex gap-5 items-center">
@@ -213,7 +216,7 @@ const ProjectSubmissionDetail = (
                                         key={status.value}
                                         onSelect={(_) => {
                                             setEvalStatus(status.value)
-                                            if(status.value==="Passed") {
+                                            if (status.value === "Passed") {
                                                 onPassSelect()
                                             }
                                             setStatusOpen(false)
@@ -236,12 +239,12 @@ const ProjectSubmissionDetail = (
             {evalStatus === "Passed"
                 ? <div>
                     {ringTheBellText}
-                    <CopyToClipboard text={ringTheBellText} >
+                    <CopyToClipboard text={ringTheBellText}>
                         <Button
                             variant="outline"
                             size="icon"
                             className="ml-2 h-8 w-8"
-                            onClick={()=>toast('Copied!')}
+                            onClick={() => toast('Copied!')}
                         >
                             <Copy className="h-4 w-4"/>
                         </Button>
