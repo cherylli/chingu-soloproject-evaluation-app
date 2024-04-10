@@ -18,6 +18,7 @@ import {getRole} from "@/lib/getRole";
 import DeveloperDetails from "@/components/soloprojects/details/Developer";
 import SMDetails from "@/components/soloprojects/details/SMDetails";
 import PODetails from "@/components/soloprojects/details/PODetails";
+import UIUXDetails from "@/components/soloprojects/details/UIUXDetails";
 
 interface ProjectDetailProps {
     record: Submission,
@@ -88,8 +89,9 @@ const ProjectSubmissionDetail = (
                 return <SMDetails fields={record.fields}/>
             case "Product Owner":
                 return <PODetails fields={record.fields}/>
+            case "UI/UX Designer":
             case "UI / UX Designer":
-                return <DeveloperDetails fields={record.fields} />
+                return <UIUXDetails fields={record.fields} />
             case "Data Scientist":
                 return <DeveloperDetails fields={record.fields} />
         }

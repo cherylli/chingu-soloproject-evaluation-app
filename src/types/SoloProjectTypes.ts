@@ -16,6 +16,7 @@ export type VoyageRole =
     | "Software Developer"
     | "Developer"
     | "UI / UX Designer"
+    | "UI/UX Designer"
     | "Data Scientist"
     | "Product Owner"
     | "Scrum Master"
@@ -29,6 +30,7 @@ type BasicFields = {
     "Tier": string
     "GitHub Repo URL": string
     "Deployed App URL": string
+    "UI/UX Project URL": string
     "Evaluation Status":EvaluationStatus
     "Evaluator": string
     "Evaluation Feedback": string
