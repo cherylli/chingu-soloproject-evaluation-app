@@ -1,0 +1,112 @@
+{
+  "PO": [
+    {
+      "PO05": {
+        "question": "PO05: Which of the following are necessary for the PO to maximize the value delivered by the MVP (select all that apply)?",
+        "answer": [
+          "C",
+          "D"
+        ]
+      }
+    }
+  ],
+  "SM": [
+    {
+      "questionNumber": "SM05",
+      "question": "SM05: What is the primary role of a Scrum Master?",
+      "answer": [
+        "B"
+      ]
+    },
+    {
+      "questionNumber": "SM06",
+      "question": "SM06: Who is responsible for managing the Product Backlog?",
+      "answer": [
+        "C"
+      ]
+    },
+    {
+      "questionNumber": "SM07",
+      "question": "SM07: What is the time-box for a Daily Scrum?",
+      "answer": [
+        "A"
+      ]
+    },
+    {
+      "questionNumber": "SM08",
+      "question": "SM08: Who determines the definition of “Done”?",
+      "answer": [
+        "C"
+      ]
+    },
+    {
+      "questionNumber": "SM09",
+      "question": "SM09: What is the maximum length of a Sprint?",
+      "answer": [
+        "C"
+      ]
+    },
+    {
+      "questionNumber": "SM10",
+      "question": "SM10: Who has the authority to cancel a Sprint?",
+      "answer": [
+        "C"
+      ]
+    },
+    {
+      "questionNumber": "SM11",
+      "question": "SM11: What is the main reason for the Scrum Master to be at the Daily Scrum?",
+      "answer": [
+        "C"
+      ]
+    },{
+      "questionNumber": "SM12",
+      "question": "SM12: What is the outcome of a Sprint?",
+      "answer": [
+        "A"
+      ]
+    },{
+      "questionNumber": "SM13",
+      "question": "SM13: What is the role of the Product Owner during a Sprint?",
+      "answer": [
+        "B"
+      ]
+    },{
+      "questionNumber": "SM14",
+      "question": "SM14: Who can change the Sprint Backlog during a Sprint?",
+      "answer": [
+        "C"
+      ]
+    },{
+      "questionNumber": "SM15",
+      "question": "SM15: What is a Sprint?",
+      "answer": [
+        "B"
+      ]
+    },{
+      "questionNumber": "SM16",
+      "question": "SM16: What happens when all planned work is completed early in a Sprint?",
+      "answer": [
+        "B"
+      ]
+    },{
+      "questionNumber": "SM17",
+      "question": "SM17: What is the main purpose of the Sprint Retrospective?",
+      "answer": [
+        "A"
+      ]
+    },{
+      "questionNumber": "SM18",
+      "question": "SM18: Who attends the Sprint Retrospective?",
+      "answer": [
+        "A"
+      ]
+    },{
+      "questionNumber": "SM19",
+      "question": "SM19: The PO may delegate the responsibility for sizing a PBI to the SM (select one)",
+      "answer": [
+        "A"
+      ]
+    }
+  ]
+}

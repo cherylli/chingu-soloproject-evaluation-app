@@ -136,6 +136,7 @@ const transformRecord = (record: Record<FieldSet>) => {
             "SM19": record.fields["SM19"] as string,
             "SM20": record.fields["SM20"] as string,
             "SM21": record.fields["SM21"] as string,
+            "SM22": record.fields["SM22"] as string,
         }
     }
 }

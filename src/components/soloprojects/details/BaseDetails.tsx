@@ -93,8 +93,7 @@ const ProjectSubmissionDetail = (
                 return <DeveloperDetails fields={record.fields} />
         }
     }
-
-    console.log(record)
+    
     return <div>
 
         <section className="flex flex-col gap-5 w-[90%] mx-auto">
