@@ -14,9 +14,10 @@ import {ActionResponse} from "@/types";
 import {CopyToClipboard} from "react-copy-to-clipboard";
 import {toast} from "react-hot-toast";
 import {getRandomPassMessage} from "@/lib/getRandomPassMessage";
-import DeveloperDetails from "@/components/soloprojects/details/Developer";
 import {getRole} from "@/lib/getRole";
+import DeveloperDetails from "@/components/soloprojects/details/Developer";
 import SMDetails from "@/components/soloprojects/details/SMDetails";
+import PODetails from "@/components/soloprojects/details/PODetails";
 
 interface ProjectDetailProps {
     record: Submission,
@@ -93,7 +94,7 @@ const ProjectSubmissionDetail = (
                 return <DeveloperDetails fields={record.fields} />
         }
     }
-    
+
     return <div>
 
         <section className="flex flex-col gap-5 w-[90%] mx-auto">

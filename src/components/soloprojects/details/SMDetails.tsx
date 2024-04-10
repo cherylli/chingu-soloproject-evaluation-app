@@ -1,10 +1,10 @@
-import {Submission} from "@/types/SoloProjectTypes";
+import {FilteredFields} from "@/types/SoloProjectTypes";
 import {Table, TableBody, TableCell, TableRow} from "@/components/ui/table";
 import QuizAnswerItem from "@/components/soloprojects/QuizAnswerItem";
 import questions from '@/data/quizAnswers.json'
 import {Answer} from "@/types/Answer";
 
-const ProductOwnerDetails = ({fields}: Submission) => {
+const ScrumMasterDetails = ({fields}: {fields: FilteredFields}) => {
     const smQuestions = questions.SM as Answer[]
 
     return(
@@ -46,4 +46,4 @@ const ProductOwnerDetails = ({fields}: Submission) => {
     )
  }
  
- export default ProductOwnerDetails
+ export default ScrumMasterDetails

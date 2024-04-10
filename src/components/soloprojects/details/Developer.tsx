@@ -1,7 +1,7 @@
-import {Submission} from "@/types/SoloProjectTypes";
+import {FilteredFields} from "@/types/SoloProjectTypes";
 import Link from "next/link";
 
-const DeveloperDetails = ({fields}: Submission) => {
+const DeveloperDetails = ({fields}: {fields: FilteredFields}) => {
     return (
         <table className="table-auto">
             <thead></thead>
