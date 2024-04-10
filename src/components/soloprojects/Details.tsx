@@ -14,9 +14,7 @@ import {ActionResponse} from "@/types";
 import {CopyToClipboard} from "react-copy-to-clipboard";
 import {toast} from "react-hot-toast";
 import {getRandomPassMessage} from "@/lib/getRandomPassMessage";
-import {parseRole} from "@/lib/parseRole";
 import DeveloperDetails from "@/components/soloprojects/Developer";
-import {fields} from "@/lib/airtable";
 import {getRole} from "@/lib/getRole";
 
 interface ProjectDetailProps {
@@ -79,6 +77,7 @@ const ProjectSubmissionDetail = (
         }
     }
 
+    console.log(record)
     return <div>
 
         <section className="flex flex-col gap-5 w-[90%] mx-auto">

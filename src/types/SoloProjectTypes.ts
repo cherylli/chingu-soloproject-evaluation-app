@@ -21,7 +21,7 @@ export type VoyageRole =
     | "Scrum Master"
     | "unknown"
 
-export type FilteredFields = {
+type BasicFields = {
     "Email": string
     "Discord Name": string
     "GitHub ID": string
@@ -39,3 +39,54 @@ export type FilteredFields = {
     "Discord ID": string
 }
 
+type POFields = {
+    "PO: Certification": string,
+    "PO: Highest Certification": string,
+    "PO: Participated in Project as PO": string,
+    "PO: Project Details": string,
+    "PO05": string,
+    "PO06": string,
+    "PO07": string,
+    "PO08": string,
+    "PO09": string,
+    "PO10": string,
+    "PO11": string,
+    "PO12": string,
+    "PO13": string,
+    "PO14": string,
+    "PO15": string,
+    "PO16": string,
+    "PO17": string,
+    "PO18": string,
+    "PO19": string,
+    "PO20": string,
+    "PO21": string,
+    "PO Product Backlog URL": string,
+
+}
+
+type SMFields = {
+    "SM: Certification": string,
+    "SM: Highest Certification": string,
+    "SM: Participated in Project as SM": string,
+    "SM: Project Details": string,
+    "SM05": string,
+    "SM06": string,
+    "SM07": string,
+    "SM08": string,
+    "SM09": string,
+    "SM10": string,
+    "SM11": string,
+    "SM12": string,
+    "SM13": string,
+    "SM14": string,
+    "SM15": string,
+    "SM16": string,
+    "SM17": string,
+    "SM18": string,
+    "SM19": string,
+    "SM20": string,
+    "SM21": string,
+}
+
+export type FilteredFields = BasicFields & POFields & SMFields
