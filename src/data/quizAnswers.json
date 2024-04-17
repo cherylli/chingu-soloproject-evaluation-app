@@ -5,7 +5,8 @@
       "question": "PO05: Which of the following are necessary for the PO to maximize the value delivered by the MVP (select all that apply)?",
       "answer": [
         "C", "D"
-      ]
+      ],
+      "answerOptions":"A. Scrum team velocity\n\nB. Unit test results\n\nC. User feedback\n\nD. Product vision"
     },
     {
       "questionNumber": "PO06",

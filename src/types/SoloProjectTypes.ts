@@ -64,7 +64,6 @@ type POFields = {
     "PO20": string,
     "PO21": string,
     "PO Product Backlog URL": string,
-
 }
 
 type SMFields = {
