@@ -5,19 +5,19 @@ import {Table, TableBody, TableCell, TableRow} from "@/components/ui/table";
 import {useState} from "react";
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import {Button} from "@/components/ui/button";
-import {Copy} from "lucide-react";
+import {ChevronUp, Copy} from "lucide-react";
 import {toast} from "react-hot-toast";
 
-const formatContent = (content:string) => {
-    return content.replaceAll('<br/>','\n')
+const formatContent = (content: string) => {
+    return content.replaceAll('<br/>', '\n')
 }
 
 const FeedbackItem = ({content, discordName}: {
     content: FeedbackContent,
     discordName: string
 }) => {
-    const fbCellContent = discordName?
-        formatContent(content.feedback).replace(/\s@\s/g,` @${discordName} `):
+    const fbCellContent = discordName ?
+        formatContent(content.feedback).replace(/\s@\s/g, ` @${discordName} `) :
         formatContent(content.feedback)
     return <TableBody>
         <TableRow>
@@ -29,7 +29,7 @@ const FeedbackItem = ({content, discordName}: {
                         variant="outline"
                         size="icon"
                         className="ml-2 h-8 w-8"
-                        onClick={()=>toast('Copied!')}
+                        onClick={() => toast('Copied!')}
                     >
                         <Copy className="h-4 w-4"/>
                     </Button>
@@ -44,7 +44,7 @@ const FeedbackItem = ({content, discordName}: {
 
 const FeedbackCategory = ({category, discordName}: {
     category: FeedbackCategoryType,
-    discordName:string
+    discordName: string
 }) => {
     return <div>
         <h1 className="text-xl m-4 text-orange-500">{category.name}</h1>
@@ -61,10 +61,10 @@ const FeedbackCategory = ({category, discordName}: {
 }
 
 const GithubFeedback = (
-    {discordName, categories}:{discordName:string, categories:FeedbackCategoryType[]}
+    {discordName, categories}: { discordName: string, categories: FeedbackCategoryType[] }
 ) => {
     const [searchTerm, setSearchTerm] = useState('')
-    const filteredFeedback = () : FeedbackCategoryType[]=> {
+    const filteredFeedback = (): FeedbackCategoryType[] => {
         const feedbackArray = [] as FeedbackCategoryType[]
         for (const category of categories) {
             const filteredContent = category.content
@@ -86,11 +86,18 @@ const GithubFeedback = (
     }
 
     return (
-        <div>
+        <div id="feedbackDiv">
+            <a href="#feedbackDiv"
+               className="flex flex-col items-center fixed bottom-4 left-4 rounded-lg p-2 text-xl bg-yellow-700 bg-opacity-25 border-yellow-700 border-2"
+            >
+                <p>top</p>
+                <ChevronUp/>
+            </a>
+
             <Input
                 type="search"
                 placeholder="Search"
-                onChange={(e)=>setSearchTerm(e.target.value)}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 className="sticky top-0 text-2xl"
             />
             <section>
