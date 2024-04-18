@@ -22,32 +22,32 @@ export default function RootLayout({children}: {
     }
     return (
         <html lang="en" suppressHydrationWarning>
-        <body className={inter.className}>
+        <body className={`${inter.className} overflow-auto`} >
         <AuthProvider>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-                <Nav/>
-                <Toaster
-                    toastOptions={{
-                        style: {
-                            background: '#4d7fff',
-                            color: '#ddd'
-                        },
-                        success: {
+                <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+                    <Nav/>
+                    <Toaster
+                        toastOptions={{
                             style: {
-                                background: '#b3fcc1',
-                                color: '#000'
-                            }
-                        },
-                        error: {
-                            style: {
-                                background: '#fcb3b3',
-                                color: '#000'
-                            }
-                        },
-                    }}
-                />
-                {children}
-            </ThemeProvider>
+                                background: '#4d7fff',
+                                color: '#ddd'
+                            },
+                            success: {
+                                style: {
+                                    background: '#b3fcc1',
+                                    color: '#000'
+                                }
+                            },
+                            error: {
+                                style: {
+                                    background: '#fcb3b3',
+                                    color: '#000'
+                                }
+                            },
+                        }}
+                    />
+                    {children}
+                </ThemeProvider>
         </AuthProvider>
         </body>
         </html>

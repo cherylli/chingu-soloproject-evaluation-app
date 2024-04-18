@@ -25,7 +25,7 @@ const SoloProjectPage = async ({params}: { params: { id: string } }) => {
         return await setEvaluatorOnDb(params.id)
     }
     return(
-        <div className="flex flex-col lg:flex-row-reverse justify-between h-screen">
+        <div className="flex flex-col lg:flex-row-reverse justify-between h-[calc(100vh-110px)]">
             <div className="lg:w-1/2 lg:overflow-y-auto">
                 {projects.length>1 && <CompactList records={projects}/>}
                 <ProjectSubmissionDetail
@@ -34,11 +34,11 @@ const SoloProjectPage = async ({params}: { params: { id: string } }) => {
                     handleSetEvaluator={handleSetEvaluator} />
                 <Comments recordId={params.id}/>
             </div>
-            <div className="hidden lg:block lg:w-1/2 lg:max-h-screen lg:overflow-y-auto">
-                <FeedbackContainer discordName={record.fields["Discord Name"]}/>
-            </div>
+                <div className="hidden lg:block lg:w-1/2 lg:max-h-screen lg:overflow-y-auto">
+                    <FeedbackContainer discordName={record.fields["Discord Name"]}/>
+                </div>
         </div>
     )
- }
+}
 
- export default SoloProjectPage
+export default SoloProjectPage

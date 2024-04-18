@@ -12,8 +12,9 @@ import {
     NavigationMenuTrigger, navigationMenuTriggerStyle
 } from "@/components/ui/navigation-menu";
 import {
-    Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger
+    Menubar, MenubarCheckboxItem, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger
 } from "@/components/ui/menubar"
+
 
 const Nav = () => {
     const {data: session} = useSession({
@@ -24,7 +25,7 @@ const Nav = () => {
     })
 
     return(
-        <div className="flex justify-between items-center p-2">
+        <div className="flex justify-between items-center p-2 h-[90px]">
             <div className="flex flex-row items-center gap-5">
                 <a href={'/'}>
                     <Home/>
@@ -42,6 +43,19 @@ const Nav = () => {
                             <MenubarItem>
                                 <Link href={'/status/requested-changes'}>Requested Changes</Link>
                             </MenubarItem>
+                        </MenubarContent>
+                    </MenubarMenu>
+                    <MenubarMenu>
+                        <MenubarTrigger>Feedback</MenubarTrigger>
+                        <MenubarContent>
+                            <MenubarCheckboxItem
+                                checked
+                                onClick={()=>console.log("show")}>
+                                Show
+                            </MenubarCheckboxItem>
+                            <MenubarCheckboxItem>
+                                Hide
+                            </MenubarCheckboxItem>
                         </MenubarContent>
                     </MenubarMenu>
                 </Menubar>

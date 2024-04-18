@@ -9,6 +9,7 @@ import {getSoloProjectsByStatus} from "@/services/soloProjects";
 
 export default async function Home() {
     const records = await getSoloProjectsByStatus("Waiting Eval")
+
     return <>
         {
             records.length === 0

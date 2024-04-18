@@ -3,11 +3,26 @@ import questions from "@/data/quizAnswers.json";
 import {Answer} from "@/types/Answer";
 import {Table, TableBody, TableCell, TableRow} from "@/components/ui/table";
 import QuizAnswerItem from "@/components/soloprojects/QuizAnswerItem";
+import Link from "next/link";
 
-const ProductOwnerDetails = ({fields}: {fields: FilteredFields}) => {
+const ProductOwnerDetails = ({fields}: { fields: FilteredFields }) => {
     const poQuestions = questions.PO as Answer[]
 
-    return(
+    return <>
+        <table>
+            <tr>
+                <td>PO Product Backlog URL:</td>
+            </tr>
+            <tr>
+                <td className="px-4 text-blue-500 hover:underline">
+                    <Link
+                        href={fields["PO Product Backlog URL"]}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >{fields["PO Product Backlog URL"]}</Link>
+                </td>
+            </tr>
+        </table>
         <Table>
             <TableBody>
                 <TableRow>
@@ -26,11 +41,13 @@ const ProductOwnerDetails = ({fields}: {fields: FilteredFields}) => {
                     <TableCell>Project Details: </TableCell>
                     <TableCell>{fields["PO: Project Details"]}</TableCell>
                 </TableRow>
-                {poQuestions.map(q=>
-                    <QuizAnswerItem key={q.questionNumber} question={q} userAnswer={fields[q.questionNumber as keyof FilteredFields]} />
+                {poQuestions.map(q =>
+                    <QuizAnswerItem key={q.questionNumber} question={q}
+                                    userAnswer={fields[q.questionNumber as keyof FilteredFields]}/>
                 )}
                 <TableRow>
-                    <TableCell>PO19: Name the Scrum event that is most important to the continuous improvement of the Scrum team and why.</TableCell>
+                    <TableCell>PO19: Name the Scrum event that is most important to the continuous improvement of
+                        the Scrum team and why.</TableCell>
                     <TableCell>{fields["PO19"]}</TableCell>
                 </TableRow>
                 <TableRow>
@@ -43,7 +60,7 @@ const ProductOwnerDetails = ({fields}: {fields: FilteredFields}) => {
                 </TableRow>
             </TableBody>
         </Table>
-    )
+    </>
 }
 
 export default ProductOwnerDetails
