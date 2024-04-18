@@ -29,7 +29,7 @@ const Nav = () => {
     const [settingsState, dispatch] = useContext(SettingsContext)
 
     return(
-        <div className="flex justify-between items-center p-2">
+        <div className="flex justify-between items-center p-2 h-[90px]">
             <div className="flex flex-row items-center gap-5">
                 <a href={'/'}>
                     <Home/>

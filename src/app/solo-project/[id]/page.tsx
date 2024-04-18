@@ -25,7 +25,7 @@ const SoloProjectPage = async ({params}: { params: { id: string } }) => {
         return await setEvaluatorOnDb(params.id)
     }
     return(
-        <div className="flex flex-col lg:flex-row-reverse justify-between h-screen">
+        <div className="flex flex-col lg:flex-row-reverse justify-between h-[calc(100vh-110px)]">
             <div className="lg:w-1/2 lg:overflow-y-auto">
                 {projects.length>1 && <CompactList records={projects}/>}
                 <ProjectSubmissionDetail

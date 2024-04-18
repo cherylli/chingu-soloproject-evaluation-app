@@ -89,6 +89,7 @@ const GithubFeedback = (
         <div id="feedbackDiv">
             <a href="#feedbackDiv"
                className="flex flex-col items-center fixed bottom-4 left-4 rounded-lg p-2 text-xl bg-yellow-700 bg-opacity-25 border-yellow-700 border-2"
+                onClick={()=>window.scrollTo(0,0)}
             >
                 <p>top</p>
                 <ChevronUp/>

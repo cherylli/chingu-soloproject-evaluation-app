@@ -23,7 +23,7 @@ export default function RootLayout({children}: {
     }
     return (
         <html lang="en" suppressHydrationWarning>
-        <body className={inter.className}>
+        <body className={`${inter.className} overflow-auto`} >
         <AuthProvider>
             <SettingsProvider>
                 <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
