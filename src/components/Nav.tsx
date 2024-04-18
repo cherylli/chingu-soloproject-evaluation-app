@@ -14,8 +14,6 @@ import {
 import {
     Menubar, MenubarCheckboxItem, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger
 } from "@/components/ui/menubar"
-import {SettingsContext} from "@/context/SettingsProvider";
-import {useContext} from "react";
 
 
 const Nav = () => {
@@ -25,8 +23,6 @@ const Nav = () => {
             redirect('/api/auth/signin?callbackUrl=/')
         }
     })
-
-    const [settingsState, dispatch] = useContext(SettingsContext)
 
     return(
         <div className="flex justify-between items-center p-2 h-[90px]">
@@ -53,13 +49,11 @@ const Nav = () => {
                         <MenubarTrigger>Feedback</MenubarTrigger>
                         <MenubarContent>
                             <MenubarCheckboxItem
-                                checked={settingsState.showFeedback}
-                                onClick={()=>dispatch({type:'show'})}>
+                                checked
+                                onClick={()=>console.log("show")}>
                                 Show
                             </MenubarCheckboxItem>
-                            <MenubarCheckboxItem
-                                checked={!settingsState.showFeedback}
-                                onClick={()=>dispatch({type:'hide'})}>
+                            <MenubarCheckboxItem>
                                 Hide
                             </MenubarCheckboxItem>
                         </MenubarContent>

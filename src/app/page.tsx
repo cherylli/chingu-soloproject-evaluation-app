@@ -6,8 +6,6 @@ export const revalidate = 0
 import ProjectSubmissionList from "@/components/soloprojects/List";
 import Link from "next/link";
 import {getSoloProjectsByStatus} from "@/services/soloProjects";
-import {useContext} from "react";
-import {SettingsContext} from "@/context/SettingsProvider";
 
 export default async function Home() {
     const records = await getSoloProjectsByStatus("Waiting Eval")

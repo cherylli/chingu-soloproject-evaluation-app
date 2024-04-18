@@ -6,7 +6,6 @@ import Nav from "@/components/Nav";
 import AuthProvider from "@/context/AuthProvider";
 import Maintenance from "@/components/Maintenance";
 import {Toaster} from "react-hot-toast";
-import {SettingsProvider} from "@/context/SettingsProvider";
 
 const inter = Inter({subsets: ['latin']})
 
@@ -25,7 +24,6 @@ export default function RootLayout({children}: {
         <html lang="en" suppressHydrationWarning>
         <body className={`${inter.className} overflow-auto`} >
         <AuthProvider>
-            <SettingsProvider>
                 <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                     <Nav/>
                     <Toaster
@@ -50,7 +48,6 @@ export default function RootLayout({children}: {
                     />
                     {children}
                 </ThemeProvider>
-            </SettingsProvider>
         </AuthProvider>
         </body>
         </html>

@@ -1,19 +1,33 @@
+// this is not working
+
+/*
 'use client'
 import {createContext, useContext, useReducer} from "react";
 
-const initialValues = {
+interface IFeedback {
+    showFeedback: boolean;
+}
+type SettingsContextType = {
+    showFeedback: IFeedback
+}
+
+type FeedbackAction =
+    | { type: 'SHOW'; payload: null}
+    | { type: 'HIDE'; payload: null}
+
+const initialValues: SettingsContextType = {
     showFeedback: true
 }
 
-export const SettingsContext = createContext(initialValues)
+export const SettingsContext = createContext<SettingsContextType| null>(initialValues)
 
-function feedbackReducer(state, action) {
+function feedbackReducer(state: IFeedback, action: FeedbackAction): IFeedback {
     switch (action.type) {
-        case 'show': {
-            return {showFeedback: true}
+        case 'SHOW': {
+            return {...state, showFeedback: true}
         }
-        case 'hide': {
-            return {showFeedback: false}
+        case 'HIDE': {
+            return {...state, showFeedback: false}
         }
         default: {
             throw new Error(`Unhandled action type ${action.type}`)
@@ -40,4 +54,4 @@ export function useSettings () {
 }
 
 
-
+*/
