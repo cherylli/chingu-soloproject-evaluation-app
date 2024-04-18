@@ -6,6 +6,7 @@ import Nav from "@/components/Nav";
 import AuthProvider from "@/context/AuthProvider";
 import Maintenance from "@/components/Maintenance";
 import {Toaster} from "react-hot-toast";
+import {SettingsProvider} from "@/context/SettingsProvider";
 
 const inter = Inter({subsets: ['latin']})
 
@@ -24,30 +25,32 @@ export default function RootLayout({children}: {
         <html lang="en" suppressHydrationWarning>
         <body className={inter.className}>
         <AuthProvider>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-                <Nav/>
-                <Toaster
-                    toastOptions={{
-                        style: {
-                            background: '#4d7fff',
-                            color: '#ddd'
-                        },
-                        success: {
+            <SettingsProvider>
+                <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+                    <Nav/>
+                    <Toaster
+                        toastOptions={{
                             style: {
-                                background: '#b3fcc1',
-                                color: '#000'
-                            }
-                        },
-                        error: {
-                            style: {
-                                background: '#fcb3b3',
-                                color: '#000'
-                            }
-                        },
-                    }}
-                />
-                {children}
-            </ThemeProvider>
+                                background: '#4d7fff',
+                                color: '#ddd'
+                            },
+                            success: {
+                                style: {
+                                    background: '#b3fcc1',
+                                    color: '#000'
+                                }
+                            },
+                            error: {
+                                style: {
+                                    background: '#fcb3b3',
+                                    color: '#000'
+                                }
+                            },
+                        }}
+                    />
+                    {children}
+                </ThemeProvider>
+            </SettingsProvider>
         </AuthProvider>
         </body>
         </html>

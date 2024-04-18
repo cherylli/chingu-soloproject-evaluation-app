@@ -34,11 +34,11 @@ const SoloProjectPage = async ({params}: { params: { id: string } }) => {
                     handleSetEvaluator={handleSetEvaluator} />
                 <Comments recordId={params.id}/>
             </div>
-            <div className="hidden lg:block lg:w-1/2 lg:max-h-screen lg:overflow-y-auto">
-                <FeedbackContainer discordName={record.fields["Discord Name"]}/>
-            </div>
+                <div className="hidden lg:block lg:w-1/2 lg:max-h-screen lg:overflow-y-auto">
+                    <FeedbackContainer discordName={record.fields["Discord Name"]}/>
+                </div>
         </div>
     )
- }
+}
 
- export default SoloProjectPage
+export default SoloProjectPage
