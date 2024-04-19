@@ -14,18 +14,18 @@ const ProductOwnerDetails = ({fields}: { fields: FilteredFields }) => {
     return <>
         <table>
             <tbody>
-                <tr>
-                    <td>PO Product Backlog URL:</td>
-                </tr>
-                <tr>
-                    <td className="px-4 text-blue-500 hover:underline">
-                        <Link
-                            href={fields["PO Product Backlog URL"]}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >{fields["PO Product Backlog URL"]}</Link>
-                    </td>
-                </tr>
+            <tr>
+                <td>PO Product Backlog URL:</td>
+            </tr>
+            <tr>
+                <td className="px-4 text-blue-500 hover:underline">
+                    <Link
+                        href={fields["PO Product Backlog URL"]}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >{fields["PO Product Backlog URL"]}</Link>
+                </td>
+            </tr>
             </tbody>
         </table>
         <Table>
@@ -46,9 +46,17 @@ const ProductOwnerDetails = ({fields}: { fields: FilteredFields }) => {
                     <TableCell>Project Details: </TableCell>
                     <TableCell>{fields["PO: Project Details"]}</TableCell>
                 </TableRow>
+            </TableBody>
+        </Table>
+        <Table>
+            <TableBody>
                 {poQuestions.map(q =>
                     <QuizAnswerItem key={q.questionNumber} question={q}/>
                 )}
+            </TableBody>
+        </Table>
+        <Table>
+            <TableBody>
                 <TableRow>
                     <TableCell>PO19: Name the Scrum event that is most important to the continuous improvement of
                         the Scrum team and why.</TableCell>
@@ -64,7 +72,9 @@ const ProductOwnerDetails = ({fields}: { fields: FilteredFields }) => {
                 </TableRow>
             </TableBody>
         </Table>
-        <Score questions={poQuestions} />
+
+
+        <Score questions={poQuestions}/>
     </>
 }
 

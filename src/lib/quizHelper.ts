@@ -5,6 +5,16 @@
 import {FilteredFields} from "@/types/SoloProjectTypes";
 import {Answer, MappedQuestionAndAnswer} from "@/types/Answer";
 
+// userAnswer is pulled from airtable and could be either string or object
+export const trimUserAnswer = (userAnswer: any) =>{
+    if (!userAnswer) return "-"
+    if (typeof userAnswer==="string"){
+        return userAnswer.substring(0,1)
+    }else{
+        return (userAnswer as string[]).map(ua=>ua.substring(0,1))
+    }
+}
+
 const isAnswerCorrect = (userAnswer: any, answer: any) => {
     if(userAnswer){
         if (answer.length===1) {
@@ -16,7 +26,6 @@ const isAnswerCorrect = (userAnswer: any, answer: any) => {
     }else {
         return null
     }
-
 }
 
 export const mappedQuestions = (fields: FilteredFields, questions: Answer[]) => {
