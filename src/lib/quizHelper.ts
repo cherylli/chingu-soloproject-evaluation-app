@@ -47,5 +47,5 @@ export const calculateScore = (questions:MappedQuestionAndAnswer[]) =>{
 export const generateTextForWrongAnswers =(questions:MappedQuestionAndAnswer[]) =>{
     return questions.filter(q=>q.isAnswerCorrect !== true).map(q=>{
         return `${q.question}\n\n${q.options}`
-    }).join("\n\n")
+    }).join("\n\n---\n\n")
 }
