@@ -3,9 +3,10 @@ import {Table, TableBody, TableCell, TableRow} from "@/components/ui/table";
 import QuizAnswerItem from "@/components/soloprojects/QuizAnswerItem";
 import questions from '@/data/quizAnswers.json'
 import {Answer} from "@/types/Answer";
+import {mappedQuestions} from "@/lib/quizHelper";
 
 const ScrumMasterDetails = ({fields}: {fields: FilteredFields}) => {
-    const smQuestions = questions.SM as Answer[]
+    const smQuestions = mappedQuestions(fields, questions.SM as Answer[]);
 
     return(
         <Table>

@@ -8,24 +8,24 @@ import {mappedQuestions} from "@/lib/quizHelper";
 
 
 const ProductOwnerDetails = ({fields}: { fields: FilteredFields }) => {
-    const poQuestions = questions.PO as Answer[]
-
-    console.log(mappedQuestions(fields, poQuestions));
+    const poQuestions = mappedQuestions(fields, questions.PO as Answer[]);
 
     return <>
         <table>
-            <tr>
-                <td>PO Product Backlog URL:</td>
-            </tr>
-            <tr>
-                <td className="px-4 text-blue-500 hover:underline">
-                    <Link
-                        href={fields["PO Product Backlog URL"]}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >{fields["PO Product Backlog URL"]}</Link>
-                </td>
-            </tr>
+            <tbody>
+                <tr>
+                    <td>PO Product Backlog URL:</td>
+                </tr>
+                <tr>
+                    <td className="px-4 text-blue-500 hover:underline">
+                        <Link
+                            href={fields["PO Product Backlog URL"]}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >{fields["PO Product Backlog URL"]}</Link>
+                    </td>
+                </tr>
+            </tbody>
         </table>
         <Table>
             <TableBody>
