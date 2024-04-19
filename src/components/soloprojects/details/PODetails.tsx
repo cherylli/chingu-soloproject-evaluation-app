@@ -4,12 +4,16 @@ import {Answer} from "@/types/Answer";
 import {Table, TableBody, TableCell, TableRow} from "@/components/ui/table";
 import QuizAnswerItem from "@/components/soloprojects/QuizAnswerItem";
 import Link from "next/link";
+import {mappedQuestions} from "@/lib/quizHelper";
+import Score from "@/components/soloprojects/Score";
+
 
 const ProductOwnerDetails = ({fields}: { fields: FilteredFields }) => {
-    const poQuestions = questions.PO as Answer[]
+    const poQuestions = mappedQuestions(fields, questions.PO as Answer[]);
 
     return <>
         <table>
+            <tbody>
             <tr>
                 <td>PO Product Backlog URL:</td>
             </tr>
@@ -22,6 +26,7 @@ const ProductOwnerDetails = ({fields}: { fields: FilteredFields }) => {
                     >{fields["PO Product Backlog URL"]}</Link>
                 </td>
             </tr>
+            </tbody>
         </table>
         <Table>
             <TableBody>
@@ -41,10 +46,17 @@ const ProductOwnerDetails = ({fields}: { fields: FilteredFields }) => {
                     <TableCell>Project Details: </TableCell>
                     <TableCell>{fields["PO: Project Details"]}</TableCell>
                 </TableRow>
+            </TableBody>
+        </Table>
+        <Table>
+            <TableBody>
                 {poQuestions.map(q =>
-                    <QuizAnswerItem key={q.questionNumber} question={q}
-                                    userAnswer={fields[q.questionNumber as keyof FilteredFields]}/>
+                    <QuizAnswerItem key={q.questionNumber} question={q}/>
                 )}
+            </TableBody>
+        </Table>
+        <Table>
+            <TableBody>
                 <TableRow>
                     <TableCell>PO19: Name the Scrum event that is most important to the continuous improvement of
                         the Scrum team and why.</TableCell>
@@ -60,6 +72,9 @@ const ProductOwnerDetails = ({fields}: { fields: FilteredFields }) => {
                 </TableRow>
             </TableBody>
         </Table>
+
+
+        <Score questions={poQuestions}/>
     </>
 }
 

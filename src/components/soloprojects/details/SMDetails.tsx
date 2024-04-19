@@ -3,11 +3,13 @@ import {Table, TableBody, TableCell, TableRow} from "@/components/ui/table";
 import QuizAnswerItem from "@/components/soloprojects/QuizAnswerItem";
 import questions from '@/data/quizAnswers.json'
 import {Answer} from "@/types/Answer";
+import {mappedQuestions} from "@/lib/quizHelper";
+import Score from "@/components/soloprojects/Score";
 
-const ScrumMasterDetails = ({fields}: {fields: FilteredFields}) => {
-    const smQuestions = questions.SM as Answer[]
+const ScrumMasterDetails = ({fields}: { fields: FilteredFields }) => {
+    const smQuestions = mappedQuestions(fields, questions.SM as Answer[]);
 
-    return(
+    return <>
         <Table>
             <TableBody>
                 <TableRow>
@@ -26,24 +28,36 @@ const ScrumMasterDetails = ({fields}: {fields: FilteredFields}) => {
                     <TableCell>Project Details: </TableCell>
                     <TableCell>{fields["SM: Project Details"]}</TableCell>
                 </TableRow>
-                {smQuestions.map(q=>
-                    <QuizAnswerItem key={q.questionNumber} question={q} userAnswer={fields[q.questionNumber as keyof FilteredFields]} />
+            </TableBody>
+        </Table>
+        <Table>
+            <TableBody>
+                {smQuestions.map(q =>
+                    <QuizAnswerItem key={q.questionNumber} question={q}/>
                 )}
+            </TableBody>
+        </Table>
+        <Table>
+            <TableBody>
                 <TableRow>
-                    <TableCell>SM20: Describe the roles and responsibilities of the Scrum Master, the Product Owner, and the Development Team in a Scrum project.</TableCell>
+                    <TableCell>SM20: Describe the roles and responsibilities of the Scrum Master, the Product Owner, and
+                        the Development Team in a Scrum project.</TableCell>
                     <TableCell>{fields["SM20"]}</TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell>SM21: Explain the concept of “user stories” and how they are used in Scrum. Provide an example of a user story.</TableCell>
+                    <TableCell>SM21: Explain the concept of “user stories” and how they are used in Scrum. Provide an
+                        example of a user story.</TableCell>
                     <TableCell>{fields["SM21"]}</TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell>SM22: Discuss the importance of the Sprint Retrospective and how it contributes to continuous improvement in a Scrum team.</TableCell>
+                    <TableCell>SM22: Discuss the importance of the Sprint Retrospective and how it contributes to
+                        continuous improvement in a Scrum team.</TableCell>
                     <TableCell>{fields["SM22"]}</TableCell>
                 </TableRow>
             </TableBody>
         </Table>
-    )
- }
- 
- export default ScrumMasterDetails
+        <Score questions={smQuestions}/>
+    </>
+}
+
+export default ScrumMasterDetails

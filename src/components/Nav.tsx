@@ -45,6 +45,7 @@ const Nav = () => {
                             </MenubarItem>
                         </MenubarContent>
                     </MenubarMenu>
+                    {/*
                     <MenubarMenu>
                         <MenubarTrigger>Feedback</MenubarTrigger>
                         <MenubarContent>
@@ -58,6 +59,7 @@ const Nav = () => {
                             </MenubarCheckboxItem>
                         </MenubarContent>
                     </MenubarMenu>
+                    */}
                 </Menubar>
             </div>
             {session?.user
