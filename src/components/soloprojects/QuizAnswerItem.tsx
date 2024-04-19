@@ -14,9 +14,9 @@ const QuizAnswerItem = ({question}: { question: MappedQuestionAndAnswer }) => {
             <TableCell className={question.isAnswerCorrect ? `bg-emerald-900` : `bg-red-950`}>
                 {question.answer.join(", ")}
             </TableCell>
-            <TableCell className="whitespace-pre-wrap">{question.answerOptions}</TableCell>
+            <TableCell className="whitespace-pre-wrap">{question.options}</TableCell>
             <TableCell>
-                <CopyToClipboard text={`${question.question}\n\n${question.answerOptions}`}>
+                <CopyToClipboard text={`${question.question}\n\n${question.options}`}>
                     <Button
                         variant="outline"
                         size="icon"
