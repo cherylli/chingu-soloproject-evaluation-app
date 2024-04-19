@@ -5,6 +5,7 @@ import {Table, TableBody, TableCell, TableRow} from "@/components/ui/table";
 import QuizAnswerItem from "@/components/soloprojects/QuizAnswerItem";
 import Link from "next/link";
 import {mappedQuestions} from "@/lib/quizHelper";
+import Score from "@/components/soloprojects/Score";
 
 
 const ProductOwnerDetails = ({fields}: { fields: FilteredFields }) => {
@@ -64,6 +65,7 @@ const ProductOwnerDetails = ({fields}: { fields: FilteredFields }) => {
                 </TableRow>
             </TableBody>
         </Table>
+        <Score questions={poQuestions} />
     </>
 }
 

@@ -8,7 +8,7 @@ import {CopyToClipboard} from "react-copy-to-clipboard";
 const QuizAnswerItem = ({question}: { question: MappedQuestionAndAnswer }) => {
 
     return (
-        <TableRow>
+        <TableRow key={question.questionNumber}>
             <TableCell>{question.question}</TableCell>
             <TableCell>{question.userAnswer}</TableCell>
             <TableCell className={question.isAnswerCorrect ? `bg-emerald-900` : `bg-red-950`}>

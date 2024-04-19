@@ -4,11 +4,12 @@ import QuizAnswerItem from "@/components/soloprojects/QuizAnswerItem";
 import questions from '@/data/quizAnswers.json'
 import {Answer} from "@/types/Answer";
 import {mappedQuestions} from "@/lib/quizHelper";
+import Score from "@/components/soloprojects/Score";
 
 const ScrumMasterDetails = ({fields}: {fields: FilteredFields}) => {
     const smQuestions = mappedQuestions(fields, questions.SM as Answer[]);
 
-    return(
+    return <>
         <Table>
             <TableBody>
                 <TableRow>
@@ -44,7 +45,8 @@ const ScrumMasterDetails = ({fields}: {fields: FilteredFields}) => {
                 </TableRow>
             </TableBody>
         </Table>
-    )
- }
- 
- export default ScrumMasterDetails
+        <Score questions={smQuestions} />
+    </>
+}
+
+export default ScrumMasterDetails
