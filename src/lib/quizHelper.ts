@@ -26,8 +26,8 @@ export const mappedQuestions = (fields: FilteredFields, questions: Answer[]) => 
             question: q.question,
             answer: q.answer,
             options: q.answerOptions,
-            userAnswer: fields[q.questionNumber],
-            isAnswerCorrect: isAnswerCorrect(fields[q.questionNumber], q.answer)
+            userAnswer: fields[q.questionNumber as keyof FilteredFields],
+            isAnswerCorrect: isAnswerCorrect(fields[q.questionNumber as keyof FilteredFields], q.answer)
         }
     })
 }
