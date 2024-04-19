@@ -8,7 +8,7 @@ import {CopyToClipboard} from "react-copy-to-clipboard";
 const QuizAnswerItem = ({question, userAnswer}: { question: Answer, userAnswer: any }) => {
 
     const isAnswerCorrect = () => {
-        console.log(userAnswer);
+        // console.log(userAnswer);
         if(userAnswer){
             if (question.answer.length===1) {
                 return question.answer.includes((userAnswer as string).substring(0,1))
@@ -31,7 +31,7 @@ const QuizAnswerItem = ({question, userAnswer}: { question: Answer, userAnswer: 
             </TableCell>
             <TableCell className="whitespace-pre-wrap">{question.answerOptions}</TableCell>
             <TableCell>
-                <CopyToClipboard text="test">
+                <CopyToClipboard text={`${question.question}\n\n${question.answerOptions}`}>
                     <Button
                         variant="outline"
                         size="icon"

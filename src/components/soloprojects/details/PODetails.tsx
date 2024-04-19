@@ -4,9 +4,13 @@ import {Answer} from "@/types/Answer";
 import {Table, TableBody, TableCell, TableRow} from "@/components/ui/table";
 import QuizAnswerItem from "@/components/soloprojects/QuizAnswerItem";
 import Link from "next/link";
+import {mappedQuestions} from "@/lib/quizHelper";
+
 
 const ProductOwnerDetails = ({fields}: { fields: FilteredFields }) => {
     const poQuestions = questions.PO as Answer[]
+
+    console.log(mappedQuestions(fields, poQuestions));
 
     return <>
         <table>
