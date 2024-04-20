@@ -59,15 +59,27 @@ const ProductOwnerDetails = ({fields}: { fields: FilteredFields }) => {
             <TableBody>
                 <TableRow>
                     <TableCell>PO19: Name the Scrum event that is most important to the continuous improvement of
-                        the Scrum team and why.</TableCell>
+                        the Scrum team and why.
+                        <span
+                            className="text-slate-500 text-xs whitespace-pre-wrap">{`\n\nThe Sprint Retrospective. Per the Scrum Guide: ‘The purpose of the Sprint Retrospective is to plan ways to increase quality and effectiveness.\n\nThe Scrum Team inspects how the last Sprint went with regards to individuals, interactions, processes, tools, and their Definition of Done. Inspected elements often vary with the domain of work. Assumptions that led them astray are identified and their origins explored. The Scrum Team discusses what went well during the Sprint, what problems it encountered, and how those problems were (or were not) solved.\n\nThe Scrum Team identifies the most helpful changes to improve its effectiveness. The most impactful improvements are addressed as soon as possible. They may even be added to the Sprint Backlog for the next Sprint.’`}
+                        </span>
+                    </TableCell>
                     <TableCell>{fields["PO19"]}</TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell>PO20: Who plans the work to be accomplished during a sprint?</TableCell>
+                    <TableCell>PO20: Who plans the work to be accomplished during a sprint?
+                        <span
+                            className="text-slate-500 text-xs whitespace-pre-wrap">{`\n\nPer the Scrum Guide: 'The Developers select items from the Product Backlog to include in the current Sprint. ... The Developers plan the work necessary to create an Increment that meets the Definition of Done.’ Yet it is the Product Owner who should initially propose what the Sprint Goal will be, and then the team collaboratively defines a Sprint Goal.’`}
+                        </span>
+                    </TableCell>
                     <TableCell>{fields["PO20"]}</TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell>PO21: Describe the role of the Product Owner and why it’s important.</TableCell>
+                    <TableCell>PO21: Describe the role of the Product Owner and why it’s important.
+                        <span
+                            className="text-slate-500 text-xs whitespace-pre-wrap">{`\n\nPer the Scrum Guide: ‘The Product Owner is accountable for maximizing the value of the product resulting from the work of the Scrum Team. How this is done may vary widely across organizations, Scrum Teams, and individuals.\``}
+                        </span>
+                    </TableCell>
                     <TableCell>{fields["PO21"]}</TableCell>
                 </TableRow>
             </TableBody>
