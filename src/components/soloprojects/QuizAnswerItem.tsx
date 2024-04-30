@@ -13,7 +13,7 @@ const QuizAnswerItem = ({question}: { question: MappedQuestionAndAnswer }) => {
                 <div>{question.question}</div>
                 <div className="text-slate-500 text-xs whitespace-pre-wrap">{question.options}</div>
             </TableCell>
-            <TableCell className={question.isAnswerCorrect ? `bg-emerald-900` : `bg-red-950`}>
+            <TableCell className={question.isAnswerCorrect ? `bg-emerald-900 text-white` : `bg-red-950 text-white`}>
                 {trimUserAnswer(question.userAnswer)}
                 {!question.isAnswerCorrect?` (${question.answer.join(", ")})`:""}
             </TableCell>
