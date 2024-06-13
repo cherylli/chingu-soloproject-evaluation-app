@@ -2,6 +2,7 @@ import {
     getAllSoloProjectsByUser,
     getSoloProjectById,
     setEvaluatorOnDb,
+    removeEvaluatorOnDb,
     updateSoloProjectById
 } from "@/services/soloProjects";
 import ProjectSubmissionDetail from "@/components/soloprojects/details/BaseDetails";
@@ -24,6 +25,10 @@ const SoloProjectPage = async ({params}: { params: { id: string } }) => {
         'use server'
         return await setEvaluatorOnDb(params.id)
     }
+    const handleRemoveEvaluator = async (): Promise<ActionResponse> => {
+        'use server'
+        return await removeEvaluatorOnDb(params.id)
+    }
     return(
         <div className="flex flex-col lg:flex-row-reverse justify-between h-[calc(100vh-110px)]">
             <div className="lg:w-1/2 lg:overflow-y-auto">
@@ -31,7 +36,9 @@ const SoloProjectPage = async ({params}: { params: { id: string } }) => {
                 <ProjectSubmissionDetail
                     record={record}
                     handleSave={handleSave}
-                    handleSetEvaluator={handleSetEvaluator} />
+                    handleSetEvaluator={handleSetEvaluator}
+                    handleRemoveEvaluator={handleRemoveEvaluator}
+                />
                 <Comments recordId={params.id}/>
             </div>
                 <div className="hidden lg:block lg:w-1/2 lg:max-h-screen lg:overflow-y-auto">
