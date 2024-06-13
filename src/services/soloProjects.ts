@@ -9,18 +9,18 @@ import {FieldSet} from "airtable";
 import {getDate} from "@/lib/getDate";
 
 export const getAllSoloProjects = async (): Promise<Submission[]> => {
-    const records =  await table.select({}).firstPage()
+    const records = await table.select({}).firstPage()
     return transformData(records)
 }
 
-export const getSoloProjectsByStatus = async (status:string): Promise<Submission[]> => {
+export const getSoloProjectsByStatus = async (status: string): Promise<Submission[]> => {
     const filter = `{Evaluation Status} = "${status}"`
     const records = await table.select({
         filterByFormula: filter,
         fields: fields,
         recordMetadata: ["commentCount"],
-        sort:[{
-            field:"Timestamp",
+        sort: [{
+            field: "Timestamp",
             direction: "desc"
         }]
     }).firstPage()
@@ -43,15 +43,15 @@ export const getAllSoloProjectsByUser = async (discordId: string, email: string)
 
 export const setEvaluatorOnDb = async (id: string): Promise<ActionResponse> => {
     const sessionData = await getServerSession(options)
-    try{
+    try {
         const record = await table.find(id)
-        if(record.fields["Evaluator"]){
+        if (record.fields["Evaluator"]) {
             return {
                 success: false,
                 message: `${record.fields["Evaluator"]} is already evaluating this solo project submission. `
             }
-        }else{
-            if(sessionData){
+        } else {
+            if (sessionData) {
                 const updatedRecord = await table.update([
                     {
                         id,
@@ -72,24 +72,53 @@ export const setEvaluatorOnDb = async (id: string): Promise<ActionResponse> => {
                 message: `You're not logged in.`
             }
         }
-    }catch (e){
-        if (e instanceof AirtableError){
+    } catch (e) {
+        if (e instanceof AirtableError) {
             if (e.error === 'INVALID_MULTIPLE_CHOICE_OPTIONS')
-            return {
-                success: false,
-                message: `Airtable error: Your email ${sessionData?.user.evaluatorEmail} has not been added to the evaluator list. Please contact an administrator.`
-            }
+                return {
+                    success: false,
+                    message: `Airtable error: Your email ${sessionData?.user.evaluatorEmail} has not been added to the evaluator list. Please contact an administrator.`
+                }
         }
         return {
             success: false,
             message: `Error: ${e}`
         }
     }
+}
 
+export const removeEvaluatorOnDb = async (id: string): Promise<ActionResponse> => {
+    const sessionData = await getServerSession(options)
+    try {
+        if(sessionData) {
+            const updatedRecord = await table.update([
+                {
+                    id,
+                    fields: {
+                        "Evaluator": ''
+                    }
+                }
+            ])
+            return {
+                success: true,
+                message: `Evaluator is removed.`,
+                data: transformData(updatedRecord)[0]
+            }
+        }
+        return {
+            success: false,
+            message: `You're not logged in.`
+        }
+    }catch (e) {
+        return {
+            success: false,
+            message: `Error: ${e}`
+        }
+    }
 }
 
 export const updateSoloProjectById = async (id: string, fields: FieldSet)
-    :Promise<ActionResponse> => {
+    : Promise<ActionResponse> => {
     const updatedRecord = await table.update([
         {
             id,

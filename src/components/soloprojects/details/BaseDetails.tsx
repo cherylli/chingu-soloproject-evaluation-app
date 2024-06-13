@@ -3,7 +3,7 @@
 import {Submission, VoyageRole} from "@/types/SoloProjectTypes";
 import {roleColors} from "@/styles/roles";
 import {Button} from "@/components/ui/button";
-import {AtSign, Check, ChevronsUpDown, Copy, Github, PencilLine} from "lucide-react";
+import {AtSign, Check, ChevronsUpDown, Copy, Github, PencilLine, XCircle} from "lucide-react";
 import {Textarea} from "@/components/ui/textarea";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem} from "@/components/ui/command";
@@ -24,10 +24,11 @@ interface ProjectDetailProps {
     record: Submission,
     handleSave: (evalNotes: string, evalStatus: string) => Promise<ActionResponse>
     handleSetEvaluator: () => Promise<ActionResponse>
+    handleRemoveEvaluator: () => Promise<ActionResponse>
 }
 
 const ProjectSubmissionDetail = (
-    {record, handleSave, handleSetEvaluator}: ProjectDetailProps
+    {record, handleSave, handleSetEvaluator, handleRemoveEvaluator}: ProjectDetailProps
 ) => {
     const [evaluator, setEvaluator] = useState('')
     const [evalNotes, setEvalNotes] = useState('');
@@ -65,6 +66,18 @@ const ProjectSubmissionDetail = (
             toast.error(`Set Evaluator FAILED: ${res.message}`)
         }
         toast.dismiss(setEvaluatorToast)
+    }
+
+    const handleRemoveEvaluatorLocal = async () => {
+        const removeEvaluatorToast = toast.loading('Removing Evaluator...')
+        const res = await handleRemoveEvaluator()
+        if (res.success) {
+            setEvaluator('')
+            toast.success('Removed Evaluator')
+        } else {
+            toast.error(`Remove evaluator FAILED: ${res.message}`)
+        }
+        toast.dismiss(removeEvaluatorToast)
     }
 
     const onPassSelect = () => {
@@ -167,6 +180,7 @@ const ProjectSubmissionDetail = (
             <div className="flex">
                 <div className="mr-3">Evaluator:</div>
                 <div>{evaluator}</div>
+                {evaluator&&<XCircle color="#A30000" className="ml-2 cursor-pointer" onClick={handleRemoveEvaluatorLocal}/>}
             </div>
 
 
