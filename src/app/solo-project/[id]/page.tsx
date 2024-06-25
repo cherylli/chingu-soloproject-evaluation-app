@@ -10,6 +10,7 @@ import {ActionResponse} from "@/types";
 import Comments from "@/components/comments";
 import FeedbackContainer from "@/components/feedback/FeedbackContainer";
 import CompactList from "@/components/soloprojects/CompactList";
+import ReadOnly from "@/components/soloprojects/details/ReadOnly";
 
 const SoloProjectPage = async ({params}: { params: { id: string } }) => {
     const record = await getSoloProjectById(params.id)
@@ -18,10 +19,16 @@ const SoloProjectPage = async ({params}: { params: { id: string } }) => {
         'use server'
         return await updateSoloProjectById(params.id, {
             "Evaluation Feedback": evalFeedback,
-            "Evaluation Status":evalStatus,
+            "Evaluation Status": evalStatus,
         })
     }
-    const handleSetEvaluator = async (): Promise<ActionResponse>  => {
+    const handleStatusChange = async (evalStatus: string): Promise<ActionResponse> => {
+        'use server'
+        return await updateSoloProjectById(params.id, {
+            "Evaluation Status": evalStatus,
+        })
+    }
+    const handleSetEvaluator = async (): Promise<ActionResponse> => {
         'use server'
         return await setEvaluatorOnDb(params.id)
     }
@@ -29,22 +36,27 @@ const SoloProjectPage = async ({params}: { params: { id: string } }) => {
         'use server'
         return await removeEvaluatorOnDb(params.id)
     }
-    return(
-        <div className="flex flex-col lg:flex-row-reverse justify-between h-[calc(100vh-110px)]">
-            <div className="lg:w-1/2 lg:overflow-y-auto">
-                {projects.length>1 && <CompactList records={projects}/>}
-                <ProjectSubmissionDetail
-                    record={record}
-                    handleSave={handleSave}
-                    handleSetEvaluator={handleSetEvaluator}
-                    handleRemoveEvaluator={handleRemoveEvaluator}
-                />
-                <Comments recordId={params.id}/>
-            </div>
+
+
+    return (
+        record.fields["Evaluation Status"] === "Passed" ?
+            <ReadOnly record={record}
+                      handleStatusChange={handleStatusChange}/> :
+            <div className="flex flex-col lg:flex-row-reverse justify-between h-[calc(100vh-110px)]">
+                <div className="lg:w-1/2 lg:overflow-y-auto">
+                    {projects.length > 1 && <CompactList records={projects}/>}
+                    <ProjectSubmissionDetail
+                        record={record}
+                        handleSave={handleSave}
+                        handleSetEvaluator={handleSetEvaluator}
+                        handleRemoveEvaluator={handleRemoveEvaluator}
+                    />
+                    <Comments recordId={params.id}/>
+                </div>
                 <div className="hidden lg:block lg:w-1/2 lg:max-h-screen lg:overflow-y-auto">
                     <FeedbackContainer discordName={record.fields["Discord Name"]}/>
                 </div>
-        </div>
+            </div>
     )
 }
 

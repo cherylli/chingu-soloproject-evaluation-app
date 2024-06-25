@@ -12,7 +12,7 @@ import {
     NavigationMenuTrigger, navigationMenuTriggerStyle
 } from "@/components/ui/navigation-menu";
 import {
-    Menubar, MenubarCheckboxItem, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger
+    Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger
 } from "@/components/ui/menubar"
 
 
@@ -42,6 +42,9 @@ const Nav = () => {
                             </MenubarItem>
                             <MenubarItem>
                                 <Link href={'/status/requested-changes'}>Requested Changes</Link>
+                            </MenubarItem>
+                            <MenubarItem>
+                                <Link href={'/status/passed'}>Passed</Link>
                             </MenubarItem>
                         </MenubarContent>
                     </MenubarMenu>
