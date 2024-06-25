@@ -5,7 +5,8 @@ import ProjectSubmissionList from "@/components/soloprojects/List";
 const statusMap = new Map<string,EvaluationStatus>([
     ["waiting-eval", "Waiting Eval"],
     ["not-in-discord", "Not in Discord"],
-    ["requested-changes", "Requested Changes"]
+    ["requested-changes", "Requested Changes"],
+    ["passed", "Passed"]
 ])
 
 const ListByStatus = async ({params}:{params:{status:string}}) => {

@@ -43,6 +43,9 @@ const Nav = () => {
                             <MenubarItem>
                                 <Link href={'/status/requested-changes'}>Requested Changes</Link>
                             </MenubarItem>
+                            <MenubarItem>
+                                <Link href={'/status/passed'}>Passed</Link>
+                            </MenubarItem>
                         </MenubarContent>
                     </MenubarMenu>
                     {/*
