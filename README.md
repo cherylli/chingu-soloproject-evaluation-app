@@ -134,11 +134,12 @@ To be able to login, you will need (please contact a Chingu admin)
 
 ### 1. Pick a project to evaluate from the home screen. 
 Projects with an empty "Evaluator" field is unclaimed and available for evaluation.
-<br/>
+<br/><br/>
 <b>Note:</b> Product Owner or Scrum Master solo projects are evaluated by the Agile Leadership team. 
 <br/>
 
-### 2. Before doing anything, claim the project by clicking on the `Evaluate This` button. 
+### 2. Claim the project 
+Before starting evaluation, please claim the project by clicking the `Evaluate This` button.
 This will set the `Evaluator`, and `Evaluation Date` fields in airtable, and the button will be greyed out on success.
 <br/>
 This is to ensure that we don't have multiple evaluators work on the same solo project.
@@ -169,21 +170,19 @@ A list of requested change conditions can be found in the flowchart below.
 
 
 ### 4. Select the appropriate 'Evaluation Status', and click `Save`
-<br/>
 This will save the feedback into the `Evaluation Feedback` field in airtable, and a save confirmation should be displayed on success. (browser alert at this stage)
 
 ![save.png](docs/images/save.png)
 <br/><br/>
-    <u>Evaluation Statuses</u>
-<br/>
-    <b>Waiting Eval</b> - Projects awaiting evaluation
-    <br/><br/>
-    <b>Passed</b> - The project has satisfied all the requirements for the tier they applied for
-    <br/><br/>
-    <b>Requested Changes</b> - Changes are requested. Participants are asked to open a ticket. 
-    Once they opened a ticket with the additional changes/information, an admin will put it back in the evaluation queue. 
-    We also have an automation to email everyone with the "requested changes".
-    Sometimes, they will directly respond to the evaluator in DM which is OK, only issue is that it may take longer for us to action as the particular evaluator might not be available to re-evaluate in a timely manner
+### Evaluation Statuses
+<b>Waiting Eval</b> - Projects awaiting evaluation
+<br/><br/>
+<b>Passed</b> - The project has satisfied all the requirements for the tier they applied for
+<br/><br/>
+<b>Requested Changes</b> - Changes are requested. Participants are asked to open a ticket. 
+Once they opened a ticket with the additional changes/information, an admin will put it back in the evaluation queue. 
+We also have an automation to email everyone with the "requested changes".
+Sometimes, they will directly respond to the evaluator in DM which is OK, only issue is that it may take longer for us to action as the particular evaluator might not be available to re-evaluate in a timely manner
    <br/><br/>
    <b>Not In Discord</b> - Participant cannot be located in discord. 
 
