@@ -42,7 +42,14 @@ export default async function Home() {
 
         </div>
         <div className="ml-5">
-            <div className="mt-5 flex"> Feedback Github Repo:
+            <div className="mt-5"> Tier Requirements:
+                <Link className="ml-3 text-blue-500 hover:underline"
+                      href={'https://github.com/chingu-voyages/Handbook/blob/main/docs/guides/soloproject/soloproject.md#1-choose-your-tier-1%EF%B8%8F%E2%83%A3-2%EF%B8%8F%E2%83%A3-3%EF%B8%8F%E2%83%A3'}
+                      target="_blank" rel="noopener noreferrer"
+                >Tier Requirements (Handbook)
+                </Link>
+            </div>
+            <div className="flex"> Feedback Github Repo:
                 <Link className="ml-3 text-blue-500 hover:underline"
                       href={'https://github.com/chingu-voyages/soloproject-evaluation'}
                       target="_blank" rel="noopener noreferrer"
