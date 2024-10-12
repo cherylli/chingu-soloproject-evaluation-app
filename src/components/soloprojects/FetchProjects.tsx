@@ -14,7 +14,6 @@ const FetchProjects = async ({
     return <>{
         records.length === 0
             ? <Card className="w-[380px] m-5 pt-5 flex items-center justify-center">
-                // TODO: if frontpage show below otherwise something else
                 <CardContent>{noRecordMessage}</CardContent>
             </Card>
             : <ProjectSubmissionList records={records}/>
