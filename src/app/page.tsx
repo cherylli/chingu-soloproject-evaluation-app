@@ -1,23 +1,22 @@
-import {Card, CardContent} from "@/components/ui/card";
-
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
-import ProjectSubmissionList from "@/components/soloprojects/List";
 import Link from "next/link";
-import {getSoloProjectsByStatus} from "@/services/soloProjects";
+
+import {Suspense} from "react";
+import FetchProjects from "@/components/soloprojects/FetchProjects";
+import {ProjectSubmissionListSkeleton} from "@/components/soloprojects/List";
 
 export default async function Home() {
-    const records = await getSoloProjectsByStatus("Waiting Eval")
+
 
     return <>
-        {
-            records.length === 0
-                ? <Card className="w-[380px] m-5 pt-5 flex items-center justify-center">
-                    <CardContent>No project awaiting evaluation. 😎</CardContent>
-                </Card>
-                : <ProjectSubmissionList records={records}/>
-        }
+        <Suspense fallback={<ProjectSubmissionListSkeleton/>}>
+            <FetchProjects
+                status="Waiting Eval"
+                noRecordMessage="No project awaiting evaluation. 😎"
+            />
+        </Suspense>
         <div className="m-5">
             <p>We want our feedback to achieve these goals:</p>
             <ul className="list-disc m-5">
