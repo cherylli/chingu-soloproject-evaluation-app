@@ -1,6 +1,8 @@
 import {EvaluationStatus} from "@/types/SoloProjectTypes";
 import {getSoloProjectsByStatus} from "@/services/soloProjects";
-import ProjectSubmissionList from "@/components/soloprojects/List";
+import ProjectSubmissionList, {ProjectSubmissionListSkeleton} from "@/components/soloprojects/List";
+import {Suspense} from "react";
+import FetchProjects from "@/components/soloprojects/FetchProjects";
 
 const statusMap = new Map<string,EvaluationStatus>([
     ["waiting-eval", "Waiting Eval"],
@@ -15,13 +17,16 @@ const ListByStatus = async ({params}:{params:{status:string}}) => {
             Status not found
         </div>
     }
-    const records = await getSoloProjectsByStatus(statusMap.get(params.status)!)
     return(
         <>
-            <h1 className="text-center text-3xl">
+            <h1 className="text-center text-3xl mb-5">
                 {statusMap.get(params.status)}
             </h1>
-            <ProjectSubmissionList records={records}/>
+            <Suspense fallback={<ProjectSubmissionListSkeleton/>}>
+                <FetchProjects
+                    status={statusMap.get(params.status)!}
+                />
+            </Suspense>
         </>
     )
  }

@@ -80,8 +80,6 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
 This application allows user to evaluate solo projects without needing to have direct access to airtable which access is charged per person. It also has features which improves the efficiency of chingu.io solo project evaluation. 
 
 It requires user to be authenticated using github OAuth, then users will be authorized based their roles which is stored in the Chingu airtable.
@@ -132,26 +130,64 @@ To be able to login, you will need (please contact a Chingu admin)
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-1. Pick a project to evaluate from the home screen. Projects with an empty "Evaluator" field is unclaimed and available for evaluation.
+### 1. Pick a project to evaluate from the home screen. 
+Projects with an empty "Evaluator" field is unclaimed and available for evaluation.
+<br/><br/>
+<b>Note:</b> Product Owner or Scrum Master solo projects are evaluated by the Agile Leadership team. 
+<br/>
+
+### 2. Claim the project 
+Before starting evaluation, please claim the project by clicking the `Evaluate This` button.
+This will set the `Evaluator`, and `Evaluation Date` fields in airtable, and the button will be greyed out on success.
+<br/>
+This is to ensure that we don't have multiple evaluators work on the same solo project.
+<br/><br/>
+![evaluate-this.png](docs/images/evaluate-this.png)
+    
+
+### 3. Enter your feedback in the textarea
+ 
+   [![](https://i.imgur.com/2cMunDSm.jpg)](https://i.imgur.com/2cMunDS.png)
+
+Here are some sample feedback (https://github.com/chingu-voyages/soloproject-evaluation#example-feedback) <br/>
+<br/>
+   We copy and paste some pre-defined feedback from the feedback pane but feel free to use your own or add to our collection of feedback by making a pull request in the feedback repository where you can find the link in frontpage of the app.
+<br/><br/>
+<b>Note</b>: we don't include feedback with "requested changes" now, as most of the time we don't get a response from them
+
+So with a `requested changes` project, we would send something like
+
+   [![](https://i.imgur.com/IWdKBcjm.jpg)](https://i.imgur.com/IWdKBcj.png)
+
+It's also a good idea to put a note in the comment section about why we are requesting for changes so it's easier for other evaluators and admin to see if they open a ticket.
+<br/><br/>
+In this case, we don't need to have the `evaluator` field set if it's moved quick enough to the `requested changes` status (remember to save). So anyone is free to evaluate it when it gets moved back to the `Waiting Eval` status.
+<br/><br/>
+A list of requested change conditions can be found in the flowchart below.
 
 
-2. Before doing anything, claim the project by clicking on the `Evaluate This` button. This will set the `Evaluator`, and `Evaluation Date` fields in airtable, and the button will be greyed out on success.
-   ![evaluate-this.png](docs/images/evaluate-this.png)
 
-
-3. Enter your feedback in the textarea
-
-    Here are some sample feedback (https://github.com/chingu-voyages/soloproject-evaluation#example-feedback) <br/>
-    <b>Note</b>: we don't include feedback with "requested changes" now, as most of the time we don't get a response from them
-
-4. Select the appropriate 'Evaluation Status', and click `Save`. This will save the feedback into the `Evaluation Feedback` field in airtable, and a save confirmation should be displayed on success. (browser alert at this stage)
+### 4. Select the appropriate 'Evaluation Status', and click `Save`
+This will save the feedback into the `Evaluation Feedback` field in airtable, and a save confirmation should be displayed on success. (browser alert at this stage)
 
 ![save.png](docs/images/save.png)
+<br/><br/>
+### Evaluation Statuses
+<b>Waiting Eval</b> - Projects awaiting evaluation
+<br/><br/>
+<b>Passed</b> - The project has satisfied all the requirements for the tier they applied for
+<br/><br/>
+<b>Requested Changes</b> - Changes are requested. Participants are asked to open a ticket. 
+Once they opened a ticket with the additional changes/information, an admin will put it back in the evaluation queue. 
+We also have an automation to email everyone with the "requested changes".
+Sometimes, they will directly respond to the evaluator in DM which is OK, only issue is that it may take longer for us to action as the particular evaluator might not be available to re-evaluate in a timely manner
+   <br/><br/>
+   <b>Not In Discord</b> - Participant cannot be located in discord. 
 
 
-5. Copy the congratulations message and send it in #ring-the-bell channel on discord
-
-6. DM member with the feedback
+### 5. Copy the congratulations message and send it in #ring-the-bell channel on discord
+   ![](https://i.imgur.com/1fxZtsK.png)
+### 6. DM member with the feedback on discord
 
 Note: Comments can also be added if necessary. Due to the limitations of the airtable API, all comments will be shown as posted by the person who owns the API key, regardless of the user logged in
 
@@ -166,8 +202,8 @@ Note: Comments can also be added if necessary. Due to the limitations of the air
 ## Roadmap
 
 - [x] Authentication with github, so we don't have to store user credentials
-- [ ] A better confirmation display for actions (save, set evaluator), an alert box is used currently
-- [ ] Add Loading state to actions (e.g. save, set evaluator)
+- [x] A better confirmation display for actions (save, set evaluator), an alert box is used currently
+- [x] Add Loading state to actions (e.g. save, set evaluator)
 - [ ] (Possibly) role based auth for additional admin features 
 - [x] Auto scrape feedback repo every x days -> added this but autoscrape every time the feedback repo is updated
 - [ ] Save evaluation text in context so progress is not lose on page navigation

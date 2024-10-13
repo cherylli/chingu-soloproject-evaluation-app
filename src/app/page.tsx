@@ -1,23 +1,22 @@
-import {Card, CardContent} from "@/components/ui/card";
-
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
-import ProjectSubmissionList from "@/components/soloprojects/List";
 import Link from "next/link";
-import {getSoloProjectsByStatus} from "@/services/soloProjects";
+
+import {Suspense} from "react";
+import FetchProjects from "@/components/soloprojects/FetchProjects";
+import {ProjectSubmissionListSkeleton} from "@/components/soloprojects/List";
 
 export default async function Home() {
-    const records = await getSoloProjectsByStatus("Waiting Eval")
+
 
     return <>
-        {
-            records.length === 0
-                ? <Card className="w-[380px] m-5 pt-5 flex items-center justify-center">
-                    <CardContent>No project awaiting evaluation. 😎</CardContent>
-                </Card>
-                : <ProjectSubmissionList records={records}/>
-        }
+        <Suspense fallback={<ProjectSubmissionListSkeleton/>}>
+            <FetchProjects
+                status="Waiting Eval"
+                noRecordMessage="No project awaiting evaluation. 😎"
+            />
+        </Suspense>
         <div className="m-5">
             <p>We want our feedback to achieve these goals:</p>
             <ul className="list-disc m-5">
@@ -42,16 +41,26 @@ export default async function Home() {
 
         </div>
         <div className="ml-5">
-            <div className="mt-5 flex"> Feedback Github Repo:
+            <div className="mt-5"> Tier Requirements:
+                <Link className="ml-3 text-blue-500 hover:underline"
+                      href={'https://github.com/chingu-voyages/Handbook/blob/main/docs/guides/soloproject/soloproject.md#1-choose-your-tier-1%EF%B8%8F%E2%83%A3-2%EF%B8%8F%E2%83%A3-3%EF%B8%8F%E2%83%A3'}
+                      target="_blank" rel="noopener noreferrer"
+                      aria-label="Tier Requirements (Handbook)"
+                >Tier Requirements (Handbook)
+                </Link>
+            </div>
+            <div className="flex"> Feedback Github Repo:
                 <Link className="ml-3 text-blue-500 hover:underline"
                       href={'https://github.com/chingu-voyages/soloproject-evaluation'}
                       target="_blank" rel="noopener noreferrer"
+                      aria-label="Solo Project Evaluation Conditions and Feedback"
                 >Solo Project Evaluation Conditions and Feedback
                 </Link>
                 <div className="mx-3 text-blue-300">|</div>
                 <Link className="text-blue-500 hover:underline"
                       href={'https://github.com/chingu-voyages/soloproject-evaluation#example-feedback'}
                       target="_blank" rel="noopener noreferrer"
+                      aria-label="Examples"
                 >(Examples)
                 </Link>
             </div>
@@ -59,6 +68,7 @@ export default async function Home() {
                 <Link className="ml-3 text-blue-500 hover:underline"
                       href={'/feedback'}
                       target="_blank" rel="noopener noreferrer"
+                      aria-label="Searchable Feedback"
                 >Searchable Feedback
                 </Link>
             </div>
@@ -66,6 +76,7 @@ export default async function Home() {
                 <Link className="ml-3 text-blue-500 hover:underline"
                       href={'https://github.com/cherylli/chingu-soloproject-evaluation-app'}
                       target="_blank" rel="noopener noreferrer"
+                      aria-label="Readme, suggestions and reporting bugs"
                 >Readme, suggestions and reporting bugs
                 </Link>
             </div>
