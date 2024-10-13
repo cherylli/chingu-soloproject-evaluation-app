@@ -45,6 +45,7 @@ export default async function Home() {
                 <Link className="ml-3 text-blue-500 hover:underline"
                       href={'https://github.com/chingu-voyages/Handbook/blob/main/docs/guides/soloproject/soloproject.md#1-choose-your-tier-1%EF%B8%8F%E2%83%A3-2%EF%B8%8F%E2%83%A3-3%EF%B8%8F%E2%83%A3'}
                       target="_blank" rel="noopener noreferrer"
+                      aria-label="Tier Requirements (Handbook)"
                 >Tier Requirements (Handbook)
                 </Link>
             </div>
@@ -52,12 +53,14 @@ export default async function Home() {
                 <Link className="ml-3 text-blue-500 hover:underline"
                       href={'https://github.com/chingu-voyages/soloproject-evaluation'}
                       target="_blank" rel="noopener noreferrer"
+                      aria-label="Solo Project Evaluation Conditions and Feedback"
                 >Solo Project Evaluation Conditions and Feedback
                 </Link>
                 <div className="mx-3 text-blue-300">|</div>
                 <Link className="text-blue-500 hover:underline"
                       href={'https://github.com/chingu-voyages/soloproject-evaluation#example-feedback'}
                       target="_blank" rel="noopener noreferrer"
+                      aria-label="Examples"
                 >(Examples)
                 </Link>
             </div>
@@ -65,6 +68,7 @@ export default async function Home() {
                 <Link className="ml-3 text-blue-500 hover:underline"
                       href={'/feedback'}
                       target="_blank" rel="noopener noreferrer"
+                      aria-label="Searchable Feedback"
                 >Searchable Feedback
                 </Link>
             </div>
@@ -72,6 +76,7 @@ export default async function Home() {
                 <Link className="ml-3 text-blue-500 hover:underline"
                       href={'https://github.com/cherylli/chingu-soloproject-evaluation-app'}
                       target="_blank" rel="noopener noreferrer"
+                      aria-label="Readme, suggestions and reporting bugs"
                 >Readme, suggestions and reporting bugs
                 </Link>
             </div>
