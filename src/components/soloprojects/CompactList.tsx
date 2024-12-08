@@ -11,7 +11,7 @@ const CompactList = ({records}: { records: Submission[] }) => {
                         <TableCell>
                             <Link href={`/solo-project/${record.id}`}
                                   target="_blank"
-                                  rel="noopener noreferrer">{record.fields.Timestamp.toString()}
+                                  rel="noopener noreferrer">{record.fields.Timestamp?.toString()}
                             </Link>
                         </TableCell>
                         <TableCell>{record.fields["Evaluation Status"]}</TableCell>
