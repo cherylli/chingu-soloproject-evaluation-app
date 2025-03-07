@@ -113,6 +113,7 @@ const ProjectSubmissionDetail = (
     return <div>
 
         <section className="flex flex-col gap-5 w-[90%] mx-auto">
+            {/*TODO: refactor this - duplicate of ReadOnly component */}
             <header className="flex flex-col">
                 <div className="flex flex-row items-center justify-center m-2">
                     <h1 className="text-2xl">
@@ -154,7 +155,7 @@ const ProjectSubmissionDetail = (
                 {getRole(record.fields) ?
                     <div
                         className={`text-center ${roleColors[getRole(record.fields)]?.bg} py-1 mt-3`}>
-                        {getRole(record.fields)}
+                        { `${getRole(record.fields)} (${record.fields["Role Type"]})` }
                     </div> :
                     <div className="text-center text-gray-800 bg-gray-300 py-1 mt-3">No Role Selected</div>
                 }

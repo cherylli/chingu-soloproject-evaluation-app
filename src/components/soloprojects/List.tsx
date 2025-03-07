@@ -10,6 +10,7 @@ const ProjectSubmissionList = ({records}:{records:Submission[]}) => {
                 <TableRow>
                     <TableHead className="border-b-2">Discord name</TableHead>
                     <TableHead className="border-b-2">Role</TableHead>
+                    <TableHead className="border-b-2">Role Type</TableHead>
                     <TableHead className="border-b-2">Tier</TableHead>
                     <TableHead className="border-b-2">Evaluator</TableHead>
                 </TableRow>
@@ -34,6 +35,7 @@ export const ProjectSubmissionListSkeleton = () => {
             <TableRow>
                 <TableHead className="border-b-2">Discord name</TableHead>
                 <TableHead className="border-b-2">Role</TableHead>
+                <TableHead className="border-b-2">Role Type</TableHead>
                 <TableHead className="border-b-2">Tier</TableHead>
                 <TableHead className="border-b-2">Evaluator</TableHead>
             </TableRow>

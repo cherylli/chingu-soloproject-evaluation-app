@@ -37,6 +37,7 @@ type BasicFields = {
     "Instructions": string
     "Addl. Comments": string
     "Voyage Role (from Applications link)": VoyageRole
+    "Role Type": string
     "Role": VoyageRole
     "Discord ID": string
 }

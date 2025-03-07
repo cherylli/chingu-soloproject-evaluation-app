@@ -22,6 +22,7 @@ const fields = [
     "Instructions",
     "Addl. Comments",
     "Voyage Role (from Applications link)",
+    "Role Type",
     "Role",
     "Discord ID",
     // PO
@@ -92,6 +93,7 @@ const transformRecord = (record: Record<FieldSet>) => {
             "Addl. Comments": record.fields["Addl. Comments"] as string,
             "Voyage Role (from Applications link)": record.fields["Voyage Role (from Applications link)"] as VoyageRole,
             "Role": record.fields["Role"] as VoyageRole,
+            "Role Type": record.fields["Role Type"] as string,
             "Discord ID": record.fields["Discord ID"] as string,
             // PO
             "PO: Certification": record.fields["PO: Certification"] as string,
