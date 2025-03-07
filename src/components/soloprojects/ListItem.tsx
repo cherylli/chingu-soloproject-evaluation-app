@@ -21,6 +21,9 @@ const SoloProjectsListItem = (
             <TableCell className={`${roleColors[projectRole]?.text}`}>
                 {projectRole}
             </TableCell>
+            <TableCell>
+                {fields["Role Type"]}
+            </TableCell>
             <TableCell>{fields.Tier.substring(0,7)}</TableCell>
             <TableCell>{fields.Evaluator}</TableCell>
         </TableRow>
