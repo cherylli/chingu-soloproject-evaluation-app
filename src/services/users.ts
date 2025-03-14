@@ -22,11 +22,15 @@ export const getUserfromDb = async(
             userFound:false
         }
     }
+    console.log("User Role: ", user[0].fields["Role"])
+
+    // TODO: change roles to array
     const appRole = (user[0].fields["Role"] as ChinguRole[]).includes("Chingu admin") ?
         "admin": "evaluator"
     return {
         userFound: true,
         evaluatorEmail: user[0].fields['evaluator email'] as string ?? "no value",
-        role: appRole
+        role: appRole,
+        status: user[0].fields["Status"]
     }
 }

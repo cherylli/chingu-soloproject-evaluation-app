@@ -24,11 +24,13 @@ export const options: NextAuthOptions = {
         // check users.email against airtable, to make sure this person is authorized
         async signIn({user}){
             const userFromDb = await getUserfromDb(user.email!!)
+            console.log(userFromDb)
+
             if(userFromDb.userFound){
                 user.role = userFromDb.role as ChinguAppRole
                 user.evaluatorEmail = userFromDb.evaluatorEmail as string
             }
-            return userFromDb.userFound
+            return userFromDb.status === "Active" // only allow access for Active staff with a record on airtable
         },
         async jwt({ token, user }) {
             if (user) {
