@@ -1,26 +1,27 @@
 import { DefaultSession, DefaultUser } from "next-auth";
 import { JWT, DefaultJWT } from "next-auth/jwt";
+import { ChinguAppRole } from "@/types/UserTypes";
 
 declare module "next-auth" {
     interface Session {
         user: {
             id: string,
             image: string,
-            role: string,
+            roles: ChinguAppRole[],
             name: string,
             evaluatorEmail: string,
         } & DefaultSession
     }
 
     interface User extends DefaultUser {
-        role: string | null,
+        roles: ChinguAppRole[],
         evaluatorEmail: string | null,
     }
 }
 
 declare module "next-auth/jwt" {
     interface JWT extends DefaultJWT {
-        role: string,
+        roles: ChinguAppRole[],
         evaluatorEmail: string,
     }
 }
