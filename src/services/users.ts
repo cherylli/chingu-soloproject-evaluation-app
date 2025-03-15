@@ -1,10 +1,11 @@
-import {ChinguAppRole, ChinguRole} from "@/types/UserTypes";
+import { ChinguAppRole, ChinguRole, StatusType } from "@/types/UserTypes";
 import {userTable} from "@/lib/airtable";
 
 type UserReturnType = {
     userFound: boolean
     evaluatorEmail?: string,
-    role?: ChinguAppRole
+    roles?: ChinguAppRole[],
+    status?: StatusType
 }
 /**
  *  Returns users "Evaluator" email, and role, from airtable
@@ -22,11 +23,34 @@ export const getUserfromDb = async(
             userFound:false
         }
     }
-    const appRole = (user[0].fields["Role"] as ChinguRole[]).includes("Chingu admin") ?
-        "admin": "evaluator"
+
+    // TODO: change roles to array
+    //const appRole = (user[0].fields["Role"] as ChinguRole[]).includes("Chingu admin") ?
+    //    "admin": "evaluator"
+
+    // map chingu roles from database (airtable) to app role
+
+
     return {
         userFound: true,
         evaluatorEmail: user[0].fields['evaluator email'] as string ?? "no value",
-        role: appRole
+        roles: mapRoles(user[0].fields["Role"] as ChinguRole[]),
+        status: user[0].fields["Status"] as StatusType,
     }
+}
+
+const mapRoles = (roles: ChinguRole[]): ChinguAppRole[] => {
+    const rolesMap = new Map<ChinguRole, ChinguAppRole>([
+        ["Chingu admin", 'admin'],
+        ["Evaluator", 'evaluator'],
+    ])
+
+    const appRoles = new Set<ChinguAppRole>([])
+
+    roles
+        .map(role=>rolesMap.get(role))
+        .filter((appRole): appRole is ChinguAppRole => appRole !== undefined)
+        .forEach(appRole=>appRoles.add(appRole))
+
+    return [...appRoles]
 }
