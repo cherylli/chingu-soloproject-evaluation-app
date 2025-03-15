@@ -24,13 +24,6 @@ export const getUserfromDb = async(
         }
     }
 
-    // TODO: change roles to array
-    //const appRole = (user[0].fields["Role"] as ChinguRole[]).includes("Chingu admin") ?
-    //    "admin": "evaluator"
-
-    // map chingu roles from database (airtable) to app role
-
-
     return {
         userFound: true,
         evaluatorEmail: user[0].fields['evaluator email'] as string ?? "no value",
