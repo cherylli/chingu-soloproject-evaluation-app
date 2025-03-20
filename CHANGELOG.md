@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/cherylli/chingu-soloproject-evaluation-app/compare/v1.1.0...v1.1.1) (2025-03-15)
+
+
+### Features
+
+* {auth) update app to deny inactive users ([#44](https://github.com/cherylli/chingu-soloproject-evaluation-app/issues/44)) ([23e725b](https://github.com/cherylli/chingu-soloproject-evaluation-app/commit/23e725bbc0b3968376e7a2d72877a39795288956))
+
 ## [1.1.0](https://github.com/cherylli/chingu-soloproject-evaluation-app/compare/v1.0.0...v1.1.0) (2025-03-07)
 
 

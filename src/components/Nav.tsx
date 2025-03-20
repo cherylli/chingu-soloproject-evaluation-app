@@ -14,18 +14,25 @@ import {
 import {
     Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger
 } from "@/components/ui/menubar"
+import { Skeleton } from "@/components/ui/skeleton";
+import NavSkeleton from "@/components/skeletons/nav-skeleton";
 
 
 const Nav = () => {
-    const {data: session} = useSession({
+    const {data: session, status} = useSession({
         required: true,
         onUnauthenticated() {
             redirect('/api/auth/signin?callbackUrl=/')
         }
     })
 
-    return(
-        <div className="flex justify-between items-center p-2 h-[90px]">
+    if (status === "loading") {
+        return <NavSkeleton />
+    }
+
+    console.log(session)
+
+    return <div className="flex justify-between items-center p-2 h-[90px]">
             <div className="flex flex-row items-center gap-5">
                 <a href={'/'}>
                     <Home/>
@@ -48,21 +55,16 @@ const Nav = () => {
                             </MenubarItem>
                         </MenubarContent>
                     </MenubarMenu>
-                    {/*
-                    <MenubarMenu>
-                        <MenubarTrigger>Feedback</MenubarTrigger>
-                        <MenubarContent>
-                            <MenubarCheckboxItem
-                                checked
-                                onClick={()=>console.log("show")}>
-                                Show
-                            </MenubarCheckboxItem>
-                            <MenubarCheckboxItem>
-                                Hide
-                            </MenubarCheckboxItem>
-                        </MenubarContent>
-                    </MenubarMenu>
-                    */}
+                    {session?.user.roles.includes("admin") &&
+                        <MenubarMenu>
+                            <MenubarTrigger>Admin</MenubarTrigger>
+                            <MenubarContent>
+                                <MenubarItem>
+                                    <Link href={'/admin/check-in'}>Voyage Checkins</Link>
+                                </MenubarItem>
+                            </MenubarContent>
+                        </MenubarMenu>
+                    }
                 </Menubar>
             </div>
             {session?.user
@@ -95,7 +97,6 @@ const Nav = () => {
                 :null
             }
         </div>
-    )
  }
 
  export default Nav

@@ -25,7 +25,7 @@ export const options: NextAuthOptions = {
         async signIn({user}){
             const userFromDb = await getUserfromDb(user.email!!)
 
-            if (!userFromDb) return false
+            if (!userFromDb.userFound) return false
 
             user.roles = userFromDb.roles as ChinguAppRole[]
             user.evaluatorEmail = userFromDb.evaluatorEmail as string
