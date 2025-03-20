@@ -207,7 +207,7 @@ const ProjectSubmissionDetail = (
                 </Popover>
             </div>
             {evalStatus === "Passed"
-                ? <div>
+                ? <div className="whitespace-pre-line">
                     {ringTheBellText}
                     <CopyToClipboard text={ringTheBellText}>
                         <Button
