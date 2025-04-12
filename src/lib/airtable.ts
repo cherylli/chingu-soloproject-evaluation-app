@@ -1,11 +1,13 @@
 import Airtable, {FieldSet, Record, Records} from "airtable";
 import {EvaluationStatus, Submission, VoyageRole} from "@/types/SoloProjectTypes";
+import { CheckIn, CheckinFormRole, ProgressRating, SprintNumber, Tier } from "@/types/CheckinTypes";
 
 const base = new Airtable({apiKey: process.env.AIRTABLE_PAT})
     .base(process.env.AIRTABLE_BASEID as string)
 
 const table = base(process.env.AIRTABLE_TABLEID as string)
 const userTable = base(process.env.AIRTABLE_USERS_TABLEID as string)
+const checkinTable = base(process.env.AIRTABLE_CHECKIN_TABLEID as string)
 
 const fields = [
     "Email",
@@ -73,6 +75,7 @@ const fields = [
     "SM22",
 ]
 
+// solo project
 const transformRecord = (record: Record<FieldSet>) => {
     return {
         id: record.id,
@@ -153,10 +156,56 @@ const transformDataSingleRecord = (record:Record<FieldSet>) => {
    return transformRecord(record)
 }
 
+
+/*********
+ Checkin
+ ************/
+
+const transformCheckinRecord = (record: Record<FieldSet>) => {
+    return {
+        id: record.id,
+        fields: {
+            "Timestamp": record.fields["Timestamp"] as string,
+            "Email": record.fields["Email"] as string,
+            "Discord Name": record.fields["Discord Name"] as string,
+            "Team Name": record.fields["Team Name"] as Tier,
+            "Team No.": record.fields["Team No."] as string,
+            "Team Communications": record.fields["Team Communications"] as string,
+            "Time Spent - Pair programming": record.fields["Time Spent - Pair programming"] as string,
+            "Time Spent - On Your Own": record.fields["Time Spent - On Your Own"] as string,
+            "Time Spent - Team Activities": record.fields["Time Spent - Team Activities"] as string,
+            "Progress Rating": record.fields["Progress Rating"] as ProgressRating,
+            "Deployed to Prod": record.fields["Deployed to Prod"] as string,
+            "Inactive Teammates": record.fields["Inactive Teammates"] as string,
+            "Helpful Teammates": record.fields["Helpful Teammates"] as string,
+            "Team Achievements": record.fields["Team Achievements"] as string,
+            Voyage: record.fields["Voyage"] as string,
+            "Sprint No.": record.fields["Sprint No."] as SprintNumber,
+            "Time Spent - Learning & Research": record.fields["Time Spent - Learning & Research"] as string,
+            "Individual Feedback Sent": record.fields["Individual Feedback Sent"] as string,
+            "Ack. Email Sent": record.fields["Ack. Email Sent"] as string,
+            Role: record.fields["Role"] as CheckinFormRole,
+            "Addl. Comments": record.fields["Addl. Comments"] as string,
+        }
+    }
+}
+
+const transformCheckinData = (records:Records<FieldSet>): CheckIn[] => {
+    return records.map((record: Record<FieldSet>)=>transformCheckinRecord(record))
+}
+
+const transformCheckinDataSingleRecord = (record:Record<FieldSet>) => {
+    return transformCheckinRecord(record)
+}
+
 export {
     table,
     userTable,
+    checkinTable,
     fields,
     transformData,
-    transformDataSingleRecord
+    transformDataSingleRecord,
+    transformCheckinData,
+    transformCheckinDataSingleRecord
 }
+

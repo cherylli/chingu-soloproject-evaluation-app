@@ -2,6 +2,7 @@ import type { NextAuthOptions} from "next-auth";
 import GithubProvider, {GithubProfile} from 'next-auth/providers/github'
 import {getUserfromDb} from "@/services/users";
 import { ChinguAppRole } from "@/types/UserTypes";
+import * as Sentry from "@sentry/nextjs";
 
 export const options: NextAuthOptions = {
     providers: [
@@ -35,13 +36,40 @@ export const options: NextAuthOptions = {
 
             return allowedRoles.some(role=>user.roles.includes(role)) && userFromDb.status === "Active"// only allow access for Active staff with a record on airtable
         },
+        // jwt, runs when token is created or refreshed
+        // flow: jwt -> session, but not the other way
         async jwt({ token, user }) {
             if (user) {
+                console.log(`[jwt] user: ${user.email} just logged in.`)
+                Sentry.captureMessage(`user: ${user.email} just logged in.`, "info")
+                // initial login
                 token.roles = user.roles!
                 token.evaluatorEmail = user.evaluatorEmail as string
+                token.permissionLastChecked = Date.now()
+            } else {
+                console.log(`[jwt] user ${token.email} already logged in. Last permission check: ${new Date(token.permissionLastChecked!).toString()} `)
+                const checkInterval = 60 * 60 * 1000 // 1h
+                const shouldRefreshPermissions = !token.permissionLastChecked ||
+                    Date.now() > token.permissionLastChecked + checkInterval
+
+                if (shouldRefreshPermissions) {
+                    console.log(`[jwt] refresh permissions - ${new Date().toString()}`)
+
+                    try {
+                        const userInDb = await getUserfromDb(token.email!!)
+                        if (userInDb) {
+                            token.roles = userInDb.roles as ChinguAppRole[]
+                            token.evaluatorEmail = userInDb.evaluatorEmail as string
+                        }
+                        token.permissionLastChecked = Date.now()
+                    } catch (error) {
+                        console.error("Failed to refresh permission: ", error)
+                    }
+                }
             }
             return token
         },
+        // session: runs every request
         async session({ session, token }) {
             if (session?.user) {
                 session.user.roles = token.roles
