@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/cherylli/chingu-soloproject-evaluation-app/compare/v1.1.1...v1.1.2) (2025-04-12)
+
+
+### Features
+
+* admin voyage checkin ([#54](https://github.com/cherylli/chingu-soloproject-evaluation-app/issues/54)) ([dc99213](https://github.com/cherylli/chingu-soloproject-evaluation-app/commit/dc99213b57d42859c8ba500029954e7edce824e7))
+
 ## [1.1.1](https://github.com/cherylli/chingu-soloproject-evaluation-app/compare/v1.1.0...v1.1.1) (2025-03-15)
 
 
