@@ -12,7 +12,8 @@ import FeedbackContainer from "@/components/feedback/FeedbackContainer";
 import CompactList from "@/components/soloprojects/CompactList";
 import ReadOnly from "@/components/soloprojects/details/ReadOnly";
 
-const SoloProjectPage = async ({params}: { params: { id: string } }) => {
+const SoloProjectPage = async (props: { params: Promise<{ id: string }> }) => {
+    const params = await props.params;
     const record = await getSoloProjectById(params.id)
     const projects = await getAllSoloProjectsByUser(record.fields["Discord ID"], record.fields.Email)
     const handleSave = async (evalFeedback: string, evalStatus: string): Promise<ActionResponse> => {
