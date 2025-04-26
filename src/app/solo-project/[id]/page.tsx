@@ -44,15 +44,15 @@ const SoloProjectPage = async (props: { params: Promise<{ id: string }> }) => {
         record.fields["Evaluation Status"] === "Passed" ?
             <ReadOnly record={record}
                       handleStatusChange={handleStatusChange}/> :
-            <ResizablePanelGroup direction="horizontal">
-                <ResizablePanel defaultSize={50}>
-                    <div className="hidden lg:block lg:overflow-y-auto lg:max-h-screen">
+            <ResizablePanelGroup direction="horizontal" className="!flex-col lg:!flex-row">
+                <ResizablePanel defaultSize={50} className="!basis-auto md:!basis-0">
+                    <div className="hidden lg:block lg:h-screen lg:overflow-y-auto">
                         <FeedbackContainer discordName={record.fields["Discord Name"]}/>
                     </div>
                 </ResizablePanel>
-                <ResizableHandle/>
-                <ResizablePanel defaultSize={50}>
-                    <div className="lg:overflow-y-auto">
+                <ResizableHandle className="hidden lg:flex"/>
+                <ResizablePanel defaultSize={50} className="!basis-auto lg:!basis-0">
+                    <div className="lg:h-screen lg:overflow-y-auto">
                         {projects.length > 1 && <CompactList records={projects}/>}
                         <ProjectSubmissionDetail
                             record={record}
