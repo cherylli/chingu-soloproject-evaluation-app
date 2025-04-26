@@ -11,7 +11,8 @@ const statusMap = new Map<string,EvaluationStatus>([
     ["passed", "Passed"]
 ])
 
-const ListByStatus = async ({params}:{params:{status:string}}) => {
+const ListByStatus = async (props:{params: Promise<{status:string}>}) => {
+    const params = await props.params;
     if(!statusMap.has(params.status)){
         return <div>
             Status not found
@@ -29,6 +30,6 @@ const ListByStatus = async ({params}:{params:{status:string}}) => {
             </Suspense>
         </>
     )
- }
+}
  
  export default ListByStatus

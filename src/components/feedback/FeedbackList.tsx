@@ -88,7 +88,7 @@ const GithubFeedback = (
     return (
         <div id="feedbackDiv">
             <a href="#feedbackDiv"
-               className="flex flex-col items-center fixed bottom-4 left-4 rounded-lg p-2 text-xl bg-yellow-700 bg-opacity-25 border-yellow-700 border-2"
+               className="flex flex-col items-center fixed bottom-4 left-4 rounded-lg p-2 text-xl bg-yellow-700 bg-opacity-25 border-yellow-700 border-2 z-10"
                 onClick={()=>window.scrollTo(0,0)}
             >
                 <p>top</p>
@@ -99,7 +99,7 @@ const GithubFeedback = (
                 type="search"
                 placeholder="Search"
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="sticky top-0 text-2xl"
+                className="sticky top-0 text-2xl z-10"
             />
             <section>
                 {filteredFeedback().map(c => (

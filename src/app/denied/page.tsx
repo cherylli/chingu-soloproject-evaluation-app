@@ -9,7 +9,7 @@ import * as Sentry from "@sentry/nextjs";
 
 const Denied = async () => {
     const session = await getServerSession(options)
-    const headerList = headers()
+    const headerList = await headers()
 
     console.log(`[Access denied] \n    user: ${session?.user.evaluatorEmail} \n    referer: ${headerList.get('referer')}`)
     Sentry.captureMessage(`[Access denied] user: ${session?.user.evaluatorEmail} referer: ${headerList.get('referer')}`, {
