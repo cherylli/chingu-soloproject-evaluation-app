@@ -46,13 +46,13 @@ const SoloProjectPage = async (props: { params: Promise<{ id: string }> }) => {
                       handleStatusChange={handleStatusChange}/> :
             <ResizablePanelGroup direction="horizontal" className="!flex-col lg:!flex-row">
                 <ResizablePanel defaultSize={50} className="!basis-auto md:!basis-0">
-                    <div className="hidden lg:block lg:h-screen lg:overflow-y-auto">
+                    <div className="hidden lg:h-[calc(100vh-110px)] lg:block lg:overflow-y-auto">
                         <FeedbackContainer discordName={record.fields["Discord Name"]}/>
                     </div>
                 </ResizablePanel>
                 <ResizableHandle className="hidden lg:flex"/>
                 <ResizablePanel defaultSize={50} className="!basis-auto lg:!basis-0">
-                    <div className="lg:h-screen lg:overflow-y-auto">
+                    <div className="lg:h-[calc(100vh-110px)] lg:overflow-y-auto">
                         {projects.length > 1 && <CompactList records={projects}/>}
                         <ProjectSubmissionDetail
                             record={record}
