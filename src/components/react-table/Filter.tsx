@@ -12,7 +12,7 @@ export default function Filter<T>({ column }: { column: Column<T, unknown> }) {
             onChange={value => column.setFilterValue(value)}
             placeholder={`Search...(${[...column.getFacetedUniqueValues()].filter(arr =>
                 arr[0]).length})`}
-            className="w-full border shadow rounded bg-card"
+            className="w-full border shadow-sm rounded bg-card"
         />
         <X onClick={_=>column.setFilterValue('')}/>
     </div>
