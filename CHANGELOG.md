@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/cherylli/chingu-soloproject-evaluation-app/compare/v1.1.2...v1.2.0) (2025-04-26)
+
+
+### Features
+
+* upgrade Next.js to v15 and React to v19, add resizable component, and fix UI issues ([c557bae](https://github.com/cherylli/chingu-soloproject-evaluation-app/commit/c557bae18daf94e8573729b6f5c82eaaf0912319))
+
 ## [1.1.2](https://github.com/cherylli/chingu-soloproject-evaluation-app/compare/v1.1.1...v1.1.2) (2025-04-12)
 
 

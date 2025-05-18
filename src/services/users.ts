@@ -1,5 +1,6 @@
 import { ChinguAppRole, ChinguRole, StatusType } from "@/types/UserTypes";
 import {userTable} from "@/lib/airtable";
+import * as Sentry from "@sentry/nextjs";
 
 type UserReturnType = {
     userFound: boolean
@@ -24,6 +25,21 @@ export const getUserfromDb = async(
         }
     }
 
+    // also update "Last Login" field in the table
+    try {
+        await userTable.update([
+            {
+                id: user[0].id,
+                fields: {
+                    "Last Login": Date.now()
+                }
+            }
+        ])
+    } catch (e) {
+        Sentry.captureException(`getUserfromDb - set Last Login Error: ${e}`)
+    }
+
+
     return {
         userFound: true,
         evaluatorEmail: user[0].fields['evaluator email'] as string ?? "no value",
@@ -31,6 +47,7 @@ export const getUserfromDb = async(
         status: user[0].fields["Status"] as StatusType,
     }
 }
+
 
 const mapRoles = (roles: ChinguRole[]): ChinguAppRole[] => {
     const rolesMap = new Map<ChinguRole, ChinguAppRole>([

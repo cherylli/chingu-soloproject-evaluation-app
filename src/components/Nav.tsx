@@ -84,7 +84,7 @@ const Nav = () => {
                                     </div>
                                 </NavigationMenuTrigger>
                                 <NavigationMenuContent>
-                                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                    <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
                                         <Link href={'/api/auth/signout?callbackUrl=/'}>Sign Out</Link>
                                     </NavigationMenuLink>
                                 </NavigationMenuContent>
