@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { getLastestCheckIns } from "@/services/checkins";
 import CheckinTable from "@/components/checkins/checkinTable";
 
