@@ -1,5 +1,5 @@
 import { CheckIn } from "@/types/CheckinTypes";
-import { DialogContent, DialogDescription } from "@/components/ui/dialog";
+import { DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { Row } from "@tanstack/table-core";
 import { progressColor } from "@/styles/checkin/progress";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -7,7 +7,8 @@ import YesNoIcon from "@/components/styles/YesNoIcon";
 
 const CheckInDialogContent = ({record}: {record: Row<CheckIn>}) => {
     return <DialogContent className={`border-4 ${progressColor[record.original.fields["Progress Rating"]]?.border}`}>
-        <DialogDescription>
+        <DialogTitle hidden></DialogTitle>
+        <DialogDescription asChild>
             <div className="flex flex-col gap-4">
                 <div>
                     <h3 className="text-2xl">{record.original.fields["Discord Name"]}</h3>
