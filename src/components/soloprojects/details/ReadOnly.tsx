@@ -4,19 +4,18 @@
 */
 'use client'
 
-import {Submission} from "@/types/SoloProjectTypes";
-import {Button} from "@/components/ui/button";
-import {AtSign, Check, ChevronsUpDown, Copy, Github} from "lucide-react";
-import {Textarea} from "@/components/ui/textarea";
-import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
-import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem} from "@/components/ui/command";
-import {evalStatusValues} from "@/lib/options";
-import {cn} from "@/lib/utils";
-import {useEffect, useState} from "react";
-import {ActionResponse} from "@/types";
-import {toast} from "react-hot-toast";
+import { Submission } from "@/types/SoloProjectTypes";
+import { Button } from "@/components/ui/button";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
+import { evalStatusValues } from "@/lib/options";
+import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
+import { ActionResponse } from "@/types";
+import { toast } from "react-hot-toast";
 import { BaseDetailHeader } from "@/components/soloprojects/details/BaseDetailsHeader";
-
 
 
 interface ProjectDetailProps {
@@ -25,7 +24,7 @@ interface ProjectDetailProps {
 }
 
 const ReadOnlyDetails = (
-    {record, handleStatusChange}: ProjectDetailProps
+    { record, handleStatusChange }: ProjectDetailProps
 ) => {
     const [evaluator, setEvaluator] = useState('')
     const [evalNotes, setEvalNotes] = useState('');
@@ -55,10 +54,45 @@ const ReadOnlyDetails = (
 
     return <div>
         <section className="flex flex-col gap-5 w-[90%] mx-auto pb-20">
-            <BaseDetailHeader record={record} />
+            <BaseDetailHeader record={record}/>
 
             <div>{record.fields["Timestamp"].toString()}</div>
             <div>{record.fields.Tier}</div>
+            {record.fields["Role"] === "Software Developer" || record.fields["Role"] === "Developer"
+                ? <div>
+                    <div>Github Repo:
+                        <a
+                            className="px-4 text-blue-500 hover:underline"
+                            href={record.fields["GitHub Repo URL"]}>
+                            {record.fields["GitHub Repo URL"]}
+                        </a>
+                    </div>
+                    <div>Deployed Url:
+                        <a className="px-4 text-blue-500 hover:underline"
+                           href={record.fields["GitHub Repo URL"]}>
+                            {record.fields["Deployed App URL"]}
+                        </a>
+                    </div>
+                </div>
+                : record.fields["Role"] === "UI/UX Designer" || record.fields["Role"] === "UI / UX Designer"
+                    ? <div>UI/UX Project URL:
+                        <a
+                            className="px-4 text-blue-500 hover:underline"
+                            href={record.fields["UI/UX Project URL"]}>
+                            {record.fields["UI/UX Project URL"]}
+                        </a>
+                    </div>
+                    : record.fields["Role"] === "Product Owner"
+                        ? <div>PO Product Backlog URL:
+                            <a
+                                className="px-4 text-blue-500 hover:underline"
+                                href={record.fields["PO Product Backlog URL"]}>
+                                {record.fields["PO Product Backlog URL"]}
+                            </a>
+                        </div>
+                        : null
+            }
+
             {record.fields["Instructions"] ?
                 <div>
                     <div className="text-gray-500">Instructions:</div>
