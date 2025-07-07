@@ -68,7 +68,6 @@ const CheckinTable = ({ records }: { records: CheckIn[] }) => {
                             </TableRow>
                         )}
                     </>
-
                 </TableHeader>
                 <TableBody>
                     <>

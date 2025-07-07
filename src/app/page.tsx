@@ -1,3 +1,5 @@
+import SoloProjectTable from "@/components/soloprojects/soloProjectTable";
+
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 

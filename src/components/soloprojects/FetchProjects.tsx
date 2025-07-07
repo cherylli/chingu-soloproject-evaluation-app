@@ -1,6 +1,7 @@
 import {getSoloProjectsByStatus} from "@/services/soloProjects";
 import ProjectSubmissionList from "@/components/soloprojects/List";
 import {Card, CardContent} from "@/components/ui/card";
+import SoloProjectTable from "@/components/soloprojects/soloProjectTable";
 
 // TODO: refactor other pages to use this component
 const FetchProjects = async ({
@@ -16,7 +17,10 @@ const FetchProjects = async ({
             ? <Card className="w-[380px] pt-5 flex items-center justify-center m-auto">
                 <CardContent>{noRecordMessage}</CardContent>
             </Card>
-            : <ProjectSubmissionList records={records}/>
+            : <>
+                <ProjectSubmissionList records={records}/>
+                <SoloProjectTable records={records}/>
+            </>
     }</>
 }
 
