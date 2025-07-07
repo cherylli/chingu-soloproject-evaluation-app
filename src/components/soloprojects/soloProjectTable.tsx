@@ -3,7 +3,7 @@
 import {Submission} from "@/types/SoloProjectTypes";
 
 import {columnDef} from "@/components/soloprojects/columnDef";
-import { getCoreRowModel} from "@tanstack/table-core";
+import {getCoreRowModel} from "@tanstack/table-core";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {flexRender, useReactTable} from "@tanstack/react-table";
 
@@ -18,7 +18,7 @@ const SoloProjectTable = ({records}: { records: Submission[] }) => {
     })
 
     return <div>
-        <Table className="border">
+        <Table className="border my-6">
             <TableHeader>
                 <>
                     {spTable.getHeaderGroups().map((headerGroup) => <TableRow key={headerGroup.id}>

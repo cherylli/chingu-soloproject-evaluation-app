@@ -1,6 +1,6 @@
 import {EvaluationStatus} from "@/types/SoloProjectTypes";
 import {getSoloProjectsByStatus} from "@/services/soloProjects";
-import ProjectSubmissionList, {ProjectSubmissionListSkeleton} from "@/components/soloprojects/List";
+import ProjectSubmissionList, {ProjectSubmissionListSkeleton} from "@/components/skeletons/List";
 import {Suspense} from "react";
 import FetchProjects from "@/components/soloprojects/FetchProjects";
 

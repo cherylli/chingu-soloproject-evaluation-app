@@ -19,3 +19,21 @@ toast from server components?
 https://stackoverflow.com/questions/76393897/how-to-call-a-notification-toast-after-a-server-action-in-nextjs13
 
 Json schema
+
+
+## refresh server components
+https://www.youtube.com/watch?v=-t3-rG5G5tA&ab_channel=RyanToronto
+
+### RevalidatePath
+does two important things: `revalidatePath('/')`
+1. Invalidates the current cache for the specified path
+2. Triggers a new render of the page, which will automatically re-run all the data fetching code in the components
+
+
+# add custom property to columnMeta, e.g. className
+https://github.com/TanStack/table/discussions/4824
+
+# meta vs cell
+- meta is not for dynamic per-row logic. It's for attaching static metadata.
+- Use cell if you want to render values differently based on their value (like styling based on role).
+
