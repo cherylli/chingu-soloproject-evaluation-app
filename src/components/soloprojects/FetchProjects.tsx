@@ -3,6 +3,7 @@ import {Card, CardContent} from "@/components/ui/card";
 import SoloProjectTable from "@/components/soloprojects/soloProjectTable";
 import {revalidatePath} from "next/cache";
 import {RefreshData} from "@/lib/RefreshData";
+import ClientDateTime from "@/components/ClientDateTime";
 
 const FetchProjects = async ({
                                  status = "Waiting Eval",
@@ -18,18 +19,6 @@ const FetchProjects = async ({
         revalidatePath('/')
     }
 
-    const dateFormatOptions = {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        timeZoneName: 'short',
-        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    } as const;
-
     return <div className="flex flex-col gap-5 mb-10">{
         records.length === 0
             ? <Card className="w-[380px] pt-5 flex items-center justify-center m-auto">
@@ -41,7 +30,7 @@ const FetchProjects = async ({
     }
         <RefreshData ms={10*60*1000} refreshAction={refreshRecords} />
         <div className="self-center text-sm text-gray-500">
-            Last Refresh: {new Intl.DateTimeFormat('en-US', dateFormatOptions).format(new Date())}
+            Last Refresh: <ClientDateTime />
         </div>
     </div>
 }
