@@ -12,7 +12,6 @@ export function RefreshData({ms = 60000, refreshAction}: {
 
     const runRefreshAction = async () => {
         if(Date.now() - lastCheck < ms) return
-        console.log("actually refreshing...")
         toast.promise(refreshAction(), {
             loading: "Refreshing...",
             success: "Refreshed!",
@@ -23,7 +22,6 @@ export function RefreshData({ms = 60000, refreshAction}: {
 
     useEffect(() => {
         const onFocus = () => {
-            console.log("focus")
             runRefreshAction()
             setShouldRun(true)
         }
