@@ -27,6 +27,7 @@ const FetchProjects = async ({
         minute: '2-digit',
         second: '2-digit',
         timeZoneName: 'short',
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     } as const;
 
     return <div className="flex flex-col gap-5 mb-10">{
