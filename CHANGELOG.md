@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/cherylli/chingu-soloproject-evaluation-app/compare/v1.2.0...v1.3.0) (2025-06-10)
+
+
+### Features
+
+* add last login ([13e411f](https://github.com/cherylli/chingu-soloproject-evaluation-app/commit/13e411f849341657e824d6fed36f38f43208c0b6))
+
 ## [1.2.0](https://github.com/cherylli/chingu-soloproject-evaluation-app/compare/v1.1.2...v1.2.0) (2025-04-26)
 
 

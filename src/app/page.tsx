@@ -5,11 +5,10 @@ import Link from "next/link";
 
 import {Suspense} from "react";
 import FetchProjects from "@/components/soloprojects/FetchProjects";
-import {ProjectSubmissionListSkeleton} from "@/components/soloprojects/List";
-
-export default async function Home() {
+import {ProjectSubmissionListSkeleton} from "@/components/skeletons/solo-project-list-skeleton";
 
 
+export default function Home() {
     return <>
         <Suspense fallback={<ProjectSubmissionListSkeleton/>}>
             <FetchProjects

@@ -1,8 +1,7 @@
 import {EvaluationStatus} from "@/types/SoloProjectTypes";
-import {getSoloProjectsByStatus} from "@/services/soloProjects";
-import ProjectSubmissionList, {ProjectSubmissionListSkeleton} from "@/components/soloprojects/List";
 import {Suspense} from "react";
 import FetchProjects from "@/components/soloprojects/FetchProjects";
+import {ProjectSubmissionListSkeleton} from "@/components/skeletons/solo-project-list-skeleton";
 
 const statusMap = new Map<string,EvaluationStatus>([
     ["waiting-eval", "Waiting Eval"],
