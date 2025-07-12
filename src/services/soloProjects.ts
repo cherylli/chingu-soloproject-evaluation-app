@@ -1,6 +1,6 @@
 "use server"
 import {fields, table, transformData, transformDataSingleRecord} from "@/lib/airtable";
-import {Submission} from "@/types/SoloProjectTypes";
+import {SoloProjectTier, Submission} from "@/types/SoloProjectTypes";
 import {ActionResponse} from "@/types";
 import {getServerSession} from "next-auth";
 import {options} from "@/app/api/auth/[...nextauth]/options";
@@ -119,15 +119,46 @@ export const removeEvaluatorOnDb = async (id: string): Promise<ActionResponse> =
 
 export const updateSoloProjectById = async (id: string, fields: FieldSet)
     : Promise<ActionResponse> => {
-    const updatedRecord = await table.update([
-        {
-            id,
-            fields
+    try{
+        const updatedRecord = await table.update([
+            {
+                id,
+                fields
+            }
+        ])
+        return {
+            success: true,
+            message: `update success`,
+            data: transformData(updatedRecord)[0]
         }
-    ])
-    return {
-        success: true,
-        message: `update success`,
-        data: transformData(updatedRecord)[0]
+    }catch (e) {
+        return {
+            success: false,
+            message: `Error: ${e}`
+        }
     }
+
+}
+
+export const setTier = async (id: string, tier: SoloProjectTier): Promise<ActionResponse> => {
+     try{
+         const updatedRecord = await table.update([
+             {
+                 id,
+                 fields: {
+                     "Tier": tier
+                 }
+             }
+         ])
+         return {
+             success: true,
+             message: `Tier is set to ${tier}.`,
+             data: transformData(updatedRecord)[0]
+         }
+     } catch (e) {
+         return {
+             success: false,
+             message: `Error: ${e}`
+         }
+     }
 }

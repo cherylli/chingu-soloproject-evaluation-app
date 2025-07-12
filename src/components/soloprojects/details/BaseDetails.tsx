@@ -19,6 +19,8 @@ import SMDetails from "@/components/soloprojects/details/SMDetails";
 import PODetails from "@/components/soloprojects/details/PODetails";
 import UIUXDetails from "@/components/soloprojects/details/UIUXDetails";
 import { BaseDetailHeader } from "@/components/soloprojects/details/BaseDetailsHeader";
+import SetTierButton from "@/components/soloprojects/tiers/SetTierButton";
+import TierSuggestion from "@/components/soloprojects/tiers/TierSuggestion";
 
 interface ProjectDetailProps {
     record: Submission,
@@ -131,6 +133,8 @@ const ProjectSubmissionDetail = (
                 </div>
                 : null
             }
+
+            <TierSuggestion />
 
             <div className="flex">
                 <div className="mr-3">Evaluator:</div>
