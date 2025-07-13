@@ -11,7 +11,7 @@ const SetTierButton = ({
 }) => {
     const params = useParams()
     return (
-        <Button>
+        <Button variant="outline" className="border-green-700 text-green-700 hover:bg-green-700 hover:text-white cursor-pointer py-2">
             {btnText}
 
         </Button>
