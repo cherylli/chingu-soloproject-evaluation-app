@@ -1,6 +1,6 @@
 'use client'
 
-import {Submission, VoyageRole} from "@/types/SoloProjectTypes";
+import {FilteredFields, Submission, VoyageRole} from "@/types/SoloProjectTypes";
 import {Button} from "@/components/ui/button";
 import {Check, ChevronsUpDown, Copy, PencilLine, XCircle} from "lucide-react";
 import {Textarea} from "@/components/ui/textarea";
@@ -19,7 +19,6 @@ import SMDetails from "@/components/soloprojects/details/SMDetails";
 import PODetails from "@/components/soloprojects/details/PODetails";
 import UIUXDetails from "@/components/soloprojects/details/UIUXDetails";
 import { BaseDetailHeader } from "@/components/soloprojects/details/BaseDetailsHeader";
-import SetTierButton from "@/components/soloprojects/tiers/SetTierButton";
 import TierSuggestion from "@/components/soloprojects/tiers/TierSuggestion";
 
 interface ProjectDetailProps {
@@ -38,6 +37,10 @@ const ProjectSubmissionDetail = (
     const [evalStatus, setEvalStatus] = useState('')
     const [ringTheBellText, setRingTheBellText] = useState('')
     const [selectionLen, setSelectionLen] = useState(0)
+    const [_record, setRecord] = useState<Submission>(record)
+    // TODO: 1. update fields to use _record instead of record from props
+    // 2. get rid of evaluator state and use _record.evaluator
+    // 3. remove ___Local functions and just use the ones in service
 
     useEffect(() => {
         if (record) {
@@ -112,13 +115,25 @@ const ProjectSubmissionDetail = (
         }
     }
 
-
+    const updateRecordFields = (field: keyof FilteredFields, value: string) => {
+        setRecord({
+            ...record,
+            fields: {
+                ...record.fields,
+                [field]: value
+            }
+        })
+    }
 
     return <div>
         <section className="flex flex-col gap-5 w-[90%] mx-auto">
             <BaseDetailHeader record={record} />
             <div>{record.fields["Timestamp"].toString()}</div>
-            <div>{record.fields.Tier}</div>
+            <div className="flex gap-5 items-center">
+                <div>{_record.fields.Tier}</div>
+                <TierSuggestion onSuccess={updateRecordFields}/>
+            </div>
+
             {record.fields["Instructions"] ?
                 <div>
                     <div className="text-gray-500">Instructions:</div>
@@ -133,8 +148,6 @@ const ProjectSubmissionDetail = (
                 </div>
                 : null
             }
-
-            <TierSuggestion />
 
             <div className="flex">
                 <div className="mr-3">Evaluator:</div>
