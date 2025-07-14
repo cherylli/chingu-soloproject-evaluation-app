@@ -161,11 +161,15 @@ So with a `requested changes` project, we would send something like
 
 It's also a good idea to put a note in the comment section about why we are requesting for changes so it's easier for other evaluators and admin to see if they open a ticket.
 <br/><br/>
-In this case, we don't need to have the `evaluator` field set if it's moved quick enough to the `requested changes` status (remember to save). So anyone is free to evaluate it when it gets moved back to the `Waiting Eval` status.
+#### <u>Requested Changes</u>
+For requested change projects, it's ok to remove yourself as the evaluator once the status is saved. This allow other evaluators to work on it when it returns to the evaluation queue. It is also ok to leave the evaluator field set if you prefer to follow up.
 <br/><br/>
 A list of requested change conditions can be found in the flowchart below.
 
+#### <u>User picked incorrect tier</u>
+If the user picked the wrong tier, we can use the `Suggested Tier` dropdown to flag it. An admin will then update it on airtable.
 
+![](https://i.imgur.com/SDbEQ0u.png)
 
 ### 4. Select the appropriate 'Evaluation Status', and click `Save`
 This will save the feedback into the `Evaluation Feedback` field in airtable, and a save confirmation should be displayed on success. (browser alert at this stage)
