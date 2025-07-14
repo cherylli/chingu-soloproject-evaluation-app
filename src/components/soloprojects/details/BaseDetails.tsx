@@ -8,7 +8,7 @@ import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem} from "@/components/ui/command";
 import {evalStatusValues} from "@/lib/options";
 import {cn} from "@/lib/utils";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {ActionResponse} from "@/types";
 import {CopyToClipboard} from "react-copy-to-clipboard";
 import {toast} from "react-hot-toast";
@@ -29,19 +29,19 @@ interface ProjectDetailProps {
 }
 
 const ProjectSubmissionDetail = (
-    {record, handleSave, handleSetEvaluator, handleRemoveEvaluator}: ProjectDetailProps
+    {record: initialRecord, handleSave, handleSetEvaluator, handleRemoveEvaluator}: ProjectDetailProps
 ) => {
-    const [evaluator, setEvaluator] = useState('')
-    const [evalNotes, setEvalNotes] = useState('');
     const [statusOpen, setStatusOpen] = useState(false)
-    const [evalStatus, setEvalStatus] = useState('')
     const [ringTheBellText, setRingTheBellText] = useState('')
     const [selectionLen, setSelectionLen] = useState(0)
-    const [_record, setRecord] = useState<Submission>(record)
-    // TODO: 1. update fields to use _record instead of record from props
-    // 2. get rid of evaluator state and use _record.evaluator
+    const [record, setRecord] = useState<Submission>(initialRecord)
+    // TODO:
+    //  [x] 1. update fields to use _record instead of record from props
+    //  [x] 2. get rid of evaluator state and use _record.evaluator
     // 3. remove ___Local functions and just use the ones in service
 
+    if(!record) return
+    /*
     useEffect(() => {
         if (record) {
             setEvalNotes(record.fields['Evaluation Feedback']);
@@ -50,9 +50,11 @@ const ProjectSubmissionDetail = (
         }
     }, [record]);
 
+     */
+
     const handleSaveLocal = async () => {
         const savingToast = toast.loading('Saving...')
-        const res = await handleSave(evalNotes, evalStatus)
+        const res = await handleSave(record.fields["Evaluation Feedback"], record.fields["Evaluation Status"])
         if (res.success) {
             toast.success(`Saved. Status: ${res.data?.fields["Evaluation Status"]}`)
         } else {
@@ -65,7 +67,7 @@ const ProjectSubmissionDetail = (
         const setEvaluatorToast = toast.loading('Setting Evaluator...')
         const res = await handleSetEvaluator()
         if (res.success) {
-            setEvaluator(res.data?.fields.Evaluator as string)
+            updateRecordFields('Evaluator', res.data?.fields.Evaluator as string)
             toast.success(`Evaluator set to ${res.data?.fields.Evaluator}`)
         } else {
             toast.error(`Set Evaluator FAILED: ${res.message}`)
@@ -77,7 +79,7 @@ const ProjectSubmissionDetail = (
         const removeEvaluatorToast = toast.loading('Removing Evaluator...')
         const res = await handleRemoveEvaluator()
         if (res.success) {
-            setEvaluator('')
+            updateRecordFields('Evaluator', '')
             toast.success('Removed Evaluator')
         } else {
             toast.error(`Remove evaluator FAILED: ${res.message}`)
@@ -130,7 +132,7 @@ const ProjectSubmissionDetail = (
             <BaseDetailHeader record={record} />
             <div>{record.fields["Timestamp"].toString()}</div>
             <div className="flex gap-5 items-center">
-                <div>{_record.fields.Tier}</div>
+                <div>{record.fields.Tier}</div>
                 <TierSuggestion onSuccess={updateRecordFields}/>
             </div>
 
@@ -151,13 +153,13 @@ const ProjectSubmissionDetail = (
 
             <div className="flex">
                 <div className="mr-3">Evaluator:</div>
-                <div>{evaluator}</div>
-                {evaluator&&<XCircle color="#A30000" className="ml-2 cursor-pointer" onClick={handleRemoveEvaluatorLocal}/>}
+                <div>{record.fields.Evaluator}</div>
+                {record.fields.Evaluator&&<XCircle color="#A30000" className="ml-2 cursor-pointer" onClick={handleRemoveEvaluatorLocal}/>}
             </div>
 
 
             <Button className="bg-green-700 light:text-white-200 hover:bg-green-900 disabled:bg-gray-500"
-                    disabled={!!evaluator}
+                    disabled={!!record.fields.Evaluator}
                     onClick={handleSetEvaluatorLocal}
             >
                 <PencilLine className="mr-2 h-4 w-4"/>
@@ -170,12 +172,12 @@ const ProjectSubmissionDetail = (
 
             <Textarea
                 className="h-[500px]"
-                value={evalNotes}
-                onChange={e => setEvalNotes(e.target.value)}
+                value={record.fields["Evaluation Feedback"]}
+                onChange={e => updateRecordFields('Evaluation Feedback', e.target.value)}
                 onMouseUp={onSelectText}
             />
             <div className="text-right text-gray-500">
-                {selectionLen}/{evalNotes?.length ?? '0'}
+                {selectionLen}/{record.fields["Evaluation Feedback"]?.length ?? '0'}
             </div>
 
             <div className="flex gap-5 items-center">
@@ -188,7 +190,7 @@ const ProjectSubmissionDetail = (
                             aria-expanded={statusOpen}
                             className="w-[200px] justify-between"
                         >
-                            {evalStatus}
+                            {record.fields["Evaluation Status"]}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50"/>
                         </Button>
                     </PopoverTrigger>
@@ -201,7 +203,7 @@ const ProjectSubmissionDetail = (
                                     <CommandItem
                                         key={status.value}
                                         onSelect={(_) => {
-                                            setEvalStatus(status.value)
+                                            updateRecordFields("Evaluation Status", status.value)
                                             if (status.value === "Passed") {
                                                 onPassSelect()
                                             }
@@ -211,7 +213,7 @@ const ProjectSubmissionDetail = (
                                         <Check
                                             className={cn(
                                                 "mr-2 h-4 w-4",
-                                                evalStatus === status.value ? "opacity-100" : "opacity-0"
+                                                record.fields["Evaluation Status"] === status.value ? "opacity-100" : "opacity-0"
                                             )}
                                         />
                                         {status.label}
@@ -222,7 +224,7 @@ const ProjectSubmissionDetail = (
                     </PopoverContent>
                 </Popover>
             </div>
-            {evalStatus === "Passed"
+            {record.fields["Evaluation Status"] === "Passed"
                 ? <div className="whitespace-pre-line">
                     {ringTheBellText}
                     <CopyToClipboard text={ringTheBellText}>
