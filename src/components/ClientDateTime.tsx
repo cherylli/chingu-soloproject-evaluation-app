@@ -14,7 +14,7 @@ const dateFormatOptions = {
 
 const ClientDateTime = () => {
     return(
-        <span>
+        <span suppressHydrationWarning>
             {new Intl.DateTimeFormat('en-US', dateFormatOptions).format(new Date())}
         </span>
     )
