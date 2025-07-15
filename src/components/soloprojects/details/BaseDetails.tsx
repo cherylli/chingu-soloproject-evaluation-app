@@ -32,10 +32,6 @@ const ProjectSubmissionDetail = (
     const [ringTheBellText, setRingTheBellText] = useState('')
     const [selectionLen, setSelectionLen] = useState(0)
     const [record, setRecord] = useState<Submission>(initialRecord)
-    // TODO:
-    //  [x] 1. update fields to use _record instead of record from props
-    //  [x] 2. get rid of evaluator state and use _record.evaluator
-    // 3. remove ___Local functions and just use the ones in service
 
     if(!record) return
 

@@ -16,33 +16,25 @@ import { useEffect, useState } from "react";
 import { ActionResponse } from "@/types";
 import { toast } from "react-hot-toast";
 import { BaseDetailHeader } from "@/components/soloprojects/details/BaseDetailsHeader";
+import {updateSoloProjectById} from "@/services/soloProjects";
 
 
 interface ProjectDetailProps {
-    record: Submission,
-    handleStatusChange: (evalStatus: string) => Promise<ActionResponse>
+    record: Submission
 }
 
 const ReadOnlyDetails = (
-    { record, handleStatusChange }: ProjectDetailProps
+    { record }: ProjectDetailProps
 ) => {
-    const [evaluator, setEvaluator] = useState('')
-    const [evalNotes, setEvalNotes] = useState('');
+
     const [statusOpen, setStatusOpen] = useState(false)
-    const [evalStatus, setEvalStatus] = useState('')
+    const [evalStatus, setEvalStatus] = useState(record.fields["Evaluation Status"])
 
-
-    useEffect(() => {
-        if (record) {
-            setEvalNotes(record.fields['Evaluation Feedback']);
-            setEvaluator(record.fields.Evaluator)
-            setEvalStatus(record.fields["Evaluation Status"])
-        }
-    }, [record]);
-
-    const handleStatusChangeLocal = async () => {
+    const handleStatusChange = async () => {
         const savingToast = toast.loading('Saving...')
-        const res = await handleStatusChange(evalStatus)
+        const res = await updateSoloProjectById(record.id, {
+            "Evaluation Status": evalStatus,
+        })
         if (res.success) {
             toast.success(`Saved. Status: ${res.data?.fields["Evaluation Status"]}`)
         } else {
@@ -110,14 +102,13 @@ const ReadOnlyDetails = (
 
             <div className="flex">
                 <div className="mr-3">Evaluator:</div>
-                <div>{evaluator}</div>
+                <div>{record.fields.Evaluator}</div>
             </div>
 
             <Textarea
                 readOnly
                 className="h-[200px]"
-                value={evalNotes}
-                onChange={e => setEvalNotes(e.target.value)}
+                value={record.fields["Evaluation Feedback"]}
             />
 
             <div className="flex gap-5 items-center">
@@ -162,7 +153,7 @@ const ReadOnlyDetails = (
                 </Popover>
             </div>
             <Button
-                onClick={handleStatusChangeLocal}
+                onClick={handleStatusChange}
             >Save</Button>
         </section>
     </div>
