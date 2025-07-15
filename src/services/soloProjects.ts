@@ -1,6 +1,6 @@
 "use server"
 import {fields, table, transformData, transformDataSingleRecord} from "@/lib/airtable";
-import {SoloProjectTier, Submission} from "@/types/SoloProjectTypes";
+import {Submission} from "@/types/SoloProjectTypes";
 import {ActionResponse} from "@/types";
 import {getServerSession} from "next-auth";
 import {options} from "@/app/api/auth/[...nextauth]/options";

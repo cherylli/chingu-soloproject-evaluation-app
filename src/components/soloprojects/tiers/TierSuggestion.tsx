@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {Button} from "@/components/ui/button";
 import {FilteredFields, SoloProjectTier, Submission} from "@/types/SoloProjectTypes";
-import {setTier, updateSoloProjectById} from "@/services/soloProjects";
+import {updateSoloProjectById} from "@/services/soloProjects";
 import {useParams} from "next/navigation";
 import {toast} from "react-hot-toast";
 
