@@ -30,15 +30,6 @@ const SoloProjectPage = async (props: { params: Promise<{ id: string }> }) => {
             "Evaluation Status": evalStatus,
         })
     }
-    const handleSetEvaluator = async (): Promise<ActionResponse> => {
-        'use server'
-        return await setEvaluatorOnDb(params.id)
-    }
-    const handleRemoveEvaluator = async (): Promise<ActionResponse> => {
-        'use server'
-        return await removeEvaluatorOnDb(params.id)
-    }
-
 
     return (
         record.fields["Evaluation Status"] === "Passed" ?
@@ -56,9 +47,6 @@ const SoloProjectPage = async (props: { params: Promise<{ id: string }> }) => {
                         {projects.length > 1 && <CompactList records={projects}/>}
                         <ProjectSubmissionDetail
                             record={record}
-                            handleSave={handleSave}
-                            handleSetEvaluator={handleSetEvaluator}
-                            handleRemoveEvaluator={handleRemoveEvaluator}
                         />
                         <Comments recordId={params.id}/>
                     </div>

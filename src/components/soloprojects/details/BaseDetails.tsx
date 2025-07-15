@@ -9,7 +9,6 @@ import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem} from "@/
 import {evalStatusValues} from "@/lib/options";
 import {cn} from "@/lib/utils";
 import {useState} from "react";
-import {ActionResponse} from "@/types";
 import {CopyToClipboard} from "react-copy-to-clipboard";
 import {toast} from "react-hot-toast";
 import {getRandomPassMessage} from "@/lib/getRandomPassMessage";
@@ -20,16 +19,14 @@ import PODetails from "@/components/soloprojects/details/PODetails";
 import UIUXDetails from "@/components/soloprojects/details/UIUXDetails";
 import { BaseDetailHeader } from "@/components/soloprojects/details/BaseDetailsHeader";
 import TierSuggestion from "@/components/soloprojects/tiers/TierSuggestion";
+import {removeEvaluatorOnDb, setEvaluatorOnDb, updateSoloProjectById} from "@/services/soloProjects";
 
 interface ProjectDetailProps {
-    record: Submission,
-    handleSave: (evalNotes: string, evalStatus: string) => Promise<ActionResponse>
-    handleSetEvaluator: () => Promise<ActionResponse>
-    handleRemoveEvaluator: () => Promise<ActionResponse>
+    record: Submission
 }
 
 const ProjectSubmissionDetail = (
-    {record: initialRecord, handleSave, handleSetEvaluator, handleRemoveEvaluator}: ProjectDetailProps
+    {record: initialRecord}: ProjectDetailProps
 ) => {
     const [statusOpen, setStatusOpen] = useState(false)
     const [ringTheBellText, setRingTheBellText] = useState('')
@@ -42,9 +39,12 @@ const ProjectSubmissionDetail = (
 
     if(!record) return
 
-    const handleSaveLocal = async () => {
+    const handleSave = async () => {
         const savingToast = toast.loading('Saving...')
-        const res = await handleSave(record.fields["Evaluation Feedback"], record.fields["Evaluation Status"])
+        const res = await updateSoloProjectById(record.id, {
+            "Evaluation Feedback": record.fields["Evaluation Feedback"],
+            "Evaluation Status": record.fields["Evaluation Status"]
+        })
         if (res.success) {
             toast.success(`Saved. Status: ${res.data?.fields["Evaluation Status"]}`)
         } else {
@@ -53,9 +53,9 @@ const ProjectSubmissionDetail = (
         toast.dismiss(savingToast)
     }
 
-    const handleSetEvaluatorLocal = async () => {
+    const handleSetEvaluator = async () => {
         const setEvaluatorToast = toast.loading('Setting Evaluator...')
-        const res = await handleSetEvaluator()
+        const res = await setEvaluatorOnDb(record.id)
         if (res.success) {
             updateRecordFields('Evaluator', res.data?.fields.Evaluator as string)
             toast.success(`Evaluator set to ${res.data?.fields.Evaluator}`)
@@ -65,9 +65,9 @@ const ProjectSubmissionDetail = (
         toast.dismiss(setEvaluatorToast)
     }
 
-    const handleRemoveEvaluatorLocal = async () => {
+    const handleRemoveEvaluator = async () => {
         const removeEvaluatorToast = toast.loading('Removing Evaluator...')
-        const res = await handleRemoveEvaluator()
+        const res = await removeEvaluatorOnDb(record.id)
         if (res.success) {
             updateRecordFields('Evaluator', '')
             toast.success('Removed Evaluator')
@@ -144,13 +144,13 @@ const ProjectSubmissionDetail = (
             <div className="flex">
                 <div className="mr-3">Evaluator:</div>
                 <div>{record.fields.Evaluator}</div>
-                {record.fields.Evaluator&&<XCircle color="#A30000" className="ml-2 cursor-pointer" onClick={handleRemoveEvaluatorLocal}/>}
+                {record.fields.Evaluator&&<XCircle color="#A30000" className="ml-2 cursor-pointer" onClick={handleRemoveEvaluator}/>}
             </div>
 
 
             <Button className="bg-green-700 light:text-white-200 hover:bg-green-900 disabled:bg-gray-500"
                     disabled={!!record.fields.Evaluator}
-                    onClick={handleSetEvaluatorLocal}
+                    onClick={handleSetEvaluator}
             >
                 <PencilLine className="mr-2 h-4 w-4"/>
                 Evaluate This
@@ -231,7 +231,7 @@ const ProjectSubmissionDetail = (
                 : null
             }
             <Button
-                onClick={handleSaveLocal}
+                onClick={handleSave}
             >Save</Button>
         </section>
     </div>
