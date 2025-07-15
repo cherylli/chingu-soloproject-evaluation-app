@@ -139,26 +139,3 @@ export const updateSoloProjectById = async (id: string, fields: FieldSet)
     }
 
 }
-
-export const setTier = async (id: string, tier: SoloProjectTier): Promise<ActionResponse> => {
-     try{
-         const updatedRecord = await table.update([
-             {
-                 id,
-                 fields: {
-                     "Tier": tier
-                 }
-             }
-         ])
-         return {
-             success: true,
-             message: `Tier is set to ${tier}.`,
-             data: transformData(updatedRecord)[0]
-         }
-     } catch (e) {
-         return {
-             success: false,
-             message: `Error: ${e}`
-         }
-     }
-}

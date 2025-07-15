@@ -41,16 +41,6 @@ const ProjectSubmissionDetail = (
     // 3. remove ___Local functions and just use the ones in service
 
     if(!record) return
-    /*
-    useEffect(() => {
-        if (record) {
-            setEvalNotes(record.fields['Evaluation Feedback']);
-            setEvaluator(record.fields.Evaluator)
-            setEvalStatus(record.fields["Evaluation Status"])
-        }
-    }, [record]);
-
-     */
 
     const handleSaveLocal = async () => {
         const savingToast = toast.loading('Saving...')

@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {Button} from "@/components/ui/button";
 import {FilteredFields, SoloProjectTier, Submission} from "@/types/SoloProjectTypes";
-import {setTier} from "@/services/soloProjects";
+import {setTier, updateSoloProjectById} from "@/services/soloProjects";
 import {useParams} from "next/navigation";
 import {toast} from "react-hot-toast";
 
@@ -27,7 +27,9 @@ const TierSuggestion = ({
     const handleTierChange = async (tier: SoloProjectTier) => {
         console.log("change tier to: ", tier, params.id)
         const res = await toast.promise(
-            setTier(params.id as string, tier), {
+            updateSoloProjectById(params.id as string, {
+                "Tier": tier,
+            }), {
                 loading: "Setting Tier...",
                 success: `Tier set to ${tier}`,
                 error: "Failed to set tier"
