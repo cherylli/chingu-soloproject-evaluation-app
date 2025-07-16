@@ -3,7 +3,7 @@ import { DialogContent, DialogDescription, DialogTitle } from "@/components/ui/d
 import { Row } from "@tanstack/table-core";
 import { progressColor } from "@/styles/checkin/progress";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import YesNoIcon from "@/components/styles/YesNoIcon";
+import YesNoIcon from "@/components/ui/icons/YesNoIcon";
 
 const CheckInDialogContent = ({record}: {record: Row<CheckIn>}) => {
     return <DialogContent className={`border-4 ${progressColor[record.original.fields["Progress Rating"]]?.border}`}>

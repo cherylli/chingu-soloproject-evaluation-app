@@ -708,6 +708,11 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/retry/-/retry-0.4.2.tgz#1860473de7dfa1546767448f333db80cb0ff2161"
   integrity sha512-xeO57FpIu4p1Ri3Jq/EXq4ClRm86dVF2z/+kvFnyqVYRavTZmaFaUBbWCOuuTh0o/g7DSsk6kc2vrS4Vl5oPOQ==
 
+"@icons-pack/react-simple-icons@^13.5.0":
+  version "13.5.0"
+  resolved "https://registry.yarnpkg.com/@icons-pack/react-simple-icons/-/react-simple-icons-13.5.0.tgz#a9ee5c774e500a011e08b525248f1fc074c186be"
+  integrity sha512-00/E53YOt967SomgPWyH4eTtHdUDLAeaowl0CAU7UnEuBOrHznrKhFQHccdN0wShR5CVXxYh41qeYl6ZGJ/OSg==
+
 "@img/sharp-darwin-arm64@0.34.1":
   version "0.34.1"
   resolved "https://registry.yarnpkg.com/@img/sharp-darwin-arm64/-/sharp-darwin-arm64-0.34.1.tgz#e79a4756bea9a06a7aadb4391ee53cb154a4968c"

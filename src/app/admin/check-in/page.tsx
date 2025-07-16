@@ -1,3 +1,5 @@
+import H1 from "@/components/ui/typography/h1";
+
 export const dynamic = 'force-dynamic'
 
 import { getLastestCheckIns } from "@/services/checkins";
@@ -8,7 +10,7 @@ const VoyageCheckIn = async () => {
 
     return(
         <div>
-            <h1 className="text-center">Latest 100 Voyage Check-ins</h1>
+            <H1>Latest 100 Voyage Check-ins</H1>
             <CheckinTable records={checkin} />
         </div>
     )

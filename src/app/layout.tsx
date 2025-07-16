@@ -48,7 +48,7 @@ export default function RootLayout({children}: {
                             },
                         }}
                     />
-                    <main>
+                    <main className="mx-5">
                         <Suspense fallback={<LoadingScreen />}>
                             {children}
                         </Suspense>

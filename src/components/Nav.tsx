@@ -60,6 +60,9 @@ const Nav = () => {
                                 <MenubarItem>
                                     <Link href={'/admin/check-in'}>Voyage Checkins</Link>
                                 </MenubarItem>
+                                <MenubarItem>
+                                    <Link href={'/admin/solo-project/tier-mismatch'}>Tier Mismatch</Link>
+                                </MenubarItem>
                             </MenubarContent>
                         </MenubarMenu>
                     }
