@@ -1,5 +1,5 @@
 import Airtable, {FieldSet, Record, Records} from "airtable";
-import {EvaluationStatus, Submission, VoyageRole} from "@/types/SoloProjectTypes";
+import {EvaluationStatus, SoloProjectTier, Submission, VoyageRole} from "@/types/SoloProjectTypes";
 import { CheckIn, CheckinFormRole, ProgressRating, SprintNumber, Tier } from "@/types/CheckinTypes";
 
 const base = new Airtable({apiKey: process.env.AIRTABLE_PAT})
@@ -85,7 +85,7 @@ const transformRecord = (record: Record<FieldSet>) => {
             "Discord Name": record.fields["Discord Name"] as string,
             "GitHub ID": record.fields["GitHub ID"] as string,
             "Timestamp": record.fields["Timestamp"] as string,
-            "Tier": record.fields["Tier"] as string,
+            "Tier": record.fields["Tier"] as SoloProjectTier,
             "GitHub Repo URL": record.fields["GitHub Repo URL"] as string,
             "Deployed App URL": record.fields["Deployed App URL"] as string,
             "UI/UX Project URL": record.fields["UI/UX Project URL"] as string,

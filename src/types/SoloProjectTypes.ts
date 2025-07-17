@@ -22,12 +22,20 @@ export type VoyageRole =
     | "Scrum Master"
     | "unknown"
 
+export type SoloProjectTier =
+    | "Tier 1 - Beginner (ONLY for Developer role)"
+    | "Tier 2  - Intermediate (All roles)"
+    | "Tier 3 - Experienced (All roles)"
+    | "*Tier1"
+    | "*Tier2"
+    | "*Tier3"
+
 type BasicFields = {
     "Email": string
     "Discord Name": string
     "GitHub ID": string
     "Timestamp": Date | string
-    "Tier": string
+    "Tier": SoloProjectTier
     "GitHub Repo URL": string
     "Deployed App URL": string
     "UI/UX Project URL": string

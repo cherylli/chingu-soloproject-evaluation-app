@@ -119,15 +119,34 @@ export const removeEvaluatorOnDb = async (id: string): Promise<ActionResponse> =
 
 export const updateSoloProjectById = async (id: string, fields: FieldSet)
     : Promise<ActionResponse> => {
-    const updatedRecord = await table.update([
-        {
-            id,
-            fields
+    try{
+        const updatedRecord = await table.update([
+            {
+                id,
+                fields
+            }
+        ])
+        return {
+            success: true,
+            message: `update success`,
+            data: transformData(updatedRecord)[0]
         }
-    ])
-    return {
-        success: true,
-        message: `update success`,
-        data: transformData(updatedRecord)[0]
+    }catch (e) {
+        return {
+            success: false,
+            message: `Error: ${e}`
+        }
     }
+
+}
+
+// return all solo projects with tier= "*Tier1", "*Tier2" or "*Tier3" (tier suggestions by evaluators),
+// which indicates the user picked a different tier
+export const getTierMismatchedSoloProjects = async (): Promise<Submission[]> => {
+    const filter = `OR({Tier} = "*Tier1", {Tier} = "*Tier2", {Tier} = "*Tier3")`
+    const records = await table.select({
+        filterByFormula: filter,
+        fields,
+    }).all()
+    return transformData(records)
 }

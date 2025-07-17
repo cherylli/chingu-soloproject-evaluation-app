@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/cherylli/chingu-soloproject-evaluation-app/compare/v1.3.0...v1.4.0) (2025-07-09)
+
+
+### Features
+
+* add auto refresh to solo project page ([f8c3438](https://github.com/cherylli/chingu-soloproject-evaluation-app/commit/f8c3438b755c18fce7183b5d39b21bfe5929a971))
+
 ## [1.3.0](https://github.com/cherylli/chingu-soloproject-evaluation-app/compare/v1.2.0...v1.3.0) (2025-06-10)
 
 

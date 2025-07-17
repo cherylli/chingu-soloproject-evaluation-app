@@ -3,7 +3,7 @@ import { DialogContent, DialogDescription, DialogTitle } from "@/components/ui/d
 import { Row } from "@tanstack/table-core";
 import { progressColor } from "@/styles/checkin/progress";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import YesNoIcon from "@/components/styles/YesNoIcon";
+import YesNoIcon from "@/components/ui/icons/YesNoIcon";
 
 const CheckInDialogContent = ({record}: {record: Row<CheckIn>}) => {
     return <DialogContent className={`border-4 ${progressColor[record.original.fields["Progress Rating"]]?.border}`}>
@@ -24,11 +24,11 @@ const CheckInDialogContent = ({record}: {record: Row<CheckIn>}) => {
                 <p>Team Communications: {record.original.fields["Team Communications"]}</p>
 
                 {record.original.fields["Addl. Comments"] &&
-                    <p>Member Comments:
+                    <div>Member Comments:
                         <ScrollArea className="h-[200px] w-full rounded-md border p-4 whitespace-break-spaces">
                             {record.original.fields["Addl. Comments"]}
                         </ScrollArea>
-                    </p>
+                    </div>
                 }
 
                 <div>
