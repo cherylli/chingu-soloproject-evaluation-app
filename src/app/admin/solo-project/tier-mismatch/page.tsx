@@ -6,6 +6,8 @@ import P from "@/components/ui/typography/p";
 const SoloProjectTierMismatchPage = async () => {
     const records = await getTierMismatchedSoloProjects()
 
+
+
     return(
         <div>
             <H1>Solo Projects with Mismatched Tiers</H1>

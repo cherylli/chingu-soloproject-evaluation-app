@@ -1,14 +1,15 @@
-import {createColumnHelper} from "@tanstack/table-core";
-import {Submission} from "@/types/SoloProjectTypes";
+import {ColumnDef, createColumnHelper} from "@tanstack/table-core";
+import {SoloProjectTier, Submission} from "@/types/SoloProjectTypes";
 import Link from "next/link";
 import {ExternalLink, LinkIcon} from "lucide-react";
 import {SiGithub} from "@icons-pack/react-simple-icons";
-import {Button} from "@/components/ui/button";
 import SetTierBtn from "@/components/soloprojects/tiers/SetTierBtn";
 
 const columnHelper = createColumnHelper<Submission>()
 
-export const tierMismatchColumnDef = [
+export const tierMismatchColumnDef = (
+    refreshRow: (id: string, newTier: SoloProjectTier) => void
+) => [
     columnHelper.accessor((row) => row.fields["Discord Name"], {
         header: "User",
         cell: ({getValue, row}) => {
@@ -62,6 +63,7 @@ export const tierMismatchColumnDef = [
             return <SetTierBtn
                 soloProjectId={row.original.id}
                 tier={row.original.fields.Tier}
+                onSuccess={(newTier) => refreshRow(row.original.id, newTier)}
             >Accept</SetTierBtn>
         }
     }),
@@ -71,9 +73,11 @@ export const tierMismatchColumnDef = [
         cell: ({row}) => {
             return <div className="flex gap-2">
                 {[1, 2, 3].map(tier => <SetTierBtn
-                    key={tier}
-                    soloProjectId={row.original.id}
-                    tier={tier.toString()}>{tier}</SetTierBtn>
+                        key={tier}
+                        soloProjectId={row.original.id}
+                        tier={tier.toString()}
+                        onSuccess={(newTier) => refreshRow(row.original.id, newTier)}
+                    >{tier}</SetTierBtn>
                 )}
             </div>
         }
