@@ -1,4 +1,4 @@
-import {ColumnDef, createColumnHelper} from "@tanstack/table-core";
+import {createColumnHelper} from "@tanstack/table-core";
 import {SoloProjectTier, Submission} from "@/types/SoloProjectTypes";
 import Link from "next/link";
 import {ExternalLink, LinkIcon} from "lucide-react";

@@ -1,6 +1,7 @@
 import Airtable, {FieldSet, Record, Records} from "airtable";
 import {EvaluationStatus, SoloProjectTier, Submission, VoyageRole} from "@/types/SoloProjectTypes";
 import { CheckIn, CheckinFormRole, ProgressRating, SprintNumber, Tier } from "@/types/CheckinTypes";
+import {VoyageSignup} from "@/types/VoyageSignupTypes";
 
 const base = new Airtable({apiKey: process.env.AIRTABLE_PAT})
     .base(process.env.AIRTABLE_BASEID as string)
@@ -8,6 +9,7 @@ const base = new Airtable({apiKey: process.env.AIRTABLE_PAT})
 const table = base(process.env.AIRTABLE_TABLEID as string)
 const userTable = base(process.env.AIRTABLE_USERS_TABLEID as string)
 const checkinTable = base(process.env.AIRTABLE_CHECKIN_TABLEID as string)
+const voyageSignupTable = base(process.env.AIRTABLE_VOYAGE_SIGNUP_TABLEID as string)
 
 const fields = [
     "Email",
@@ -152,6 +154,7 @@ const transformData = (records:Records<FieldSet>): Submission[] => {
     return records.map((record: Record<FieldSet>)=>transformRecord(record))
 }
 
+// TODO: this can probably be combined with transformRecord
 const transformDataSingleRecord = (record:Record<FieldSet>) => {
    return transformRecord(record)
 }
@@ -194,18 +197,53 @@ const transformCheckinData = (records:Records<FieldSet>): CheckIn[] => {
     return records.map((record: Record<FieldSet>)=>transformCheckinRecord(record))
 }
 
-const transformCheckinDataSingleRecord = (record:Record<FieldSet>) => {
-    return transformCheckinRecord(record)
+/*******
+ Voyage Signup
+     *************/
+// single record
+const transformVoyageSignupRecord = (record: Record<FieldSet>) => {
+    return {
+        id: record.id,
+        fields: {
+            "Timestamp": record.fields["Timestamp"] as string,
+            "Email": record.fields["Email"] as string,
+            "Discord Name": record.fields["Discord Name"] as string,
+            "GitHub ID": record.fields["GitHub ID"] as string,
+            "Evaluation Status (from Solo Project Link)": record.fields["Evaluation Status (from Solo Project Link)"] as string,
+            "Status": record.fields["Status"] as string,
+            "Status Comment": record.fields["Status Comment"] as string,
+            "Voyage": record.fields["Voyage"] as string,
+            "Team Name": record.fields["Team Name"] as string,
+            "Team No.": record.fields["Team No."] as string,
+            "Timezone": record.fields["Timezone"] as string,
+            "Role": record.fields["Role"] as VoyageRole,
+            "Role Type": record.fields["Role Type"] as string,
+            "Tier": record.fields["Tier"] as SoloProjectTier,
+            "Info to Share": record.fields["Info to Share"] as string,
+            "Application Link": record.fields["Application Link"] as string,
+            "Solo Project Link": record.fields["Solo Project Link"] as string,
+            "Confirmation Form Completed": record.fields["Confirmation Form Completed"] as boolean,
+            "Showcase Name Permission?": record.fields["Showcase Name Permission?"] as boolean,
+            "Discord ID": record.fields["Discord ID"] as string,
+            "Product (from Most Recent Subscriptions & Product Sales)": record.fields["Product (from Most Recent Subscriptions & Product Sales)"] as string
+        }
+    }
+}
+
+// multiple records
+const transformVoyageSignupData = (records:Records<FieldSet>): VoyageSignup[] => {
+    return records.map((record: Record<FieldSet>)=>transformVoyageSignupRecord(record))
 }
 
 export {
     table,
     userTable,
     checkinTable,
+    voyageSignupTable,
     fields,
     transformData,
     transformDataSingleRecord,
     transformCheckinData,
-    transformCheckinDataSingleRecord
+    transformVoyageSignupData
 }
 
