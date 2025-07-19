@@ -13,6 +13,7 @@ const VoyageSignupTable = ({
         atBaseUrl: string
     }
 ) => {
+
     const table = useReactTable<VoyageSignup>({
         data: records,
         columns: voyageSignupColumnDef(atBaseUrl),

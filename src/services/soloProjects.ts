@@ -41,7 +41,7 @@ export const getAllSoloProjectsByUser = async (discordId: string, email: string)
     return transformData(records)
 }
 
-export const setEvaluatorOnDb = async (id: string): Promise<ActionResponse> => {
+export const setEvaluatorOnDb = async (id: string): Promise<ActionResponse<Submission>> => {
     const sessionData = await getServerSession(options)
     try {
         const record = await table.find(id)
@@ -87,7 +87,7 @@ export const setEvaluatorOnDb = async (id: string): Promise<ActionResponse> => {
     }
 }
 
-export const removeEvaluatorOnDb = async (id: string): Promise<ActionResponse> => {
+export const removeEvaluatorOnDb = async (id: string): Promise<ActionResponse<Submission>> => {
     const sessionData = await getServerSession(options)
     try {
         if(sessionData) {
@@ -118,7 +118,7 @@ export const removeEvaluatorOnDb = async (id: string): Promise<ActionResponse> =
 }
 
 export const updateSoloProjectById = async (id: string, fields: FieldSet)
-    : Promise<ActionResponse> => {
+    : Promise<ActionResponse<Submission>> => {
     try{
         const updatedRecord = await table.update([
             {
