@@ -2,9 +2,10 @@ import FeedbackList from "@/components/feedback/FeedbackList";
 import {FeedbackCategory as FeedbackCategoryType} from "@/types/FeedbackType";
 import {initializeApp} from "@firebase/app";
 import {getDownloadURL, getStorage, ref} from "@firebase/storage";
+import {env} from "@/env";
 
 const firebaseConfig = {
-    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+    storageBucket: env.FIREBASE_STORAGE_BUCKET,
 }
 
 const app = initializeApp(firebaseConfig);

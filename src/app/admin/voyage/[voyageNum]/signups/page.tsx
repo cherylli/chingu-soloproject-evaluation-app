@@ -1,6 +1,7 @@
 import {getVoyageSignupByVoyageNum} from "@/services/voyages";
+import SingleVoyageSignupTable from "@/components/voyages/signups/SingleVoyageSignupTable";
 import {z} from "zod";
-import VoyageSignupTable from "@/components/voyages/signups/VoyageSignupTable";
+import {getAtTableBaseUrl} from "@/lib/getAtTableBaseUrl";
 
 const paramsSchema = z.object({
     voyageNum: z
@@ -20,16 +21,16 @@ const SingleVoyageSignupPage = async ({
 
     const signups = await getVoyageSignupByVoyageNum(parsedParams.voyageNum)
 
-    if(!signups.success){
+    if (!signups.success) {
         return <div>Error fetching signups</div>
     }
 
     return (
         <div>
             SingleVoyageSignupPage - {parsedParams.voyageNum}
-            <VoyageSignupTable
+            <SingleVoyageSignupTable
                 records={signups.data}
-                atBaseUrl={`https://airtable.com/${process.env.AIRTABLE_BASEID}/${process.env.AIRTABLE_VOYAGE_SIGNUP_TABLEID}`}
+                atBaseUrl={getAtTableBaseUrl("voyage-signup")}
             />
         </div>
     )

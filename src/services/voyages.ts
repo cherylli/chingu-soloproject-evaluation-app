@@ -30,7 +30,7 @@ export const getLastestVoyageSignups = async (): Promise<ActionResponse<VoyageSi
 export const getVoyageSignupByVoyageNum = async (voyageNum: number): Promise<ActionResponse<VoyageSignup[]>> => {
     try{
         const records = await voyageSignupTable.select({
-            filterByFormula: `{Voyage} = "V${voyageNum}"`,
+            filterByFormula: `AND({Voyage} = "V${voyageNum}", {Email} != "")`,
             sort: [{
                 field: "Timestamp",
                 direction: "desc"

@@ -2,8 +2,8 @@
 import {VoyageSignup} from "@/types/VoyageSignupTypes";
 import {useReactTable} from "@tanstack/react-table";
 import {getCoreRowModel} from "@tanstack/table-core";
-import {voyageSignupColumnDef} from "@/components/voyages/signups/SignupColDef";
 import StandardReactTable from "@/components/react-table/StandardReactTable";
+import {voyageSignupColumnDef} from "@/components/voyages/signups/allSignupColDef";
 
 const VoyageSignupTable = ({
         records,

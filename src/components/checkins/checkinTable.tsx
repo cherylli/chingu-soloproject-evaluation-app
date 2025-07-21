@@ -1,23 +1,23 @@
 'use client'
 
-import { CheckIn } from "@/types/CheckinTypes";
+import {CheckIn} from "@/types/CheckinTypes";
 import {
     ColumnFiltersState,
     getCoreRowModel, getFacetedUniqueValues,
     getFilteredRowModel,
     getPaginationRowModel, Row
 } from "@tanstack/table-core";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { flexRender, useReactTable } from "@tanstack/react-table";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
+import {flexRender, useReactTable} from "@tanstack/react-table";
+import {Button} from "@/components/ui/button";
+import {useState} from "react";
 import Filter from "@/components/react-table/Filter";
-import { columnDef } from "@/components/checkins/columnDef";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import {columnDef} from "@/components/checkins/columnDef";
+import {Dialog, DialogTrigger} from "@/components/ui/dialog";
 import CheckInDialogContent from "@/components/checkins/CheckInDialogContent";
-import { progressColor } from "@/styles/checkin/progress";
+import {progressColor} from "@/styles/checkin/progress";
 
-const CheckinTable = ({ records }: { records: CheckIn[] }) => {
+const CheckinTable = ({records}: { records: CheckIn[] }) => {
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
     const table = useReactTable<CheckIn>({
@@ -43,61 +43,50 @@ const CheckinTable = ({ records }: { records: CheckIn[] }) => {
         <div className="mt-6 rounded-lg overflow-hidden w-[90%] mx-auto">
             <Table className="border">
                 <TableHeader>
-                    <>
-                        {table.getHeaderGroups().map((headerGroup) => <TableRow key={headerGroup.id}>
-                            <>
-                                {headerGroup.headers.map((header) => (
-                                    <TableHead key={header.id}>
-                                        <div>
-                                            {flexRender(
-                                                header.column.columnDef.header,
-                                                header.getContext()
-                                            )}
-                                        </div>
-                                        <>
-                                            {header.column.getCanFilter() ? (
-                                                <div className="grid place-content-center">
-                                                    <Filter column={header.column}/>
-                                                </div>
-                                            ) : null}
-                                        </>
-                                    </TableHead>
-                                ))}
-                            </>
 
-                            </TableRow>
-                        )}
-                    </>
+                    {table.getHeaderGroups().map((headerGroup) => <TableRow key={headerGroup.id}>
+                            {headerGroup.headers.map((header) => (
+                                <TableHead key={header.id}>
+                                    <div>
+                                        {flexRender(
+                                            header.column.columnDef.header,
+                                            header.getContext()
+                                        )}
+                                    </div>
+                                    <>
+                                        {header.column.getCanFilter() ? (
+                                            <div className="grid place-content-center">
+                                                <Filter column={header.column}/>
+                                            </div>
+                                        ) : null}
+                                    </>
+                                </TableHead>
+                            ))}
+                        </TableRow>
+                    )}
                 </TableHeader>
                 <TableBody>
-                    <>
-                        {table.getRowModel().rows.map((row) => (
-                            <Dialog key={`${row.id}-dialog`}>
-                                <TableRow key={row.id}
-                                    className={`${progressColor[row.original.fields["Progress Rating"]]?.border}`}>
-                                    <>
-                                        {row.getVisibleCells().map(cell => (
-                                            <TableCell
-                                                key={cell.id}>
-                                                <DialogTrigger key={`${cell.id}-dialog-trigger`} asChild>
-                                                    <button className="w-full text-left">
-                                                        {flexRender(
-                                                            cell.column.columnDef.cell,
-                                                            cell.getContext()
-                                                        )}
-                                                    </button>
-                                                </DialogTrigger>
-                                            </TableCell>
-                                        ))}
-                                    </>
-
-                                </TableRow>
-                                <CheckInDialogContent record={row as Row<CheckIn>}/>
-                            </Dialog>
-
-                        ))}
-                    </>
-                    
+                    {table.getRowModel().rows.map((row) => (
+                        <Dialog key={`${row.id}-dialog`}>
+                            <TableRow key={row.id}
+                                className={`${progressColor[row.original.fields["Progress Rating"]]?.border}`}>
+                                {row.getVisibleCells().map(cell => (
+                                    <TableCell
+                                        key={cell.id}>
+                                        <DialogTrigger key={`${cell.id}-dialog-trigger`} asChild>
+                                            <button className="w-full text-left">
+                                                {flexRender(
+                                                    cell.column.columnDef.cell,
+                                                    cell.getContext()
+                                                )}
+                                            </button>
+                                        </DialogTrigger>
+                                    </TableCell>
+                                ))}
+                            </TableRow>
+                            <CheckInDialogContent record={row as Row<CheckIn>}/>
+                        </Dialog>
+                    ))}
                 </TableBody>
             </Table>
             <div className="flex justify-between items-center mt-4">
