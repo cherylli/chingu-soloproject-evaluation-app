@@ -19,7 +19,7 @@ const SingleVoyageSignupTable = ({
 ) => {
     const [grouping, setGrouping] = useState(['teamNum'])
     const [sorting, setSorting] = useState<SortingState>([
-        { id: 'teamNum', desc: false },
+        {id: 'teamNum', desc: false},
     ])
 
     const columns = singleVoyageColumnDef(atBaseUrl)
@@ -58,40 +58,49 @@ const SingleVoyageSignupTable = ({
             </TableHeader>
             <TableBody>
                 {table.getRowModel().rows.map((row) => {
+
                         if (row.getIsGrouped()) {
                             return <Fragment key={row.id}>
-                            <TableRow>
-                                <TableCell colSpan={columns.length}>
-                                    <div>
-                                        <Button
-                                            variant="ghost" size="icon"
-                                            onClick={row.getToggleExpandedHandler()}
-                                        >
-                                            {row.getIsExpanded()
-                                                ? <ChevronDown size={16}/>
-                                                : <ChevronRight size={16}/>
-                                            }
-                                        </Button>
-                                        <strong>
-                                            {String(row.getGroupingValue(row.groupingColumnId!) ?? '')} ({row.subRows.length})
-                                        </strong>
-                                    </div>
-                                </TableCell>
-                            </TableRow>
-                            {row.getIsExpanded() &&
-                                row.subRows.map((subRow) => (
-                                    <TableRow key={subRow.id}>
-                                        {subRow.getVisibleCells().map(cell => (
-                                            <TableCell key={cell.id}>
-                                                {flexRender(
-                                                    cell.column.columnDef.cell,
-                                                    cell.getContext()
-                                                )}
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                ))
-                            }
+                                <TableRow
+                                    className="cursor-pointer"
+                                    onClick={row.getToggleExpandedHandler()}
+                                >
+                                    <TableCell colSpan={columns.length}>
+                                        <div>
+                                            <Button
+                                                variant="ghost" size="icon"
+                                                className="cursor-pointer"
+                                                onClick={row.getToggleExpandedHandler()}
+                                            >
+                                                {row.getIsExpanded()
+                                                    ? <ChevronDown size={16}/>
+                                                    : <ChevronRight size={16}/>
+                                                }
+                                            </Button>
+                                            <strong>
+                                                {String(row.getGroupingValue(row.groupingColumnId!) ?? '')} ({row.subRows.length})
+                                            </strong>
+                                        </div>
+                                    </TableCell>
+                                </TableRow>
+                                {row.getIsExpanded() &&
+                                    row.subRows.map((subRow) => {
+                                        const rowClassByStatus = {
+                                            Dropped: 'text-gray-500',
+                                            Inactive: 'dark:text-amber-200 text-amber-600',
+                                        }[subRow.original.fields.Status] || ''
+                                        return <TableRow key={subRow.id} className={rowClassByStatus}>
+                                            {subRow.getVisibleCells().map(cell => (
+                                                <TableCell key={cell.id}>
+                                                    {flexRender(
+                                                        cell.column.columnDef.cell,
+                                                        cell.getContext()
+                                                    )}
+                                                </TableCell>
+                                            ))}
+                                        </TableRow>
+                                    })
+                                }
                             </Fragment>
 
                         }
