@@ -32,7 +32,7 @@ const SingleVoyageSignupTable = ({
             sorting,
             columnVisibility: {
                 teamNum: false,
-            }
+            },
         },
         getCoreRowModel: getCoreRowModel<VoyageSignup>(),
         getGroupedRowModel: getGroupedRowModel<VoyageSignup>(),

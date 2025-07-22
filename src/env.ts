@@ -11,7 +11,7 @@ const envSchema = z.object({
     AIRTABLE_VOYAGE_SIGNUP_TABLEID: z.string().startsWith("tbl"),
     AIRTABLE_PAT: z.string().startsWith("pat"),
     // auth (next-auth and github)
-    NEXTAUTH_URL: z.url(),
+    NEXTAUTH_URL: z.url().optional(),
     NEXTAUTH_SECRET: z.string(),
     GITHUB_SECRET: z.string(),
     GITHUB_ID: z.string(),
@@ -19,7 +19,7 @@ const envSchema = z.object({
     // firebase
     FIREBASE_STORAGE_BUCKET: z.string(),
     // sentry
-    SENTRY_AUTH_TOKEN: z.string().startsWith('sntrys_'),
+    SENTRY_AUTH_TOKEN: z.string().startsWith('sntrys_').optional(),
     // general app keys
     NEXT_PUBLIC_MAINTENANCE: z.coerce.boolean().default(false),
 })
