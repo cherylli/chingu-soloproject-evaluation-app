@@ -14,6 +14,7 @@ export const singleVoyageColumnDef =(
         enableSorting: true,
         getGroupingValue: (row) =>
             `${row.fields["Team Name"]} - ${row.fields["Team No."]}`,
+        // TODO: show how many active in the team
     }),
     columnHelper.display({
         id: "Links",
