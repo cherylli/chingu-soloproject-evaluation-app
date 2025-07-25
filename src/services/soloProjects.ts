@@ -1,6 +1,6 @@
 "use server"
-import {fields, table, transformData, transformDataSingleRecord} from "@/lib/airtable";
-import {Submission} from "@/types/SoloProjectTypes";
+import {createOrFilter, fields, table, transformData, transformDataSingleRecord} from "@/lib/airtable";
+import {type SoloProjectSearchableFields, Submission} from "@/types/SoloProjectTypes";
 import {ActionResponse} from "@/types";
 import {getServerSession} from "next-auth";
 import {options} from "@/app/api/auth/[...nextauth]/options";
@@ -32,8 +32,33 @@ export const getSoloProjectById = async (id: string): Promise<Submission> => {
     return transformDataSingleRecord(record)
 }
 
-export const getAllSoloProjectsByUser = async (discordId: string, email: string): Promise<Submission[]> => {
-    const filter = `OR({Discord ID} = "${discordId}", Email = "${email}")`
+/**
+ * Retrieves all solo projects for a Chingu member identified by Discord ID and/or email
+ * @param {string} discordId - Member's Discord ID
+ * @param {string} email - Member's email address
+ * @returns {Promise<Submission[]>} Array of member's submissions
+ * @throws {Error} If neither discordId nor email is provided
+ */
+
+export const getAllSoloProjectsByUser = async (
+    discordId?: string,
+    email?: string
+): Promise<Submission[]> => {
+    if (!discordId && !email) {
+        throw new Error("Either discordId or email must be provided.")
+    }
+
+    const conditions: {field: SoloProjectSearchableFields, value: string}[] = []
+
+    if(discordId) {
+        conditions.push({ field: 'Discord ID', value: discordId });
+    }
+    if(email) {
+        conditions.push({ field: 'Email', value: email });
+    }
+
+    const filter = createOrFilter(conditions)
+
     const records = await table.select({
         filterByFormula: filter,
         fields,

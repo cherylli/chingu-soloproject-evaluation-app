@@ -1,7 +1,7 @@
 import Airtable, {FieldSet, Record, Records} from "airtable";
-import {EvaluationStatus, SoloProjectTier, Submission, VoyageRole} from "@/types/SoloProjectTypes";
-import { CheckIn, CheckinFormRole, ProgressRating, SprintNumber, Tier } from "@/types/CheckinTypes";
-import {VoyageSignup} from "@/types/VoyageSignupTypes";
+import {EvaluationStatus, FilteredFields, SoloProjectTier, Submission, VoyageRole} from "@/types/SoloProjectTypes";
+import {CheckIn, CheckInFields, CheckinFormRole, ProgressRating, SprintNumber, Tier} from "@/types/CheckinTypes";
+import {VoyageSignup, VoyageSignupFields} from "@/types/VoyageSignupTypes";
 
 const base = new Airtable({apiKey: process.env.AIRTABLE_PAT})
     .base(process.env.AIRTABLE_BASEID as string)
@@ -233,6 +233,38 @@ const transformVoyageSignupRecord = (record: Record<FieldSet>) => {
 // multiple records
 const transformVoyageSignupData = (records:Records<FieldSet>): VoyageSignup[] => {
     return records.map((record: Record<FieldSet>)=>transformVoyageSignupRecord(record))
+}
+
+/*********
+ * Helper functions
+ ************/
+
+
+/**
+ * Creates an Airtable OR filter formula from multiple conditions
+ * condition.field should be checked by caller function to ensure the table has those fields
+ * @param conditions Array of field-value pairs to filter by
+ * @returns Airtable filter formula string
+ */
+
+export const createOrFilter = (
+    conditions: {
+        field: string,
+        value: string
+    }[]
+): string => {
+    console.log("createORFilter - conditions", conditions)
+    if (conditions.length === 0) {
+        throw new Error("[CreateOrFilter]: At least one condition must be provided.")
+    }
+
+    const filterFields = conditions.map(({field, value})=>{
+        return `{${field}} = "${value}"`
+    })
+
+    console.log("createORFilter - filterFields", filterFields)
+
+    return `OR(${filterFields.join(",")})`
 }
 
 export {

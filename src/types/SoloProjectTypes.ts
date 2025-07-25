@@ -1,7 +1,7 @@
 export type Submission = {
     id: string
     commentCount: number
-    fields: FilteredFields
+    fields: FilteredFields // TODO: rename this to "SoloProjectFields
 }
 
 export type EvaluationStatus =
@@ -101,3 +101,12 @@ type SMFields = {
 }
 
 export type FilteredFields = BasicFields & POFields & SMFields
+
+// Search Fields
+const soloProjectSearchableFields = [
+    "GitHub ID",
+    "Discord ID",
+    "Email"
+] as const satisfies readonly (keyof FilteredFields)[];
+
+export type SoloProjectSearchableFields = typeof soloProjectSearchableFields[number]

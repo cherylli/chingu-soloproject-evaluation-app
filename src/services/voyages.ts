@@ -48,5 +48,4 @@ export const getVoyageSignupByVoyageNum = async (voyageNum: number): Promise<Act
             message: `Failed to get voyage signup data for V${voyageNum}. Error: ${e}`,
         }
     }
-
 }
