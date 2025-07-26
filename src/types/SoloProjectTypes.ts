@@ -104,7 +104,6 @@ export type FilteredFields = BasicFields & POFields & SMFields
 
 // Search Fields
 const soloProjectSearchableFields = [
-    "GitHub ID",
     "Discord ID",
     "Email"
 ] as const satisfies readonly (keyof FilteredFields)[];

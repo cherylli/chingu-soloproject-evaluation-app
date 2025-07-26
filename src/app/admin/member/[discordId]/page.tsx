@@ -11,6 +11,7 @@ const MemberPage =
 
             <div>
                 MemberPage - {params.discordId}
+                {JSON.stringify(userDetails, null, 2)}
             </div>
         )
     }

@@ -28,3 +28,11 @@ export type VoyageSignupFields = {
     "Discord ID": string, // might not need -> fetch in user instead
     "Product (from Most Recent Subscriptions & Product Sales)": string,
 }
+
+// Search Fields
+const voyageSignupSearchableFields = [
+    "Discord ID",
+    "Email"
+] as const satisfies readonly (keyof VoyageSignupFields)[];
+
+export type VoyageSignupSearchableFields = typeof voyageSignupSearchableFields[number]

@@ -40,6 +40,8 @@ export const getSoloProjectById = async (id: string): Promise<Submission> => {
  * @throws {Error} If neither discordId nor email is provided
  */
 
+// TODO: rename to getAllSoloProjectsByMember to avoid confusion
+// TODO: refactor this like getAllVoyageSignupsByMember
 export const getAllSoloProjectsByUser = async (
     discordId?: string,
     email?: string
