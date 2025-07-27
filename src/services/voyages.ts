@@ -21,7 +21,6 @@ export const getLastestVoyageSignups = async (): Promise<ActionResponse<VoyageSi
     } catch (e) {
         throw new Error(`Failed to get latest voyage signup data. Error: ${e}`)
     }
-
 }
 
 export const getVoyageSignupByVoyageNum = async (voyageNum: number): Promise<ActionResponse<VoyageSignup[]>> => {
@@ -48,20 +47,21 @@ export const getAllVoyageSignupsByMember = async (
     discordId?: string,
     email?: string,
 ): Promise<ActionResponse<VoyageSignup[]>> => {
-    if(!discordId && !email){
+    if (!discordId && !email) {
         return {
             success: false,
             message: "Either discordId or email must be provided.",
         }
     }
 
-    try{
-        const conditions: {field: VoyageSignupSearchableFields, value: string}[] = []
+    try {
 
-        if(discordId){
+        const conditions: { field: VoyageSignupSearchableFields, value: string }[] = []
+
+        if (discordId) {
             conditions.push({field: 'Discord ID', value: discordId})
         }
-        if(email){
+        if (email) {
             conditions.push({field: 'Email', value: email})
         }
 
@@ -73,11 +73,11 @@ export const getAllVoyageSignupsByMember = async (
 
         return {
             success: true,
-            data:transformVoyageSignupData(records),
+            data: transformVoyageSignupData(records),
             message: "Successfully get voyage signup data."
         }
-    }catch (e) {
+    } catch
+        (e) {
         throw new Error(`Failed to get voyage signup data. Error: ${e}`)
     }
-
 }

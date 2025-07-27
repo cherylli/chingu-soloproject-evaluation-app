@@ -1,10 +1,10 @@
-import {getMemberDetails} from "@/services/members";
+import {getMemberDetailsByDiscordId} from "@/services/members";
 
 const MemberPage =
     async (props: {params: Promise<{discordId: string}>}) => {
         const params = await props.params;
 
-        const userDetails = await getMemberDetails(params.discordId)
+        const userDetails = await getMemberDetailsByDiscordId(params.discordId)
         console.log(userDetails)
         return (
 

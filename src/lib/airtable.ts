@@ -1,16 +1,21 @@
 import Airtable, {FieldSet, Record, Records} from "airtable";
-import {EvaluationStatus, FilteredFields, SoloProjectTier, Submission, VoyageRole} from "@/types/SoloProjectTypes";
-import {CheckIn, CheckInFields, CheckinFormRole, ProgressRating, SprintNumber, Tier} from "@/types/CheckinTypes";
-import {VoyageSignup, VoyageSignupFields} from "@/types/VoyageSignupTypes";
+import {EvaluationStatus, SoloProjectTier, Submission, VoyageRole} from "@/types/SoloProjectTypes";
+import {CheckIn, CheckinFormRole, ProgressRating, SprintNumber, Tier} from "@/types/CheckinTypes";
+import {VoyageSignup} from "@/types/VoyageSignupTypes";
+import {env} from "@/env";
+import {Application} from "@/types/ApplicationTypes";
+import {SearchableFields} from "@/types";
 
-const base = new Airtable({apiKey: process.env.AIRTABLE_PAT})
-    .base(process.env.AIRTABLE_BASEID as string)
+const base = new Airtable({apiKey: env.AIRTABLE_PAT})
+    .base(env.AIRTABLE_BASEID)
 
-const table = base(process.env.AIRTABLE_TABLEID as string)
-const userTable = base(process.env.AIRTABLE_USERS_TABLEID as string)
-const checkinTable = base(process.env.AIRTABLE_CHECKIN_TABLEID as string)
-const voyageSignupTable = base(process.env.AIRTABLE_VOYAGE_SIGNUP_TABLEID as string)
+const table = base(env.AIRTABLE_TABLEID)
+const userTable = base(env.AIRTABLE_USERS_TABLEID)
+const checkinTable = base(env.AIRTABLE_CHECKIN_TABLEID)
+const voyageSignupTable = base(env.AIRTABLE_VOYAGE_SIGNUP_TABLEID)
+const applicationTable = base(env.AIRTABLE_APP_TABLEID)
 
+// TODO: rename to soloPorjectFields, this can probably be removed and use the types instead
 const fields = [
     "Email",
     "Discord Name",
@@ -235,6 +240,39 @@ const transformVoyageSignupData = (records:Records<FieldSet>): VoyageSignup[] =>
     return records.map((record: Record<FieldSet>)=>transformVoyageSignupRecord(record))
 }
 
+/**
+ * Transforms an application record object from airtable format into a standardized format.
+ *
+ * @param {Record<FieldSet>} record - The input application record object (airtable results).
+ * @returns {Application} A transformed application record object with id and fields properties.
+ */
+
+// single record
+const transformApplicationRecord = (record: Record<FieldSet>): Application => {
+    return {
+        id: record.id,
+        fields: {
+            "Timestamp": record.fields["Timestamp"] as string,
+            "Email": record.fields["Email"] as string,
+            "Discord Name": record.fields["Discord Name"] as string,
+            "Discord ID": record.fields["Discord ID"] as string,
+        }
+    }
+}
+
+
+/**
+ * Transforms an array of application data records into an array of Application objects.
+ *
+ * @param {Object[]} records - Array of application data records
+ * @returns {Application[]} Array of transformed Application objects
+ */
+// multiple records
+const transformApplicationData = (records: Records<FieldSet>): Application[] => {
+    return records.map((record: Record<FieldSet>) => transformApplicationRecord(record))
+}
+
+
 /*********
  * Helper functions
  ************/
@@ -249,7 +287,7 @@ const transformVoyageSignupData = (records:Records<FieldSet>): VoyageSignup[] =>
 
 export const createOrFilter = (
     conditions: {
-        field: string,
+        field: SearchableFields,
         value: string
     }[]
 ): string => {
@@ -272,10 +310,12 @@ export {
     userTable,
     checkinTable,
     voyageSignupTable,
+    applicationTable,
     fields,
     transformData,
     transformDataSingleRecord,
     transformCheckinData,
-    transformVoyageSignupData
+    transformVoyageSignupData,
+    transformApplicationData,
 }
 
