@@ -21,3 +21,4 @@ export type SearchableFields =
     | ApplicationSearchableFields
     | VoyageSignupSearchableFields
     | SoloProjectSearchableFields
+

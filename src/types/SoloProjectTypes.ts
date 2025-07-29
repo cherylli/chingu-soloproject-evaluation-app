@@ -34,7 +34,7 @@ type BasicFields = {
     "Email": string
     "Discord Name": string
     "GitHub ID": string
-    "Timestamp": Date | string
+    "Timestamp": string
     "Tier": SoloProjectTier
     "GitHub Repo URL": string
     "Deployed App URL": string
