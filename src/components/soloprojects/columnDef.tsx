@@ -14,7 +14,7 @@ export const columnDef = [
             return <Link href={`/solo-project/${row.original.id}`}>
                 {getValue()}
                 <span className="text-red-700">
-                    {row.original.commentCount === 0 ? '' : ` ( ${row.original.commentCount} )`}
+                    {row.original.commentCount > 0 && ` ( ${row.original.commentCount} )` }
                 </span>
             </Link>
         }

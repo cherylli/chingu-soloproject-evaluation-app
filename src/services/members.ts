@@ -2,13 +2,11 @@
 
 import {getAllSoloProjectsByUser} from "@/services/soloProjects";
 import {getAllVoyageSignupsByMember} from "@/services/voyages";
-import {FilteredFields, Submission} from "@/types/SoloProjectTypes";
-import {VoyageSignup} from "@/types/VoyageSignupTypes";
 import {getApplicationsByMember} from "@/services/applications";
-import {Application} from "@/types/ApplicationTypes";
 import {getRecordsByFilter} from "@/services/common";
-import {createOrFilter, table} from "@/lib/airtable";
+import {createOrFilter} from "@/lib/airtable";
 import {SearchableFields} from "@/types";
+import {MemberDetails} from "@/types/MemberTypes";
 
 
 /**
@@ -18,7 +16,7 @@ import {SearchableFields} from "@/types";
  * @param {string} discordId - The Discord ID of the member to retrieve emails for.
  * @returns {Promise<string[]>} A promise that resolves to an array of unique email addresses.
  */
-const getMemberEmailsByDiscordId = async (discordId: string) => {
+const getMemberEmailsByDiscordId= async (discordId: string): Promise<string[]>  => {
     const emails: Set<string> = new Set<string>()
     // get application,
     // there should only be 1 application per person, but sometimes people sign up multiple times with different emails
@@ -46,55 +44,55 @@ export const getMemberDetailsByDiscordId = async (discordId: string) => {
     // create an array of emails to re-search all the tables
     // some members have used multiple emails
 
-    const allRecords = {
-        applications: [],
-        soloProjects: [],
-        voyageSignups: [],
-    } as {
-        applications: Application[],
-        soloProjects: Submission[],
-        voyageSignups: VoyageSignup[]
+    try {
+        const allRecords: MemberDetails = {
+            applications: [],
+            soloProjects: [],
+            voyageSignups: [],
+        }
+
+        // get all emails
+        const emails = await getMemberEmailsByDiscordId(discordId)
+        console.log(`emails: ${emails}`)
+
+        // search again with all emails (even when there's only 1 email) for cases like
+        // 1. records with different emails,
+        // 2. records with no discordId
+
+        const conditions = emails
+            .map(email => ({field: "Email" as SearchableFields, value: email}))
+        conditions.push({field: "Discord ID", value: discordId})
+
+
+        const soloProjects = await getRecordsByFilter(
+            "soloProject",
+            () => createOrFilter(conditions)
+        )
+
+        if(soloProjects.success) {
+            allRecords.soloProjects = soloProjects.data
+        }
+
+        const applications = await getRecordsByFilter(
+            "application",
+            () => createOrFilter(conditions)
+        )
+
+        if(applications.success) {
+            allRecords.applications = applications.data
+        }
+
+        const voyageSignups = await getRecordsByFilter(
+            "voyageSignup",
+            () => createOrFilter(conditions)
+        )
+
+        if(voyageSignups.success) {
+            allRecords.voyageSignups = voyageSignups.data
+        }
+
+        return allRecords
+    }catch (e) {
+        throw new Error(`Failed to get member details. Error: ${e}`)
     }
-
-    // get all emails
-    const emails = await getMemberEmailsByDiscordId(discordId)
-    console.log(`emails: ${emails}`)
-
-    // search again with all emails (even when there's only 1 email) for cases like
-    // 1. records with different emails,
-    // 2. records with no discordId
-
-    const conditions = emails
-        .map(email => ({field: "Email" as SearchableFields, value: email}))
-    conditions.push({field: "Discord ID", value: discordId})
-
-
-    const soloProjects = await getRecordsByFilter(
-        "soloProject",
-        () => createOrFilter(conditions)
-    )
-
-    if(soloProjects.success) {
-        allRecords.soloProjects = soloProjects.data
-    }
-
-    const applications = await getRecordsByFilter(
-        "application",
-        () => createOrFilter(conditions)
-    )
-
-    if(applications.success) {
-        allRecords.applications = applications.data
-    }
-
-    const voyageSignups = await getRecordsByFilter(
-        "voyageSignup",
-        () => createOrFilter(conditions)
-    )
-
-    if(voyageSignups.success) {
-        allRecords.voyageSignups = voyageSignups.data
-    }
-
-    return allRecords
 }

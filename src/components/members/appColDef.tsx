@@ -1,0 +1,29 @@
+import {createColumnHelper} from "@tanstack/table-core";
+import {Submission} from "@/types/SoloProjectTypes";
+import ReactTableRoleCell from "@/components/react-table/cells/Role";
+import AirtableLinkCell from "@/components/react-table/cells/AirtableLink";
+import {Application} from "@/types/ApplicationTypes";
+
+const columnHelper = createColumnHelper<Application>()
+
+export const appColDef = (
+    baseURL: string
+) => [
+    columnHelper.display({
+        id: "Airtable Link",
+        cell: ({row}) => {
+            return <AirtableLinkCell
+                row={row}
+                baseUrl={baseURL}
+            />
+        }
+    }),
+    columnHelper.accessor((row) => row.fields["Discord Name"], {
+        id: "Discord Name",
+        header: "Discord Name",
+    }),
+    columnHelper.accessor((row) => row.fields["Email"], {
+        id: "Email",
+        header: "Email"
+    })
+]

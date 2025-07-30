@@ -1,4 +1,4 @@
-import {FieldSet, Records, Table} from "airtable";
+import {FieldSet, Records} from "airtable";
 import {
     applicationTable,
     checkinTable,
@@ -46,7 +46,7 @@ export const getRecordsByFilter = async <
         return {
             success: true,
             data: tableMap[table].transformFn(records) as ReturnType<typeof tableMap[T]["transformFn"]>,
-            message: "Successfully get data."
+            message: `Successfully get all ${table} records.`
         }
     }catch (e) {
         throw e
