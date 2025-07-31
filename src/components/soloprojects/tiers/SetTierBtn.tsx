@@ -40,7 +40,9 @@ const SetTierBtn = ({
                     error: "Failed to set tier"
                 }
             )
-            onSuccess?.(res.data?.fields.Tier as SoloProjectTier)
+            if(res.success) {
+                onSuccess?.(res.data?.fields.Tier as SoloProjectTier)
+            }
         }catch (e) {
             if (e instanceof Error)
                 toast.error("Error setting tier: " + e.message)

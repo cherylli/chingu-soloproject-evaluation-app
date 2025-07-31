@@ -1,14 +1,21 @@
 import Airtable, {FieldSet, Record, Records} from "airtable";
 import {EvaluationStatus, SoloProjectTier, Submission, VoyageRole} from "@/types/SoloProjectTypes";
-import { CheckIn, CheckinFormRole, ProgressRating, SprintNumber, Tier } from "@/types/CheckinTypes";
+import {CheckIn, CheckinFormRole, ProgressRating, SprintNumber, Tier} from "@/types/CheckinTypes";
+import {VoyageSignup} from "@/types/VoyageSignupTypes";
+import {env} from "@/env";
+import {Application} from "@/types/ApplicationTypes";
+import {SearchableFields} from "@/types";
 
-const base = new Airtable({apiKey: process.env.AIRTABLE_PAT})
-    .base(process.env.AIRTABLE_BASEID as string)
+const base = new Airtable({apiKey: env.AIRTABLE_PAT})
+    .base(env.AIRTABLE_BASEID)
 
-const table = base(process.env.AIRTABLE_TABLEID as string)
-const userTable = base(process.env.AIRTABLE_USERS_TABLEID as string)
-const checkinTable = base(process.env.AIRTABLE_CHECKIN_TABLEID as string)
+const table = base(env.AIRTABLE_TABLEID)
+const userTable = base(env.AIRTABLE_USERS_TABLEID)
+const checkinTable = base(env.AIRTABLE_CHECKIN_TABLEID)
+const voyageSignupTable = base(env.AIRTABLE_VOYAGE_SIGNUP_TABLEID)
+const applicationTable = base(env.AIRTABLE_APP_TABLEID)
 
+// TODO: rename to soloPorjectFields, this can probably be removed and use the types instead
 const fields = [
     "Email",
     "Discord Name",
@@ -152,6 +159,7 @@ const transformData = (records:Records<FieldSet>): Submission[] => {
     return records.map((record: Record<FieldSet>)=>transformRecord(record))
 }
 
+// TODO: this can probably be combined with transformRecord
 const transformDataSingleRecord = (record:Record<FieldSet>) => {
    return transformRecord(record)
 }
@@ -194,18 +202,120 @@ const transformCheckinData = (records:Records<FieldSet>): CheckIn[] => {
     return records.map((record: Record<FieldSet>)=>transformCheckinRecord(record))
 }
 
-const transformCheckinDataSingleRecord = (record:Record<FieldSet>) => {
-    return transformCheckinRecord(record)
+/*******
+ Voyage Signup
+     *************/
+// single record
+const transformVoyageSignupRecord = (record: Record<FieldSet>) => {
+    return {
+        id: record.id,
+        fields: {
+            "Timestamp": record.fields["Timestamp"] as string,
+            "Email": record.fields["Email"] as string,
+            "Discord Name": record.fields["Discord Name"] as string,
+            "GitHub ID": record.fields["GitHub ID"] as string,
+            "Evaluation Status (from Solo Project Link)": record.fields["Evaluation Status (from Solo Project Link)"] as string,
+            "Status": record.fields["Status"] as string,
+            "Status Comment": record.fields["Status Comment"] as string,
+            "Voyage": record.fields["Voyage"] as string,
+            "Team Name": record.fields["Team Name"] as string,
+            "Team No.": record.fields["Team No."] as string,
+            "Timezone": record.fields["Timezone"] as string,
+            "Role": record.fields["Role"] as VoyageRole,
+            "Role Type": record.fields["Role Type"] as string,
+            "Tier": record.fields["Tier"] as SoloProjectTier,
+            "Info to Share": record.fields["Info to Share"] as string,
+            "Application Link": record.fields["Application Link"] as string,
+            "Solo Project Link": record.fields["Solo Project Link"] as string,
+            "Confirmation Form Completed": record.fields["Confirmation Form Completed"] as boolean,
+            "Showcase Name Permission?": record.fields["Showcase Name Permission?"] as boolean,
+            "Discord ID": record.fields["Discord ID"] as string,
+            "Product (from Most Recent Subscriptions & Product Sales)": record.fields["Product (from Most Recent Subscriptions & Product Sales)"] as string
+        }
+    }
+}
+
+// multiple records
+const transformVoyageSignupData = (records:Records<FieldSet>): VoyageSignup[] => {
+    return records.map((record: Record<FieldSet>)=>transformVoyageSignupRecord(record))
+}
+
+/**
+ * Transforms an application record object from airtable format into a standardized format.
+ *
+ * @param {Record<FieldSet>} record - The input application record object (airtable results).
+ * @returns {Application} A transformed application record object with id and fields properties.
+ */
+
+// single record
+const transformApplicationRecord = (record: Record<FieldSet>): Application => {
+    return {
+        id: record.id,
+        fields: {
+            "Timestamp": record.fields["Timestamp"] as string,
+            "Email": record.fields["Email"] as string,
+            "Discord Name": record.fields["Discord Name"] as string,
+            "Discord ID": record.fields["Discord ID"] as string,
+        }
+    }
+}
+
+
+/**
+ * Transforms an array of application data records into an array of Application objects.
+ *
+ * @param {Object[]} records - Array of application data records
+ * @returns {Application[]} Array of transformed Application objects
+ */
+// multiple records
+const transformApplicationData = (records: Records<FieldSet>): Application[] => {
+    return records.map((record: Record<FieldSet>) => transformApplicationRecord(record))
+}
+
+
+/*********
+ * Helper functions
+ ************/
+
+
+/**
+ * Creates an Airtable OR filter formula from multiple conditions
+ * condition.field should be checked by caller function to ensure the table has those fields
+ * @param conditions Array of field-value pairs to filter by
+ * @returns Airtable filter formula string
+ */
+
+export const createOrFilter = (
+    conditions: {
+        field: SearchableFields,
+        value: string
+    }[]
+): string => {
+    console.log("createORFilter - conditions", conditions)
+    if (conditions.length === 0) {
+        throw new Error("[CreateOrFilter]: At least one condition must be provided.")
+    }
+
+    const filterFields = conditions.map(({field, value})=>{
+        return `{${field}} = "${value}"`
+    })
+
+    console.log("createORFilter - filterFields", filterFields)
+
+    return `OR(${filterFields.join(",")})`
 }
 
 export {
     table,
     userTable,
     checkinTable,
+    voyageSignupTable,
+    applicationTable,
     fields,
     transformData,
     transformDataSingleRecord,
     transformCheckinData,
-    transformCheckinDataSingleRecord
+    transformVoyageSignupData,
+    transformApplicationData,
 }
 

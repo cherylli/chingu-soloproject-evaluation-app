@@ -1,6 +1,6 @@
 "use server"
-import {fields, table, transformData, transformDataSingleRecord} from "@/lib/airtable";
-import {Submission} from "@/types/SoloProjectTypes";
+import {createOrFilter, fields, table, transformData, transformDataSingleRecord} from "@/lib/airtable";
+import {type SoloProjectSearchableFields, Submission} from "@/types/SoloProjectTypes";
 import {ActionResponse} from "@/types";
 import {getServerSession} from "next-auth";
 import {options} from "@/app/api/auth/[...nextauth]/options";
@@ -32,8 +32,35 @@ export const getSoloProjectById = async (id: string): Promise<Submission> => {
     return transformDataSingleRecord(record)
 }
 
-export const getAllSoloProjectsByUser = async (discordId: string, email: string): Promise<Submission[]> => {
-    const filter = `OR({Discord ID} = "${discordId}", Email = "${email}")`
+/**
+ * Retrieves all solo projects for a Chingu member identified by Discord ID and/or email
+ * @param {string} discordId - Member's Discord ID
+ * @param {string} email - Member's email address
+ * @returns {Promise<Submission[]>} Array of member's submissions
+ * @throws {Error} If neither discordId nor email is provided
+ */
+
+// TODO: rename to getAllSoloProjectsByMember to avoid confusion
+// TODO: refactor this like getAllVoyageSignupsByMember
+export const getAllSoloProjectsByUser = async (
+    discordId?: string,
+    email?: string
+): Promise<Submission[]> => {
+    if (!discordId && !email) {
+        throw new Error("Either discordId or email must be provided.")
+    }
+
+    const conditions: {field: SoloProjectSearchableFields, value: string}[] = []
+
+    if(discordId) {
+        conditions.push({ field: 'Discord ID', value: discordId });
+    }
+    if(email) {
+        conditions.push({ field: 'Email', value: email });
+    }
+
+    const filter = createOrFilter(conditions)
+
     const records = await table.select({
         filterByFormula: filter,
         fields,
@@ -41,7 +68,7 @@ export const getAllSoloProjectsByUser = async (discordId: string, email: string)
     return transformData(records)
 }
 
-export const setEvaluatorOnDb = async (id: string): Promise<ActionResponse> => {
+export const setEvaluatorOnDb = async (id: string): Promise<ActionResponse<Submission>> => {
     const sessionData = await getServerSession(options)
     try {
         const record = await table.find(id)
@@ -87,7 +114,7 @@ export const setEvaluatorOnDb = async (id: string): Promise<ActionResponse> => {
     }
 }
 
-export const removeEvaluatorOnDb = async (id: string): Promise<ActionResponse> => {
+export const removeEvaluatorOnDb = async (id: string): Promise<ActionResponse<Submission>> => {
     const sessionData = await getServerSession(options)
     try {
         if(sessionData) {
@@ -118,7 +145,7 @@ export const removeEvaluatorOnDb = async (id: string): Promise<ActionResponse> =
 }
 
 export const updateSoloProjectById = async (id: string, fields: FieldSet)
-    : Promise<ActionResponse> => {
+    : Promise<ActionResponse<Submission>> => {
     try{
         const updatedRecord = await table.update([
             {

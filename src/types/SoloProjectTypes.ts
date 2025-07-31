@@ -1,7 +1,7 @@
 export type Submission = {
     id: string
     commentCount: number
-    fields: FilteredFields
+    fields: FilteredFields // TODO: rename this to "SoloProjectFields
 }
 
 export type EvaluationStatus =
@@ -34,7 +34,7 @@ type BasicFields = {
     "Email": string
     "Discord Name": string
     "GitHub ID": string
-    "Timestamp": Date | string
+    "Timestamp": string
     "Tier": SoloProjectTier
     "GitHub Repo URL": string
     "Deployed App URL": string
@@ -101,3 +101,11 @@ type SMFields = {
 }
 
 export type FilteredFields = BasicFields & POFields & SMFields
+
+// Search Fields
+const soloProjectSearchableFields = [
+    "Discord ID",
+    "Email"
+] as const satisfies readonly (keyof FilteredFields)[];
+
+export type SoloProjectSearchableFields = typeof soloProjectSearchableFields[number]

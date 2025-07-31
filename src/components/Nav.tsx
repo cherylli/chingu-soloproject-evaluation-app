@@ -12,9 +12,8 @@ import {
     NavigationMenuTrigger, navigationMenuTriggerStyle
 } from "@/components/ui/navigation-menu";
 import {
-    Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger
+    Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSub, MenubarSubContent, MenubarSubTrigger, MenubarTrigger
 } from "@/components/ui/menubar"
-import { Skeleton } from "@/components/ui/skeleton";
 import NavSkeleton from "@/components/skeletons/nav-skeleton";
 
 
@@ -57,12 +56,39 @@ const Nav = () => {
                         <MenubarMenu>
                             <MenubarTrigger>Admin</MenubarTrigger>
                             <MenubarContent>
-                                <MenubarItem>
-                                    <Link href={'/admin/check-in'}>Voyage Checkins</Link>
-                                </MenubarItem>
-                                <MenubarItem>
-                                    <Link href={'/admin/solo-project/tier-mismatch'}>Tier Mismatch</Link>
-                                </MenubarItem>
+                                <MenubarSub>
+                                    <MenubarSubTrigger>Solo Project</MenubarSubTrigger>
+                                    <MenubarSubContent>
+                                        <MenubarItem>
+                                            <Link href={'/admin/solo-project/tier-mismatch'}>Tier Mismatch</Link>
+                                        </MenubarItem>
+                                    </MenubarSubContent>
+                                </MenubarSub>
+                                <MenubarSub>
+                                    <MenubarSubTrigger>Voyage</MenubarSubTrigger>
+                                    <MenubarSubContent>
+                                        <MenubarItem>
+                                            <Link href={'/admin/voyage/schedule'}>Schedule</Link>
+                                        </MenubarItem>
+                                        <MenubarItem>
+                                            <Link href={'/admin/check-in'}>Check-ins</Link>
+                                        </MenubarItem>
+                                        <MenubarItem>
+                                            <Link href={'/admin/voyage/signups'}>Latest Signups</Link>
+                                        </MenubarItem>
+                                    </MenubarSubContent>
+                                </MenubarSub>
+                                <MenubarSub>
+                                    <MenubarSubTrigger>Member</MenubarSubTrigger>
+                                    <MenubarSubContent>
+                                        <MenubarItem>
+                                            <Link href={'/admin/member/search'}>Search</Link>
+                                        </MenubarItem>
+                                        <MenubarItem>
+                                            <Link href={'/admin/member/'}>Latest Applications</Link>
+                                        </MenubarItem>
+                                    </MenubarSubContent>
+                                </MenubarSub>
                             </MenubarContent>
                         </MenubarMenu>
                     }
