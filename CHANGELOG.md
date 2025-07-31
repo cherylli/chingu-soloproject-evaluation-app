@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/cherylli/chingu-soloproject-evaluation-app/compare/v1.5.0...v1.6.0) (2025-07-31)
+
+
+### Miscellaneous Chores
+
+* release 1.6.0 ([e70ef94](https://github.com/cherylli/chingu-soloproject-evaluation-app/commit/e70ef94e79f32ef8b00ca224e2a53b48a9268cc0))
+
 ## [1.5.0](https://github.com/cherylli/chingu-soloproject-evaluation-app/compare/v1.4.0...v1.5.0) (2025-07-17)
 
 
