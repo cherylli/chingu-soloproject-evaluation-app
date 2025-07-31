@@ -11,6 +11,7 @@ import {Application} from "@/types/ApplicationTypes";
 import {VoyageSignup} from "@/types/VoyageSignupTypes";
 import {appColDef} from "@/components/members/appColDef";
 import {vsColDef} from "@/components/members/vsColDef";
+import H1 from "@/components/ui/typography/h1";
 
 const MemberDetails = ({
     memberDetails,
@@ -36,8 +37,11 @@ const MemberDetails = ({
     })
     return (
         <div>
-            <StandardReactTable table={spTable} />
+            <H1>Voyage Signups</H1>
             <StandardReactTable table={vsTable} />
+            <H1>Solo Projects</H1>
+            <StandardReactTable table={spTable} />
+            <H1>Applications</H1>
             <StandardReactTable table={appTable} />
         </div>
     )

@@ -1,8 +1,9 @@
 import {Row} from "@tanstack/table-core";
-import {Submission} from "@/types/SoloProjectTypes";
 import {getRole} from "@/lib/getRole";
 import {roleColors} from "@/styles/roles";
+import {Submission} from "@/types/SoloProjectTypes";
 
+// TODO: update this component so it works with Role fields from all tables
 const ReactTableRoleCell = (
     {row}: { row: Row<Submission> }
 ) => {

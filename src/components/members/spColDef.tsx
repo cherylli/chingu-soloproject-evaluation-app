@@ -28,7 +28,8 @@ export const spColDef = (
     columnHelper.accessor((row) => row.fields["Role"], {
         id: "Role",
         header: "Role",
-        cell: ({row}) => <ReactTableRoleCell row={row} />
+        cell: ({row}) =>
+            <ReactTableRoleCell row={row} />
     }),
     columnHelper.accessor((row) => row.fields["Role Type"], {
         id: "Role Type",

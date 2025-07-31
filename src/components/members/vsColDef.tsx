@@ -29,7 +29,9 @@ export const vsColDef = (
     columnHelper.accessor((row) => row.fields["Role"], {
         id: "Role",
         header: "Role",
-        cell: ({row}) =>row.original.fields.Role
+        // TODO: update ReactTableRoleCell
+        // cell: ({row}) =>
+        //    <ReactTableRoleCell row={row} />
     }),
     columnHelper.accessor((row) => row.fields["Role Type"], {
         id: "Role Type",

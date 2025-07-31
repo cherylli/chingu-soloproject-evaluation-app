@@ -1,7 +1,7 @@
-import {Application, ApplicationSearchableFields} from "@/types/ApplicationTypes";
-import {VoyageSignup, VoyageSignupSearchableFields} from "@/types/VoyageSignupTypes";
-import {SoloProjectSearchableFields, Submission} from "@/types/SoloProjectTypes";
-import {CheckIn} from "@/types/CheckinTypes";
+import {Application, ApplicationFields, ApplicationSearchableFields} from "@/types/ApplicationTypes";
+import {VoyageSignup, VoyageSignupFields, VoyageSignupSearchableFields} from "@/types/VoyageSignupTypes";
+import {FilteredFields, SoloProjectSearchableFields, Submission} from "@/types/SoloProjectTypes";
+import {CheckIn, CheckInFields} from "@/types/CheckinTypes";
 
 type ActionSuccess<T> = {
     success: true
@@ -28,6 +28,12 @@ export type AirtableData =
     | VoyageSignup
     | Application
     | CheckIn
+
+export type AirtableFields =
+    | FilteredFields
+    | VoyageSignupFields
+    | ApplicationFields
+    | CheckInFields
 
 export type Context =
     |"solo-project"
