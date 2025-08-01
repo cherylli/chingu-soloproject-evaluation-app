@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/cherylli/chingu-soloproject-evaluation-app/compare/v1.6.0...v1.7.0) (2025-08-01)
+
+
+### Features
+
+* **admin/solo-projects:** force dynamic rendering on TierMismatch page ([791223f](https://github.com/cherylli/chingu-soloproject-evaluation-app/commit/791223fbca3531e93bf9c53126afc1a8e3683644))
+
 ## [1.6.0](https://github.com/cherylli/chingu-soloproject-evaluation-app/compare/v1.5.0...v1.6.0) (2025-07-31)
 
 
