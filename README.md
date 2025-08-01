@@ -39,12 +39,12 @@
   <p align="center">
     An application which helps with chingu.io solo project evaluation
     <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/cherylli/chingu-soloproject-evaluation-app/wiki"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/cherylli/chingu-soloproject-evaluation-app/issues">Report Bug</a>
+    <a href="https://chingu.youtrack.cloud/issues">Report Bug</a>
     ·
-    <a href="https://github.com/cherylli/chingu-soloproject-evaluation-app/issues">Request Feature</a>
+    <a href="https://chingu.youtrack.cloud/issues">Request Feature</a>
   </p>
 </div>
 
