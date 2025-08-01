@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic'
 import {getTierMismatchedSoloProjects} from "@/services/soloProjects";
 import TierMismatchTable from "@/components/soloprojects/tiers/TierMismatchTable";
 import H1 from "@/components/ui/typography/h1";
