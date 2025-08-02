@@ -3,10 +3,21 @@ import {Submission} from "@/types/SoloProjectTypes";
 import {roleColors} from "@/styles/roles";
 import {getRole} from "@/lib/getRole";
 import Link from "next/link";
+import {SiAirtable} from "@icons-pack/react-simple-icons";
 
 const columnHelper = createColumnHelper<Submission>()
 
-export const columnDef = [
+export const columnDef = (
+    baseURL: string
+) => [
+    columnHelper.display({
+        id: "Airtable Link",
+        cell: ({row}) => {
+            return <a href={`${baseURL}/${row.original.id}`} target="_blank" rel="noreferrer">
+                <SiAirtable />
+            </a>
+        }
+    }),
     columnHelper.accessor((row) => row.fields["Discord Name"], {
         id: "Discord Name",
         header: "Discord Name",
