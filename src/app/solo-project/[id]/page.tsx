@@ -8,6 +8,7 @@ import FeedbackContainer from "@/components/feedback/FeedbackContainer";
 import CompactList from "@/components/soloprojects/CompactList";
 import ReadOnly from "@/components/soloprojects/details/ReadOnly";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
+import {getAtTableBaseUrl} from "@/lib/getAtTableBaseUrl";
 
 const SoloProjectPage = async (props: { params: Promise<{ id: string }> }) => {
     const params = await props.params;
@@ -30,6 +31,7 @@ const SoloProjectPage = async (props: { params: Promise<{ id: string }> }) => {
                         {projects.length > 1 && <CompactList records={projects}/>}
                         <ProjectSubmissionDetail
                             record={record}
+                            atBaseUrl={getAtTableBaseUrl('solo-project')}
                         />
                         <Comments recordId={params.id}/>
                     </div>
