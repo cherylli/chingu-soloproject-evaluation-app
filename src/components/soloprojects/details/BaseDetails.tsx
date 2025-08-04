@@ -20,18 +20,25 @@ import UIUXDetails from "@/components/soloprojects/details/UIUXDetails";
 import { BaseDetailHeader } from "@/components/soloprojects/details/BaseDetailsHeader";
 import TierSuggestion from "@/components/soloprojects/tiers/TierSuggestion";
 import {removeEvaluatorOnDb, setEvaluatorOnDb, updateSoloProjectById} from "@/services/soloProjects";
+import {SiAirtable} from "@icons-pack/react-simple-icons";
+import {useRoleCheck} from "@/hooks/useRoleCheck";
+
 
 interface ProjectDetailProps {
     record: Submission
+    atBaseUrl: string
 }
 
+
 const ProjectSubmissionDetail = (
-    {record: initialRecord}: ProjectDetailProps
+    {record: initialRecord, atBaseUrl}: ProjectDetailProps
 ) => {
     const [statusOpen, setStatusOpen] = useState(false)
     const [ringTheBellText, setRingTheBellText] = useState('')
     const [selectionLen, setSelectionLen] = useState(0)
     const [record, setRecord] = useState<Submission>(initialRecord)
+
+    const { isAdmin } = useRoleCheck()
 
     if(!record) return
 
@@ -113,10 +120,19 @@ const ProjectSubmissionDetail = (
         })
     }
 
+
+
     return <div>
         <section className="flex flex-col gap-5 w-[90%] mx-auto">
             <BaseDetailHeader record={record} />
-            <div>{record.fields["Timestamp"].toString()}</div>
+            <div className="flex gap-5 items-center">
+                {
+                    isAdmin && <a href={`${atBaseUrl}/${record.id}`} target="_blank" rel="noreferrer" >
+                        <SiAirtable/>
+                    </a>
+                }
+                <div>{record.fields["Timestamp"].toString()}</div>
+            </div>
             <div className="flex gap-5 items-center">
                 <div>{record.fields.Tier}</div>
                 <TierSuggestion onSuccess={updateRecordFields}/>

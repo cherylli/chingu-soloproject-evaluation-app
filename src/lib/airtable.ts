@@ -291,7 +291,6 @@ export const createOrFilter = (
         value: string
     }[]
 ): string => {
-    console.log("createORFilter - conditions", conditions)
     if (conditions.length === 0) {
         throw new Error("[CreateOrFilter]: At least one condition must be provided.")
     }
@@ -299,8 +298,6 @@ export const createOrFilter = (
     const filterFields = conditions.map(({field, value})=>{
         return `{${field}} = "${value}"`
     })
-
-    console.log("createORFilter - filterFields", filterFields)
 
     return `OR(${filterFields.join(",")})`
 }

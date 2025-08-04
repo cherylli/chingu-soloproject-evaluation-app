@@ -4,6 +4,7 @@ import SoloProjectTable from "@/components/soloprojects/soloProjectTable";
 import {revalidatePath} from "next/cache";
 import {RefreshData} from "@/lib/RefreshData";
 import ClientDateTime from "@/components/ClientDateTime";
+import {getAtTableBaseUrl} from "@/lib/getAtTableBaseUrl";
 
 const FetchProjects = async ({
                                  status = "Waiting Eval",
@@ -25,7 +26,10 @@ const FetchProjects = async ({
                 <CardContent>{noRecordMessage}</CardContent>
             </Card>
             : <>
-                <SoloProjectTable records={records}/>
+                <SoloProjectTable
+                    records={records}
+                    baseUrl={getAtTableBaseUrl('solo-project')}
+                />
             </>
     }
         <RefreshData ms={10*60*1000} refreshAction={refreshRecords} />
