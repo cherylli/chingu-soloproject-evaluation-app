@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.8.0](https://github.com/cherylli/chingu-soloproject-evaluation-app/compare/v1.7.0...v1.8.0) (2025-08-04)
+
+
+### Features
+
+* **solo-projects:** add admin-only Airtable link and role-check hook ([1194e3e](https://github.com/cherylli/chingu-soloproject-evaluation-app/commit/1194e3e82da93252ab2bedef0892c0f633c5b38a))
+* **solo-projects:** add Airtable link column and support base URL in SoloProjectTable ([4e69047](https://github.com/cherylli/chingu-soloproject-evaluation-app/commit/4e69047f55fe3a886266b9e2de3472f93c19b601))
+
 ## [1.7.0](https://github.com/cherylli/chingu-soloproject-evaluation-app/compare/v1.6.0...v1.7.0) (2025-08-01)
 
 
