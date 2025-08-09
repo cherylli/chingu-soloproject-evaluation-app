@@ -63,7 +63,8 @@
     "@types/react-copy-to-clipboard": "^5.0.4",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.5",
-    "prettier": "^3.6.2"
+    "prettier": "^3.6.2",
+    "prettier-plugin-organize-imports": "^4.2.0"
   },
   "resolutions": {
     "@types/react": "19.1.2",
