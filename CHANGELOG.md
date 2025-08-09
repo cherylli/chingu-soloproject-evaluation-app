@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.0](https://github.com/cherylli/chingu-soloproject-evaluation-app/compare/v1.8.0...v1.9.0) (2025-08-09)
+
+
+### Features
+
+* **admin/voyage-signups:** enhance table with GitHub links, status indicator, and role coloring ([7d373c6](https://github.com/cherylli/chingu-soloproject-evaluation-app/commit/7d373c63732ed4ec6d29aeac99a122dcfc3a6e3d))
+
 ## [1.8.0](https://github.com/cherylli/chingu-soloproject-evaluation-app/compare/v1.7.0...v1.8.0) (2025-08-04)
 
 
