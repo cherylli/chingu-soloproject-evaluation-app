@@ -28,10 +28,10 @@ const SingleVoyageSignupPage = async ({
     return (
         <div>
             SingleVoyageSignupPage - {parsedParams.voyageNum}
-            <SingleVoyageSignupTable
-                records={signups.data}
-                atBaseUrl={getAtTableBaseUrl("voyage-signup")}
-            />
+                <SingleVoyageSignupTable
+                    records={signups.data}
+                    atBaseUrl={getAtTableBaseUrl("voyage-signup")}
+                />
         </div>
     )
 }

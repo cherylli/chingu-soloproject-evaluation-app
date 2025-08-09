@@ -5,9 +5,12 @@ import {flexRender, getGroupedRowModel, getSortedRowModel, SortingState, useReac
 import {getCoreRowModel} from "@tanstack/table-core";
 import {singleVoyageColumnDef} from "@/components/voyages/signups/singleVoyageColumnDef";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
-import {Fragment, useState} from "react";
-import {ChevronDown, ChevronRight} from "lucide-react";
+import {Fragment, useMemo, useState} from "react";
+import {ChevronDown, ChevronRight, ExternalLinkIcon, MoreVertical} from "lucide-react";
 import {Button} from "@/components/ui/button";
+import {DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
+import {githubTeamUrl} from "@/lib/urls";
+
 
 const SingleVoyageSignupTable = ({
         records,
@@ -21,6 +24,7 @@ const SingleVoyageSignupTable = ({
     const [sorting, setSorting] = useState<SortingState>([
         {id: 'teamNum', desc: false},
     ])
+    const columnVisibility = useMemo(()=> ({teamNum: false}), [])
 
     const columns = singleVoyageColumnDef(atBaseUrl)
 
@@ -30,10 +34,9 @@ const SingleVoyageSignupTable = ({
         state: {
             grouping,
             sorting,
-            columnVisibility: {
-                teamNum: false,
-            },
+            columnVisibility
         },
+        autoResetAll: false,
         getCoreRowModel: getCoreRowModel<VoyageSignup>(),
         getGroupedRowModel: getGroupedRowModel<VoyageSignup>(),
         getSortedRowModel: getSortedRowModel<VoyageSignup>(),
@@ -58,19 +61,21 @@ const SingleVoyageSignupTable = ({
             </TableHeader>
             <TableBody>
                 {table.getRowModel().rows.map((row) => {
-
+                        // Grouping row (category header)
                         if (row.getIsGrouped()) {
+
+                            const activeNum = row.subRows.filter(sr=>sr.original.fields.Status === "Active").length
+
                             return <Fragment key={row.id}>
                                 <TableRow
                                     className="cursor-pointer"
-                                    onClick={row.getToggleExpandedHandler()}
                                 >
                                     <TableCell colSpan={columns.length}>
-                                        <div>
+                                        <div className="flex items-center">
                                             <Button
                                                 variant="ghost" size="icon"
                                                 className="cursor-pointer"
-                                                onClick={row.getToggleExpandedHandler()}
+                                                onClick={ row.getToggleExpandedHandler()}
                                             >
                                                 {row.getIsExpanded()
                                                     ? <ChevronDown size={16}/>
@@ -78,8 +83,27 @@ const SingleVoyageSignupTable = ({
                                                 }
                                             </Button>
                                             <strong>
-                                                {String(row.getGroupingValue(row.groupingColumnId!) ?? '')} ({row.subRows.length})
+                                                <span className="text-green-700">{`${row.getGroupingValue(row.groupingColumnId!) ?? ''}`}</span>
+                                                <span className="ml-5 text-green-700/60">{`( ${activeNum} / ${row.subRows.length} )`}</span>
                                             </strong>
+                                            {row.original.fields["Team No."] &&
+                                                <DropdownMenu>
+                                                    <DropdownMenuTrigger asChild>
+                                                        <Button variant="ghost" className="h-8 w-8 p-0 ml-4">
+                                                            <span className="sr-only">Open menu</span>
+                                                            <MoreVertical/>
+                                                        </Button>
+                                                    </DropdownMenuTrigger>
+                                                    <DropdownMenuContent>
+                                                        <a
+                                                            href={githubTeamUrl(row.original.fields)}
+                                                            target="_blank"
+                                                        >
+                                                            <DropdownMenuLabel className="flex items-center gap-2"><ExternalLinkIcon/> Github repo</DropdownMenuLabel>
+                                                        </a>
+                                                    </DropdownMenuContent>
+                                                </DropdownMenu>
+                                            }
                                         </div>
                                     </TableCell>
                                 </TableRow>
