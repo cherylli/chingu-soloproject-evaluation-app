@@ -19,8 +19,7 @@ const checkinTable = base(env.AIRTABLE_CHECKIN_TABLEID);
 const voyageSignupTable = base(env.AIRTABLE_VOYAGE_SIGNUP_TABLEID);
 const applicationTable = base(env.AIRTABLE_APP_TABLEID);
 
-// TODO: rename to soloPorjectFields, this can probably be removed and use the types instead
-const fields = [
+const soloProjectFields = [
   'Email',
   'Discord Name',
   'GitHub ID',
@@ -87,7 +86,7 @@ const fields = [
 ];
 
 // solo project
-const transformRecord = (record: Record<FieldSet>) => {
+const transformSoloProjectRecord = (record: Record<FieldSet>) => {
   return {
     id: record.id,
     commentCount: record.commentCount as number,
@@ -165,13 +164,8 @@ const transformRecord = (record: Record<FieldSet>) => {
   };
 };
 
-const transformData = (records: Records<FieldSet>): SoloProjectSubmission[] => {
-  return records.map((record: Record<FieldSet>) => transformRecord(record));
-};
-
-// TODO: this can probably be combined with transformRecord
-const transformDataSingleRecord = (record: Record<FieldSet>) => {
-  return transformRecord(record);
+const transformSoloProjectData = (records: Records<FieldSet>): SoloProjectSubmission[] => {
+  return records.map((record: Record<FieldSet>) => transformSoloProjectRecord(record));
 };
 
 /*********
@@ -259,7 +253,7 @@ const transformVoyageSignupData = (records: Records<FieldSet>): VoyageSignup[] =
  * Transforms an application record object from airtable format into a standardized format.
  *
  * @param {Record<FieldSet>} record - The input application record object (airtable results).
- * @returns {Application} A transformed application record object with id and fields properties.
+ * @returns {Application} A transformed application record object with id and soloProjectFields properties.
  */
 
 // single record
@@ -292,7 +286,7 @@ const transformApplicationData = (records: Records<FieldSet>): Application[] => 
 
 /**
  * Creates an Airtable OR filter formula from multiple conditions
- * condition.field should be checked by caller function to ensure the table has those fields
+ * condition.field should be checked by caller function to ensure the table has those soloProjectFields
  * @param conditions Array of field-value pairs to filter by
  * @returns Airtable filter formula string
  */
@@ -317,12 +311,12 @@ export const createOrFilter = (
 export {
   applicationTable,
   checkinTable,
-  fields,
+  soloProjectFields,
   table,
   transformApplicationData,
   transformCheckinData,
-  transformData,
-  transformDataSingleRecord,
+  transformSoloProjectData,
+  transformSoloProjectRecord,
   transformVoyageSignupData,
   userTable,
   voyageSignupTable,

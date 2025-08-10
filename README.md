@@ -1,5 +1,7 @@
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
+
 <a name="readme-top"></a>
+
 <!--
 *** Thanks for checking out the Best-README-Template. If you have a suggestion
 *** that would make this better, please fork the repo and create a pull request
@@ -7,8 +9,6 @@
 *** Don't forget to give the project a star!
 *** Thanks again! Now go create something AMAZING! :D
 -->
-
-
 
 <!-- PROJECT SHIELDS -->
 <!--
@@ -18,14 +18,12 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
+
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
-
-
-
 
 <!-- PROJECT LOGO -->
 <br />
@@ -47,8 +45,6 @@
     <a href="https://chingu.youtrack.cloud/issues">Request Feature</a>
   </p>
 </div>
-
-
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -75,18 +71,18 @@
   </ol>
 </details>
 
-
-
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
 
-This application allows user to evaluate solo projects without needing to have direct access to airtable which access is charged per person. It also has features which improves the efficiency of chingu.io solo project evaluation. 
+This application allows user to evaluate solo projects without needing to have direct access to airtable which access is charged per person. It also has features which improves the efficiency of chingu.io solo project evaluation.
 
 It requires user to be authenticated using github OAuth, then users will be authorized based their roles which is stored in the Chingu airtable.
 
 Feedback is scraped from the [soloproject-evaluation](https://github.com/chingu-voyages/soloproject-evaluation) repository.
 
 ## Screenshots
+
 The home screen shows a list of projects to be evaluated, click on the `Discord name` to go to the detail view
 ![home.png](docs/images/home.png)
 
@@ -94,7 +90,6 @@ Feedback are shown side-by-side in the desktop view
 ![detail.png](docs/images/detail.png)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 ### Built With
 
@@ -108,114 +103,119 @@ Feedback are shown side-by-side in the desktop view
 <br/>
 [![Airtable](https://img.shields.io/badge/Airtable-18BFFF?style=for-the-badge&logo=Airtable&logoColor=white)](https://airtable.com/)
 
-
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- GETTING STARTED -->
+
 ## Getting Started
 
 ### Prerequisites
 
 To be able to login, you will need (please contact a Chingu admin)
-* an entry in the chingu admin airtable to be able to login with your github account
-* an existing option in the Evaluation dropdown on airtable
+
+- an entry in the chingu admin airtable to be able to login with your github account
+- an existing option in the Evaluation dropdown on airtable
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- USAGE EXAMPLES -->
+
 ## Usage
 
-### 1. Pick a project to evaluate from the home screen. 
+### 1. Pick a project to evaluate from the home screen.
+
 Projects with an empty "Evaluator" field is unclaimed and available for evaluation.
 <br/><br/>
-<b>Note:</b> Product Owner or Scrum Master solo projects are evaluated by the Agile Leadership team. 
+<b>Note:</b> Product Owner or Scrum Master solo projects are evaluated by the Agile Leadership team.
 <br/>
 
-### 2. Claim the project 
+### 2. Claim the project
+
 Before starting evaluation, please claim the project by clicking the `Evaluate This` button.
-This will set the `Evaluator`, and `Evaluation Date` fields in airtable, and the button will be greyed out on success.
+This will set the `Evaluator`, and `Evaluation Date` soloProjectFields in airtable, and the button will be greyed out on success.
 <br/>
 This is to ensure that we don't have multiple evaluators work on the same solo project.
 <br/><br/>
 ![evaluate-this.png](docs/images/evaluate-this.png)
-    
 
 ### 3. Enter your feedback in the textarea
- 
-   [![](https://i.imgur.com/2cMunDSm.jpg)](https://i.imgur.com/2cMunDS.png)
+
+[![](https://i.imgur.com/2cMunDSm.jpg)](https://i.imgur.com/2cMunDS.png)
 
 Here are some sample feedback (https://github.com/chingu-voyages/soloproject-evaluation#example-feedback) <br/>
 <br/>
-   We copy and paste some pre-defined feedback from the feedback pane but feel free to use your own or add to our collection of feedback by making a pull request in the feedback repository where you can find the link in frontpage of the app.
+We copy and paste some pre-defined feedback from the feedback pane but feel free to use your own or add to our collection of feedback by making a pull request in the feedback repository where you can find the link in frontpage of the app.
 <br/><br/>
 <b>Note</b>: we don't include feedback with "requested changes" now, as most of the time we don't get a response from them
 
 So with a `requested changes` project, we would send something like
 
-   [![](https://i.imgur.com/IWdKBcjm.jpg)](https://i.imgur.com/IWdKBcj.png)
+[![](https://i.imgur.com/IWdKBcjm.jpg)](https://i.imgur.com/IWdKBcj.png)
 
 It's also a good idea to put a note in the comment section about why we are requesting for changes so it's easier for other evaluators and admin to see if they open a ticket.
 <br/><br/>
+
 #### <u>Requested Changes</u>
+
 For requested change projects, it's ok to remove yourself as the evaluator once the status is saved. This allow other evaluators to work on it when it returns to the evaluation queue. It is also ok to leave the evaluator field set if you prefer to follow up.
 <br/><br/>
 A list of requested change conditions can be found in the flowchart below.
 
 #### <u>User picked incorrect tier</u>
+
 If the user picked the wrong tier, we can use the `Suggested Tier` dropdown to flag it. An admin will then update it on airtable.
 
 ![](https://i.imgur.com/SDbEQ0u.png)
 
 ### 4. Select the appropriate 'Evaluation Status', and click `Save`
+
 This will save the feedback into the `Evaluation Feedback` field in airtable, and a save confirmation should be displayed on success. (browser alert at this stage)
 
 ![save.png](docs/images/save.png)
 <br/><br/>
+
 ### Evaluation Statuses
+
 <b>Waiting Eval</b> - Projects awaiting evaluation
 <br/><br/>
 <b>Passed</b> - The project has satisfied all the requirements for the tier they applied for
 <br/><br/>
-<b>Requested Changes</b> - Changes are requested. Participants are asked to open a ticket. 
-Once they opened a ticket with the additional changes/information, an admin will put it back in the evaluation queue. 
+<b>Requested Changes</b> - Changes are requested. Participants are asked to open a ticket.
+Once they opened a ticket with the additional changes/information, an admin will put it back in the evaluation queue.
 We also have an automation to email everyone with the "requested changes".
 Sometimes, they will directly respond to the evaluator in DM which is OK, only issue is that it may take longer for us to action as the particular evaluator might not be available to re-evaluate in a timely manner
-   <br/><br/>
-   <b>Not In Discord</b> - Participant cannot be located in discord. 
-
+<br/><br/>
+<b>Not In Discord</b> - Participant cannot be located in discord.
 
 ### 5. Copy the congratulations message and send it in #ring-the-bell channel on discord
-   ![](https://i.imgur.com/1fxZtsK.png)
+
+![](https://i.imgur.com/1fxZtsK.png)
+
 ### 6. DM member with the feedback on discord
 
 Note: Comments can also be added if necessary. Due to the limitations of the airtable API, all comments will be shown as posted by the person who owns the API key, regardless of the user logged in
 
 ![comments.png](docs/images/comments.png)
 
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ![flowchart.png](docs/images/flowchart.png)
 
 <!-- ROADMAP -->
+
 ## Roadmap
 
 - [x] Authentication with github, so we don't have to store user credentials
 - [x] A better confirmation display for actions (save, set evaluator), an alert box is used currently
 - [x] Add Loading state to actions (e.g. save, set evaluator)
-- [ ] (Possibly) role based auth for additional admin features 
+- [ ] (Possibly) role based auth for additional admin features
 - [x] Auto scrape feedback repo every x days -> added this but autoscrape every time the feedback repo is updated
 - [ ] Save evaluation text in context so progress is not lose on page navigation
 - [ ] Comments
   - [x] Show comments
   - [x] Add comments
   - [ ] Edit/Delete comments (not sure if I want to implement this)
-- [x] Feedback 
+- [x] Feedback
   - [x] copy and paste
   - [x] searchable
 - [x] Copy and paste "ring-the-bell" comments
@@ -230,7 +230,7 @@ See the [open issues](https://github.com/cherylli/chingu-soloproject-evaluation-
 
 ## Contribution
 
-1. Setup required API keys 
+1. Setup required API keys
 2. Clone the repo
    ```sh
    git clone https://github.com/cherylli/chingu-soloproject-evaluation-app
@@ -244,17 +244,16 @@ See the [open issues](https://github.com/cherylli/chingu-soloproject-evaluation-
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
 <!-- LICENSE -->
+
 ## License
 
 [GNU General Public License V3](https://www.gnu.org/licenses/gpl-3.0)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- CONTACT -->
+
 ## Contact
 
 Cheryl Murphy - [cherylli](https://github.com/cherylli) - https://github.com/cherylli
@@ -263,11 +262,9 @@ Project Link: [https://github.com/cherylli/chingu-soloproject-evaluation-app](ht
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
-
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
 [contributors-shield]: https://img.shields.io/github/contributors/cherylli/chingu-soloproject-evaluation-app.svg?style=for-the-badge
 [contributors-url]: https://github.com/cherylli/chingu-soloproject-evaluation-app/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/cherylli/chingu-soloproject-evaluation-app.svg?style=for-the-badge

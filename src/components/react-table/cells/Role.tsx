@@ -3,7 +3,7 @@ import { roleColors } from '@/styles/roles';
 import { SoloProjectSubmission } from '@/types/SoloProjectTypes';
 import { Row } from '@tanstack/table-core';
 
-// TODO: update this component so it works with Role fields from all tables
+// TODO: update this component so it works with Role soloProjectFields from all tables
 const ReactTableRoleCell = ({ row }: { row: Row<SoloProjectSubmission> }) => {
   const role = getRole(row.original.fields);
   if (!role) return null;

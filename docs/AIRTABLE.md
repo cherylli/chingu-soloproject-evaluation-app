@@ -1,4 +1,4 @@
-For development purpose, 2 test airtable tables need to have the following fields
+For development purpose, 2 test airtable tables need to have the following soloProjectFields
 
 ### Solo project submission table
 
@@ -36,7 +36,7 @@ export type VoyageRole =
 ### User table
 
 ```ts
-// These 3 tables fields are used to check if user is authorised to use the app
+// These 3 tables soloProjectFields are used to check if user is authorised to use the app
 "github email": Single line text|null
 "evaluator email": Single line text|null
 "Role": (Multiple select) ChinguRole | null

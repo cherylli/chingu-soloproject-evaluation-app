@@ -4,7 +4,7 @@ import {
   table,
   transformApplicationData,
   transformCheckinData,
-  transformData,
+  transformSoloProjectData,
   transformVoyageSignupData,
   voyageSignupTable,
 } from '@/lib/airtable';
@@ -18,7 +18,7 @@ import { FieldSet, Records } from 'airtable';
 const tableMap = {
   soloProject: {
     atTable: table,
-    transformFn: transformData as (r: Records<FieldSet>) => SoloProjectSubmission[],
+    transformFn: transformSoloProjectData as (r: Records<FieldSet>) => SoloProjectSubmission[],
   },
   application: {
     atTable: applicationTable,
