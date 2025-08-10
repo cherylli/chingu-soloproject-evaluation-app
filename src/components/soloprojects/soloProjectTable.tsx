@@ -1,11 +1,11 @@
 'use client';
 
 import StandardReactTable from '@/components/react-table/StandardReactTable';
-import { columnDef } from '@/components/soloprojects/columnDef';
+import { soloProjectColDef } from '@/components/soloprojects/soloProjectColDef';
+import { useRoleCheck } from '@/hooks/useRoleCheck';
 import { SoloProjectSubmission } from '@/types/SoloProjectTypes';
 import { useReactTable } from '@tanstack/react-table';
 import { getCoreRowModel } from '@tanstack/table-core';
-import { useSession } from 'next-auth/react';
 
 const SoloProjectTable = ({
   records,
@@ -14,13 +14,11 @@ const SoloProjectTable = ({
   records: SoloProjectSubmission[];
   baseUrl: string;
 }) => {
-  const { data: sessionData } = useSession();
-  const userRole = sessionData?.user?.roles || [];
-  const isAdmin = userRole.includes('admin');
+  const { isAdmin } = useRoleCheck();
 
   const spTable = useReactTable<SoloProjectSubmission>({
     data: records,
-    columns: columnDef(baseUrl, isAdmin),
+    columns: soloProjectColDef(baseUrl, isAdmin),
     getCoreRowModel: getCoreRowModel<SoloProjectSubmission>(),
   });
 

@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 const columnHelper = createColumnHelper<SoloProjectSubmission>();
 
-export const columnDef = (baseURL: string, isAdmin: boolean = false) => [
+export const soloProjectColDef = (baseURL: string, isAdmin: boolean = false) => [
   ...(isAdmin
     ? [
         columnHelper.display({
