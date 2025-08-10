@@ -1,6 +1,6 @@
 import SetTierBtn from '@/components/soloprojects/tiers/SetTierBtn';
 import { SoloProjectSubmission, SoloProjectTier } from '@/types/SoloProjectTypes';
-import { SiGithub } from '@icons-pack/react-simple-icons';
+import { SiAirtable, SiGithub } from '@icons-pack/react-simple-icons';
 import { createColumnHelper } from '@tanstack/table-core';
 import { ExternalLink, LinkIcon } from 'lucide-react';
 import Link from 'next/link';
@@ -8,18 +8,31 @@ import Link from 'next/link';
 const columnHelper = createColumnHelper<SoloProjectSubmission>();
 
 export const tierMismatchColumnDef = (
-  refreshRow: (id: string, newTier: SoloProjectTier) => void
+  refreshRow: (id: string, newTier: SoloProjectTier) => void,
+  baseURL: string,
+  isAdmin: boolean = false
 ) => [
+  ...(isAdmin
+    ? [
+        columnHelper.display({
+          id: 'Airtable Link',
+          cell: ({ row }) => {
+            return (
+              <a href={`${baseURL}/${row.original.id}`} target="_blank" rel="noreferrer">
+                <SiAirtable />
+              </a>
+            );
+          },
+        }),
+      ]
+    : []),
   columnHelper.accessor((row) => row.fields['Discord Name'], {
     header: 'User',
     cell: ({ getValue, row }) => {
       return (
         <div className="flex gap-2">
           <div className="flex flex-col gap-2">
-            <div className="cursor-pointer">
-              {/* TODO: Link to user */}
-              <div className="font-bold mr-6">{getValue()}</div>
-            </div>
+            <div className="font-bold mr-6">{getValue()}</div>
             <div className="text-gray-500">
               <div>{row.original.fields['Evaluation Status']}</div>
               <div>{row.original.fields['Role']}</div>
