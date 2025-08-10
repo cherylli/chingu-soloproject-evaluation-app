@@ -6,7 +6,13 @@
     "dev": "next dev -p 3014",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx,js,jsx,json,md,yml,yaml,css,scss}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@icons-pack/react-simple-icons": "^13.5.0",
@@ -54,7 +60,11 @@
     "zod": "^4.0.5"
   },
   "devDependencies": {
-    "@types/react-copy-to-clipboard": "^5.0.4"
+    "@types/react-copy-to-clipboard": "^5.0.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.5",
+    "prettier": "^3.6.2",
+    "prettier-plugin-organize-imports": "^4.2.0"
   },
   "resolutions": {
     "@types/react": "19.1.2",
