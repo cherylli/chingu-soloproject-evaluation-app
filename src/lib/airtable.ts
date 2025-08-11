@@ -14,11 +14,16 @@ import Airtable, { FieldSet, Record, Records } from 'airtable';
 
 const base = new Airtable({ apiKey: env.AIRTABLE_PAT }).base(env.AIRTABLE_BASEID);
 
-const table = base(env.AIRTABLE_TABLEID);
+const soloProjectTable = base(env.AIRTABLE_TABLEID);
 const userTable = base(env.AIRTABLE_USERS_TABLEID);
 const checkinTable = base(env.AIRTABLE_CHECKIN_TABLEID);
 const voyageSignupTable = base(env.AIRTABLE_VOYAGE_SIGNUP_TABLEID);
 const applicationTable = base(env.AIRTABLE_APP_TABLEID);
+const scheduleTable = base(env.AIRTABLE_SCHEDULE_TABLEID);
+
+/*********
+ * Single record transformers: raw airtable record -> structured entity
+ ************/
 
 // solo project
 const transformSoloProjectRecord = (record: Record<FieldSet>) => {
@@ -99,10 +104,7 @@ const transformSoloProjectRecord = (record: Record<FieldSet>) => {
   };
 };
 
-/*********
- Checkin
- ************/
-
+// voyage check in
 const transformCheckinRecord = (record: Record<FieldSet>) => {
   return {
     id: record.id,
@@ -134,10 +136,7 @@ const transformCheckinRecord = (record: Record<FieldSet>) => {
   };
 };
 
-/*******
- Voyage Signup
-     *************/
-// single record
+// voyage signup
 const transformVoyageSignupRecord = (record: Record<FieldSet>) => {
   return {
     id: record.id,
@@ -198,6 +197,10 @@ const transformScheduleRecord = (record: Record<FieldSet>): Schedule => {
   };
 };
 
+/*********
+ * transform multiple records: raw airtable record -> structured entity
+ ************/
+
 /**
  * Creates a function that transforms an array of Airtable records to an array of structured entities
  *
@@ -225,13 +228,16 @@ const transformApplicationRecords = createMultipleRecordsTransformer<Application
 );
 const transformCheckinRecords = createMultipleRecordsTransformer<CheckIn>(transformCheckinRecord);
 
+const transformScheduleRecords =
+  createMultipleRecordsTransformer<Schedule>(transformScheduleRecord);
+
 /*********
  * Helper functions
  ************/
 
 /**
  * Creates an Airtable OR filter formula from multiple conditions
- * condition.field should be checked by caller function to ensure the table has those soloProjectFields
+ * condition.field should be checked by caller function to ensure the soloProjectTable has those soloProjectFields
  * @param conditions Array of field-value pairs to filter by
  * @returns Airtable filter formula string
  */
@@ -256,9 +262,11 @@ export const createOrFilter = (
 export {
   applicationTable,
   checkinTable,
-  table,
+  scheduleTable,
+  soloProjectTable,
   transformApplicationRecords,
   transformCheckinRecords,
+  transformScheduleRecords,
   transformSoloProjectRecord,
   transformSoloProjectRecords,
   transformVoyageSignupRecords,

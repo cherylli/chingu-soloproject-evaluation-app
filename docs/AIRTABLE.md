@@ -1,6 +1,6 @@
 For development purpose, 2 test airtable tables need to have the following soloProjectFields
 
-### Solo project submission table
+### Solo project submission soloProjectTable
 
 ```ts
 export type SoloProjectFields = {
@@ -33,7 +33,7 @@ export type VoyageRole =
   | 'Product Owner';
 ```
 
-### User table
+### User soloProjectTable
 
 ```ts
 // These 3 tables soloProjectFields are used to check if user is authorised to use the app

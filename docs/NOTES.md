@@ -4,7 +4,7 @@ which can be constructed using soloProjectField Type
 now we just fetch all fields, and "transform" what we need
 
 ```ts
-const records = await table
+const records = await soloProjectTable
   .select({
     filterByFormula: filter,
     fields: soloProjectFields,

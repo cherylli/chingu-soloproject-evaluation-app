@@ -2,7 +2,7 @@
 import { options } from '@/app/api/auth/[...nextauth]/options';
 import {
   createOrFilter,
-  table,
+  soloProjectTable,
   transformSoloProjectRecord,
   transformSoloProjectRecords,
 } from '@/lib/airtable';
@@ -14,13 +14,13 @@ import AirtableError from 'airtable/lib/airtable_error';
 import { getServerSession } from 'next-auth';
 
 export const getAllSoloProjects = async (): Promise<SoloProjectSubmission[]> => {
-  const records = await table.select({}).firstPage();
+  const records = await soloProjectTable.select({}).firstPage();
   return transformSoloProjectRecords(records);
 };
 
 export const getSoloProjectsByStatus = async (status: string): Promise<SoloProjectSubmission[]> => {
   const filter = `{Evaluation Status} = "${status}"`;
-  const records = await table
+  const records = await soloProjectTable
     .select({
       filterByFormula: filter,
       recordMetadata: ['commentCount'],
@@ -36,7 +36,7 @@ export const getSoloProjectsByStatus = async (status: string): Promise<SoloProje
 };
 
 export const getSoloProjectById = async (id: string): Promise<SoloProjectSubmission> => {
-  const record = await table.find(id);
+  const record = await soloProjectTable.find(id);
   return transformSoloProjectRecord(record);
 };
 
@@ -69,7 +69,7 @@ export const getAllSoloProjectsByUser = async (
 
   const filter = createOrFilter(conditions);
 
-  const records = await table
+  const records = await soloProjectTable
     .select({
       filterByFormula: filter,
     })
@@ -82,7 +82,7 @@ export const setEvaluatorOnDb = async (
 ): Promise<ActionResponse<SoloProjectSubmission>> => {
   const sessionData = await getServerSession(options);
   try {
-    const record = await table.find(id);
+    const record = await soloProjectTable.find(id);
     if (record.fields['Evaluator']) {
       return {
         success: false,
@@ -90,7 +90,7 @@ export const setEvaluatorOnDb = async (
       };
     } else {
       if (sessionData) {
-        const updatedRecord = await table.update([
+        const updatedRecord = await soloProjectTable.update([
           {
             id,
             fields: {
@@ -131,7 +131,7 @@ export const removeEvaluatorOnDb = async (
   const sessionData = await getServerSession(options);
   try {
     if (sessionData) {
-      const updatedRecord = await table.update([
+      const updatedRecord = await soloProjectTable.update([
         {
           id,
           fields: {
@@ -162,7 +162,7 @@ export const updateSoloProjectById = async (
   fields: FieldSet
 ): Promise<ActionResponse<SoloProjectSubmission>> => {
   try {
-    const updatedRecord = await table.update([
+    const updatedRecord = await soloProjectTable.update([
       {
         id,
         fields,
@@ -185,7 +185,7 @@ export const updateSoloProjectById = async (
 // which indicates the user picked a different tier
 export const getTierMismatchedSoloProjects = async (): Promise<SoloProjectSubmission[]> => {
   const filter = `OR({Tier} = "*Tier1", {Tier} = "*Tier2", {Tier} = "*Tier3")`;
-  const records = await table
+  const records = await soloProjectTable
     .select({
       filterByFormula: filter,
     })
