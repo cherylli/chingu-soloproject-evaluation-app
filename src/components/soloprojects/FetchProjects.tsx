@@ -16,6 +16,9 @@ const FetchProjects = async ({
 }) => {
   const records = await getSoloProjectsByStatus(status);
 
+  if (!records.success)
+    return <div>Error fetching projects</div>;
+
   async function refreshRecords() {
     'use server';
     revalidatePath('/');
@@ -27,14 +30,14 @@ const FetchProjects = async ({
         path={getATBaseURL('solo-project')}
         label="Go to Solo Project Table in Airtable"
       />
-      {records.length === 0 ? (
+      {records.data.length === 0 ? (
         <Card className="w-[380px] pt-5 flex items-center justify-center m-auto">
           <CardContent>{noRecordMessage}</CardContent>
         </Card>
       ) : (
         <>
           <SoloProjectTable
-            records={records}
+            records={records.data}
             baseUrl={getATBaseURL('solo-project')}
           />
         </>

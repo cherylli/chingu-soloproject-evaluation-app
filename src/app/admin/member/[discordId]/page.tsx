@@ -4,10 +4,16 @@ import { getATBaseURL } from '@/lib/getAirtableUrls';
 import { getMemberDetailsByDiscordId } from '@/services/members';
 import { Context } from '@/types';
 
-const MemberPage = async (props: { params: Promise<{ discordId: string }> }) => {
+const MemberPage = async (props: {
+  params: Promise<{ discordId: string }>;
+}) => {
   const params = await props.params;
 
-  const memberDetails = await getMemberDetailsByDiscordId(params.discordId);
+  const memberDetails = await getMemberDetailsByDiscordId(
+    params.discordId
+  );
+  if (!memberDetails.success)
+    return <div>Error fetching member details</div>;
 
   const atBaseUrls: Partial<Record<Context, string>> = {
     'solo-project': getATBaseURL('solo-project'),
@@ -20,7 +26,10 @@ const MemberPage = async (props: { params: Promise<{ discordId: string }> }) => 
   return (
     <div>
       <H1>MemberPage - {params.discordId}</H1>
-      <MemberDetails memberDetails={memberDetails} atBaseUrls={atBaseUrls} />
+      <MemberDetails
+        memberDetails={memberDetails.data}
+        atBaseUrls={atBaseUrls}
+      />
     </div>
   );
 };

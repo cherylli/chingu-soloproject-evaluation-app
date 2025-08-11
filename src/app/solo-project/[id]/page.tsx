@@ -3,29 +3,66 @@ import FeedbackContainer from '@/components/feedback/FeedbackContainer';
 import CompactList from '@/components/soloprojects/CompactList';
 import ProjectSubmissionDetail from '@/components/soloprojects/details/BaseDetails';
 import ReadOnly from '@/components/soloprojects/details/ReadOnly';
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from '@/components/ui/resizable';
 import { getATBaseURL } from '@/lib/getAirtableUrls';
-import { getAllSoloProjectsByUser, getSoloProjectById } from '@/services/soloProjects';
+import {
+  getAllSoloProjectsByUser,
+  getSoloProjectById,
+} from '@/services/soloProjects';
 
-const SoloProjectPage = async (props: { params: Promise<{ id: string }> }) => {
+const SoloProjectPage = async (props: {
+  params: Promise<{ id: string }>;
+}) => {
   const params = await props.params;
   const record = await getSoloProjectById(params.id);
-  const projects = await getAllSoloProjectsByUser(record.fields['Discord ID'], record.fields.Email);
+  if (!record.success)
+    return <div>Error fetching Project</div>;
 
-  return record.fields['Evaluation Status'] === 'Passed' ? (
-    <ReadOnly record={record} />
+  const projects = await getAllSoloProjectsByUser(
+    record.data.fields['Discord ID'],
+    record.data.fields.Email
+  );
+
+  if (!projects.success)
+    return (
+      <div>Error fetching other projects by the user</div>
+    );
+
+  return record.data.fields['Evaluation Status'] ===
+    'Passed' ? (
+    <ReadOnly record={record.data} />
   ) : (
-    <ResizablePanelGroup direction="horizontal" className="flex-col! lg:flex-row!">
-      <ResizablePanel defaultSize={50} className="basis-auto! md:basis-0!">
+    <ResizablePanelGroup
+      direction="horizontal"
+      className="flex-col! lg:flex-row!"
+    >
+      <ResizablePanel
+        defaultSize={50}
+        className="basis-auto! md:basis-0!"
+      >
         <div className="hidden lg:h-[calc(100vh-110px)] lg:block lg:overflow-y-auto">
-          <FeedbackContainer discordName={record.fields['Discord Name']} />
+          <FeedbackContainer
+            discordName={record.data.fields['Discord Name']}
+          />
         </div>
       </ResizablePanel>
       <ResizableHandle className="hidden lg:flex" />
-      <ResizablePanel defaultSize={50} className="basis-auto! lg:basis-0!">
+      <ResizablePanel
+        defaultSize={50}
+        className="basis-auto! lg:basis-0!"
+      >
         <div className="lg:h-[calc(100vh-110px)] lg:overflow-y-auto">
-          {projects.length > 1 && <CompactList records={projects} />}
-          <ProjectSubmissionDetail record={record} atBaseUrl={getATBaseURL('solo-project')} />
+          {projects.data.length > 1 && (
+            <CompactList records={projects.data} />
+          )}
+          <ProjectSubmissionDetail
+            record={record.data}
+            atBaseUrl={getATBaseURL('solo-project')}
+          />
           <Comments recordId={params.id} />
         </div>
       </ResizablePanel>
