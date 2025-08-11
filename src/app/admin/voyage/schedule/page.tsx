@@ -1,9 +1,9 @@
 // TODO: this will be a page to show all the voyages, links to signups, checkin etc
 import ScheduleTable from '@/components/schedule/ScheduleTable';
+import AirtableLinkButton from '@/components/ui/navigation/AirtableLinkButton';
 import H1 from '@/components/ui/typography/h1';
 import { getATBaseURL } from '@/lib/getAirtableUrls';
 import { getVoyageSchedule } from '@/services/schedule';
-import Link from 'next/link';
 
 const VoyageSchedule = async () => {
   const schedule = await getVoyageSchedule();
@@ -14,13 +14,11 @@ const VoyageSchedule = async () => {
   }
   return (
     <>
-      <H1>VoyageSchedule</H1>
-      <Link href={`/admin/voyage/56/signups`}>V56</Link>
-      <Link href={`/admin/voyage/57/signups`}>V57</Link>
-      <br />
-      <a href={`${getATBaseURL('schedule')}`} target="_blank">
-        Go to Airtable Schedule Table
-      </a>
+      <AirtableLinkButton
+        path={getATBaseURL('schedule')}
+        label="Go to Schedule Table in Airtable"
+      />
+      <H1>Voyage Schedule</H1>
       <ScheduleTable records={schedule.data} />
     </>
   );

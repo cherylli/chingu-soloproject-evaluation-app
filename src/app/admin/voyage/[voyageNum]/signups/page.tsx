@@ -1,3 +1,6 @@
+import AirtableLinkButton from '@/components/ui/navigation/AirtableLinkButton';
+import BackButton from '@/components/ui/navigation/BackButton';
+import H1 from '@/components/ui/typography/h1';
 import SingleVoyageSignupTable from '@/components/voyages/signups/SingleVoyageSignupTable';
 import { getATBaseURL } from '@/lib/getAirtableUrls';
 import { getVoyageSignupByVoyageNum } from '@/services/voyages';
@@ -7,15 +10,24 @@ const paramsSchema = z.object({
   voyageNum: z
     .string()
     .transform((val) => Number(val))
-    .refine((num) => !isNaN(num) && num >= 40 && num <= 100, {
-      message: 'Invalid voyage number',
-    }),
+    .refine(
+      (num) => !isNaN(num) && num >= 40 && num <= 100,
+      {
+        message: 'Invalid voyage number',
+      }
+    ),
 });
 
-const SingleVoyageSignupPage = async ({ params }: { params: Promise<{ voyageNum: string }> }) => {
+const SingleVoyageSignupPage = async ({
+  params,
+}: {
+  params: Promise<{ voyageNum: string }>;
+}) => {
   const parsedParams = paramsSchema.parse(await params);
 
-  const signups = await getVoyageSignupByVoyageNum(parsedParams.voyageNum);
+  const signups = await getVoyageSignupByVoyageNum(
+    parsedParams.voyageNum
+  );
 
   if (!signups.success) {
     return <div>Error fetching signups</div>;
@@ -23,8 +35,19 @@ const SingleVoyageSignupPage = async ({ params }: { params: Promise<{ voyageNum:
 
   return (
     <div>
-      SingleVoyageSignupPage - {parsedParams.voyageNum}
-      <SingleVoyageSignupTable records={signups.data} atBaseUrl={getATBaseURL('voyage-signup')} />
+      <BackButton
+        path="/admin/voyages/schedule"
+        label="Back to Voyages"
+      />
+      <AirtableLinkButton
+        path={getATBaseURL('schedule')}
+        label="Go to airtable"
+      />
+      <H1>Voyage {parsedParams.voyageNum} Signups</H1>
+      <SingleVoyageSignupTable
+        records={signups.data}
+        atBaseUrl={getATBaseURL('voyage-signup')}
+      />
     </div>
   );
 };
