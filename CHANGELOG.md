@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.10.0](https://github.com/cherylli/chingu-soloproject-evaluation-app/compare/v1.9.0...v1.10.0) (2025-08-11)
+
+
+### Features
+
+* **ui:** add `AirtableLinkButton` and `BackButton`, integrate into admin pages and components ([5578893](https://github.com/cherylli/chingu-soloproject-evaluation-app/commit/55788935868916252af3786302341606a01907b5))
+
 ## [1.9.0](https://github.com/cherylli/chingu-soloproject-evaluation-app/compare/v1.8.0...v1.9.0) (2025-08-09)
 
 ### Features
