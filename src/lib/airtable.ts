@@ -238,7 +238,11 @@ const transformScheduleRecords =
 /**
  * Creates an Airtable OR filter formula from multiple conditions
  * condition.field should be checked by caller function to ensure the soloProjectTable has those soloProjectFields
- * @param conditions Array of field-value pairs to filter by
+ * @param conditions Array of field-value pairs to filter by, example
+ *  {
+ *      "name": "value",
+ *      "email": "value",
+ *  }
  * @returns Airtable filter formula string
  */
 

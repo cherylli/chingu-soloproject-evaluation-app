@@ -1,7 +1,7 @@
 import TierMismatchTable from '@/components/soloprojects/tiers/TierMismatchTable';
 import H1 from '@/components/ui/typography/h1';
 import P from '@/components/ui/typography/p';
-import { getAtTableBaseUrl } from '@/lib/getAtTableBaseUrl';
+import { getATBaseURL } from '@/lib/getAirtableUrls';
 import { getTierMismatchedSoloProjects } from '@/services/soloProjects';
 
 export const dynamic = 'force-dynamic';
@@ -17,7 +17,7 @@ const SoloProjectTierMismatchPage = async () => {
         &ldquo;Accept&rdquo; to accept the suggestion or manually set tier with the &ldquo;Set
         Tier&rdquo; buttons
       </P>
-      <TierMismatchTable records={records} baseUrl={getAtTableBaseUrl('solo-project')} />
+      <TierMismatchTable records={records} baseUrl={getATBaseURL('solo-project')} />
     </div>
   );
 };

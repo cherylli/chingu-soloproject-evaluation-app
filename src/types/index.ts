@@ -43,4 +43,9 @@ export type AirtableFields =
   | ApplicationFields
   | CheckInFields;
 
-export type Context = 'solo-project' | 'voyage-signup' | 'voyage-checkin' | 'application';
+export type Context =
+  | 'solo-project'
+  | 'voyage-signup'
+  | 'voyage-checkin'
+  | 'application'
+  | 'schedule';
