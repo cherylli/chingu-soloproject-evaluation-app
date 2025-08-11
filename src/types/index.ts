@@ -1,42 +1,51 @@
-import {Application, ApplicationFields, ApplicationSearchableFields} from "@/types/ApplicationTypes";
-import {VoyageSignup, VoyageSignupFields, VoyageSignupSearchableFields} from "@/types/VoyageSignupTypes";
-import {FilteredFields, SoloProjectSearchableFields, Submission} from "@/types/SoloProjectTypes";
-import {CheckIn, CheckInFields} from "@/types/CheckinTypes";
+import {
+  Application,
+  ApplicationFields,
+  ApplicationSearchableFields,
+} from '@/types/ApplicationTypes';
+import { CheckIn, CheckInFields } from '@/types/CheckinTypes';
+import {
+  SoloProjectFields,
+  SoloProjectSearchableFields,
+  SoloProjectSubmission,
+} from '@/types/SoloProjectTypes';
+import {
+  VoyageSignup,
+  VoyageSignupFields,
+  VoyageSignupSearchableFields,
+} from '@/types/VoyageSignupTypes';
 
 type ActionSuccess<T> = {
-    success: true
-    message: string
-    data: T
-}
+  success: true;
+  message: string;
+  data: T;
+};
 
 type ActionFailure = {
-    success: false
-    message: string
-}
+  success: false;
+  message: string;
+};
 
 export type ActionResponse<T> = ActionSuccess<T> | ActionFailure;
 
 // TODO: update all services to use ActionResponse
 
 export type SearchableFields =
-    | ApplicationSearchableFields
-    | VoyageSignupSearchableFields
-    | SoloProjectSearchableFields
+  | ApplicationSearchableFields
+  | VoyageSignupSearchableFields
+  | SoloProjectSearchableFields;
 
-export type AirtableData =
-    | Submission
-    | VoyageSignup
-    | Application
-    | CheckIn
+export type AirtableData = SoloProjectSubmission | VoyageSignup | Application | CheckIn;
 
 export type AirtableFields =
-    | FilteredFields
-    | VoyageSignupFields
-    | ApplicationFields
-    | CheckInFields
+  | SoloProjectFields
+  | VoyageSignupFields
+  | ApplicationFields
+  | CheckInFields;
 
 export type Context =
-    |"solo-project"
-    |"voyage-signup"
-    |"voyage-checkin"
-    |"application"
+  | 'solo-project'
+  | 'voyage-signup'
+  | 'voyage-checkin'
+  | 'application'
+  | 'schedule';

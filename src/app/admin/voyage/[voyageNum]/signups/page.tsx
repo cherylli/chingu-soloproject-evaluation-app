@@ -1,39 +1,55 @@
-import {getVoyageSignupByVoyageNum} from "@/services/voyages";
-import SingleVoyageSignupTable from "@/components/voyages/signups/SingleVoyageSignupTable";
-import {z} from "zod";
-import {getAtTableBaseUrl} from "@/lib/getAtTableBaseUrl";
+import AirtableLinkButton from '@/components/ui/navigation/AirtableLinkButton';
+import BackButton from '@/components/ui/navigation/BackButton';
+import H1 from '@/components/ui/typography/h1';
+import SingleVoyageSignupTable from '@/components/voyages/signups/SingleVoyageSignupTable';
+import { getATBaseURL } from '@/lib/getAirtableUrls';
+import { getVoyageSignupByVoyageNum } from '@/services/voyages';
+import { z } from 'zod';
 
 const paramsSchema = z.object({
-    voyageNum: z
-        .string()
-        .transform((val) => Number(val))
-        .refine((num) => !isNaN(num) && num >= 40 && num <= 100, {
-            message: 'Invalid voyage number',
-        })
-})
+  voyageNum: z
+    .string()
+    .transform((val) => Number(val))
+    .refine(
+      (num) => !isNaN(num) && num >= 40 && num <= 100,
+      {
+        message: 'Invalid voyage number',
+      }
+    ),
+});
 
 const SingleVoyageSignupPage = async ({
-    params
+  params,
 }: {
-    params: Promise<{ voyageNum: string }>
+  params: Promise<{ voyageNum: string }>;
 }) => {
-    const parsedParams = paramsSchema.parse(await params)
+  const parsedParams = paramsSchema.parse(await params);
 
-    const signups = await getVoyageSignupByVoyageNum(parsedParams.voyageNum)
+  const signups = await getVoyageSignupByVoyageNum(
+    parsedParams.voyageNum
+  );
 
-    if (!signups.success) {
-        return <div>Error fetching signups</div>
-    }
+  if (!signups.success) {
+    return <div>Error fetching signups</div>;
+  }
 
-    return (
-        <div>
-            SingleVoyageSignupPage - {parsedParams.voyageNum}
-                <SingleVoyageSignupTable
-                    records={signups.data}
-                    atBaseUrl={getAtTableBaseUrl("voyage-signup")}
-                />
-        </div>
-    )
-}
+  return (
+    <div>
+      <BackButton
+        path="/admin/voyages/schedule"
+        label="Back to Voyages"
+      />
+      <AirtableLinkButton
+        path={getATBaseURL('schedule')}
+        label="Go to airtable"
+      />
+      <H1>Voyage {parsedParams.voyageNum} Signups</H1>
+      <SingleVoyageSignupTable
+        records={signups.data}
+        atBaseUrl={getATBaseURL('voyage-signup')}
+      />
+    </div>
+  );
+};
 
-export default SingleVoyageSignupPage
+export default SingleVoyageSignupPage;
