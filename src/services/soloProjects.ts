@@ -2,10 +2,9 @@
 import { options } from '@/app/api/auth/[...nextauth]/options';
 import {
   createOrFilter,
-  soloProjectFields,
   table,
-  transformSoloProjectData,
   transformSoloProjectRecord,
+  transformSoloProjectRecords,
 } from '@/lib/airtable';
 import { getDate } from '@/lib/getDate';
 import { ActionResponse } from '@/types';
@@ -16,7 +15,7 @@ import { getServerSession } from 'next-auth';
 
 export const getAllSoloProjects = async (): Promise<SoloProjectSubmission[]> => {
   const records = await table.select({}).firstPage();
-  return transformSoloProjectData(records);
+  return transformSoloProjectRecords(records);
 };
 
 export const getSoloProjectsByStatus = async (status: string): Promise<SoloProjectSubmission[]> => {
@@ -24,7 +23,6 @@ export const getSoloProjectsByStatus = async (status: string): Promise<SoloProje
   const records = await table
     .select({
       filterByFormula: filter,
-      fields: soloProjectFields,
       recordMetadata: ['commentCount'],
       sort: [
         {
@@ -34,7 +32,7 @@ export const getSoloProjectsByStatus = async (status: string): Promise<SoloProje
       ],
     })
     .firstPage();
-  return transformSoloProjectData(records);
+  return transformSoloProjectRecords(records);
 };
 
 export const getSoloProjectById = async (id: string): Promise<SoloProjectSubmission> => {
@@ -74,10 +72,9 @@ export const getAllSoloProjectsByUser = async (
   const records = await table
     .select({
       filterByFormula: filter,
-      fields: soloProjectFields,
     })
     .all();
-  return transformSoloProjectData(records);
+  return transformSoloProjectRecords(records);
 };
 
 export const setEvaluatorOnDb = async (
@@ -105,7 +102,7 @@ export const setEvaluatorOnDb = async (
         return {
           success: true,
           message: `Evaluator is set to ${updatedRecord[0].fields['Evaluator']}.`,
-          data: transformSoloProjectData(updatedRecord)[0],
+          data: transformSoloProjectRecords(updatedRecord)[0],
         };
       }
       return {
@@ -145,7 +142,7 @@ export const removeEvaluatorOnDb = async (
       return {
         success: true,
         message: `Evaluator is removed.`,
-        data: transformSoloProjectData(updatedRecord)[0],
+        data: transformSoloProjectRecords(updatedRecord)[0],
       };
     }
     return {
@@ -174,7 +171,7 @@ export const updateSoloProjectById = async (
     return {
       success: true,
       message: `update success`,
-      data: transformSoloProjectData(updatedRecord)[0],
+      data: transformSoloProjectRecords(updatedRecord)[0],
     };
   } catch (e) {
     return {
@@ -191,8 +188,7 @@ export const getTierMismatchedSoloProjects = async (): Promise<SoloProjectSubmis
   const records = await table
     .select({
       filterByFormula: filter,
-      fields: soloProjectFields,
     })
     .all();
-  return transformSoloProjectData(records);
+  return transformSoloProjectRecords(records);
 };

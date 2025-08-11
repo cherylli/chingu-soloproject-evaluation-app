@@ -1,43 +1,45 @@
-"use server"
+'use server';
 
-import {ActionResponse} from "@/types";
-import {Application, ApplicationSearchableFields} from "@/types/ApplicationTypes";
-import {applicationTable, createOrFilter, transformApplicationData} from "@/lib/airtable";
+import { applicationTable, createOrFilter, transformApplicationRecords } from '@/lib/airtable';
+import { ActionResponse } from '@/types';
+import { Application, ApplicationSearchableFields } from '@/types/ApplicationTypes';
 
 // TODO: maybe can refactor to combine with getVoyageSignup and soloProject
 export const getApplicationsByMember = async (
-    discordId?: string,
-    email?: string,
+  discordId?: string,
+  email?: string
 ): Promise<ActionResponse<Application[]>> => {
-    if(!discordId && !email){
-        return {
-            success: false,
-            message: "Either discordId or email must be provided.",
-        }
+  if (!discordId && !email) {
+    return {
+      success: false,
+      message: 'Either discordId or email must be provided.',
+    };
+  }
+
+  try {
+    const conditions: { field: ApplicationSearchableFields; value: string }[] = [];
+
+    if (discordId) {
+      conditions.push({ field: 'Discord ID', value: discordId });
+    }
+    if (email) {
+      conditions.push({ field: 'Email', value: email });
     }
 
-    try {
-        const conditions: {field: ApplicationSearchableFields, value: string}[] = []
+    const filter = createOrFilter(conditions);
 
-        if(discordId){
-            conditions.push({field: 'Discord ID', value: discordId})
-        }
-        if(email){
-            conditions.push({field: 'Email', value: email})
-        }
+    const records = await applicationTable
+      .select({
+        filterByFormula: filter,
+      })
+      .all();
 
-        const filter = createOrFilter(conditions)
-
-        const records = await applicationTable.select({
-            filterByFormula: filter
-        }).all()
-
-        return {
-            success: true,
-            data: transformApplicationData(records),
-            message: "Successfully get application data."
-        }
-    }catch (e) {
-        throw new Error(`Failed to get application data. Error: ${e}`)
-    }
-}
+    return {
+      success: true,
+      data: transformApplicationRecords(records),
+      message: 'Successfully get application data.',
+    };
+  } catch (e) {
+    throw new Error(`Failed to get application data. Error: ${e}`);
+  }
+};

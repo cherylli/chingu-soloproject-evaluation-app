@@ -2,10 +2,10 @@ import {
   applicationTable,
   checkinTable,
   table,
-  transformApplicationData,
-  transformCheckinData,
-  transformSoloProjectData,
-  transformVoyageSignupData,
+  transformApplicationRecords,
+  transformCheckinRecords,
+  transformSoloProjectRecords,
+  transformVoyageSignupRecords,
   voyageSignupTable,
 } from '@/lib/airtable';
 import { ActionResponse } from '@/types';
@@ -18,19 +18,19 @@ import { FieldSet, Records } from 'airtable';
 const tableMap = {
   soloProject: {
     atTable: table,
-    transformFn: transformSoloProjectData as (r: Records<FieldSet>) => SoloProjectSubmission[],
+    transformFn: transformSoloProjectRecords as (r: Records<FieldSet>) => SoloProjectSubmission[],
   },
   application: {
     atTable: applicationTable,
-    transformFn: transformApplicationData as (r: Records<FieldSet>) => Application[],
+    transformFn: transformApplicationRecords as (r: Records<FieldSet>) => Application[],
   },
   checkin: {
     atTable: checkinTable,
-    transformFn: transformCheckinData as (r: Records<FieldSet>) => CheckIn[],
+    transformFn: transformCheckinRecords as (r: Records<FieldSet>) => CheckIn[],
   },
   voyageSignup: {
     atTable: voyageSignupTable,
-    transformFn: transformVoyageSignupData as (r: Records<FieldSet>) => VoyageSignup[],
+    transformFn: transformVoyageSignupRecords as (r: Records<FieldSet>) => VoyageSignup[],
   },
 };
 

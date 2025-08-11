@@ -2,6 +2,7 @@ import { env } from '@/env';
 import { SearchableFields } from '@/types';
 import { Application } from '@/types/ApplicationTypes';
 import { CheckIn, CheckinFormRole, ProgressRating, SprintNumber, Tier } from '@/types/CheckinTypes';
+import { EventTypes, Schedule } from '@/types/ScheduleTypes';
 import {
   EvaluationStatus,
   SoloProjectSubmission,
@@ -18,72 +19,6 @@ const userTable = base(env.AIRTABLE_USERS_TABLEID);
 const checkinTable = base(env.AIRTABLE_CHECKIN_TABLEID);
 const voyageSignupTable = base(env.AIRTABLE_VOYAGE_SIGNUP_TABLEID);
 const applicationTable = base(env.AIRTABLE_APP_TABLEID);
-
-const soloProjectFields = [
-  'Email',
-  'Discord Name',
-  'GitHub ID',
-  'Timestamp',
-  'Tier',
-  'GitHub Repo URL',
-  'Deployed App URL',
-  'UI/UX Project URL',
-  'Evaluation Status',
-  'Evaluator',
-  'Evaluation Feedback',
-  'Instructions',
-  'Addl. Comments',
-  'Voyage Role (from Applications link)',
-  'Role Type',
-  'Role',
-  'Discord ID',
-  // PO
-  'PO: Certification',
-  'PO: Highest Certification',
-  'PO: Participated in Project as PO',
-  'PO: Project Details',
-  'PO05',
-  'PO06',
-  'PO07',
-  'PO08',
-  'PO09',
-  'PO10',
-  'PO11',
-  'PO12',
-  'PO13',
-  'PO14',
-  'PO15',
-  'PO16',
-  'PO17',
-  'PO18',
-  'PO19',
-  'PO20',
-  'PO21',
-  'PO Product Backlog URL',
-  // SM
-  'SM: Certification',
-  'SM: Highest Certification',
-  'SM: Participated in Project as SM',
-  'SM: Project Details',
-  'SM05',
-  'SM06',
-  'SM07',
-  'SM08',
-  'SM09',
-  'SM10',
-  'SM11',
-  'SM12',
-  'SM13',
-  'SM14',
-  'SM15',
-  'SM16',
-  'SM17',
-  'SM18',
-  'SM19',
-  'SM20',
-  'SM21',
-  'SM22',
-];
 
 // solo project
 const transformSoloProjectRecord = (record: Record<FieldSet>) => {
@@ -164,10 +99,6 @@ const transformSoloProjectRecord = (record: Record<FieldSet>) => {
   };
 };
 
-const transformSoloProjectData = (records: Records<FieldSet>): SoloProjectSubmission[] => {
-  return records.map((record: Record<FieldSet>) => transformSoloProjectRecord(record));
-};
-
 /*********
  Checkin
  ************/
@@ -201,10 +132,6 @@ const transformCheckinRecord = (record: Record<FieldSet>) => {
       'Addl. Comments': record.fields['Addl. Comments'] as string,
     },
   };
-};
-
-const transformCheckinData = (records: Records<FieldSet>): CheckIn[] => {
-  return records.map((record: Record<FieldSet>) => transformCheckinRecord(record));
 };
 
 /*******
@@ -244,19 +171,7 @@ const transformVoyageSignupRecord = (record: Record<FieldSet>) => {
   };
 };
 
-// multiple records
-const transformVoyageSignupData = (records: Records<FieldSet>): VoyageSignup[] => {
-  return records.map((record: Record<FieldSet>) => transformVoyageSignupRecord(record));
-};
-
-/**
- * Transforms an application record object from airtable format into a standardized format.
- *
- * @param {Record<FieldSet>} record - The input application record object (airtable results).
- * @returns {Application} A transformed application record object with id and soloProjectFields properties.
- */
-
-// single record
+// Applications
 const transformApplicationRecord = (record: Record<FieldSet>): Application => {
   return {
     id: record.id,
@@ -269,16 +184,46 @@ const transformApplicationRecord = (record: Record<FieldSet>): Application => {
   };
 };
 
-/**
- * Transforms an array of application data records into an array of Application objects.
- *
- * @param {Object[]} records - Array of application data records
- * @returns {Application[]} Array of transformed Application objects
- */
-// multiple records
-const transformApplicationData = (records: Records<FieldSet>): Application[] => {
-  return records.map((record: Record<FieldSet>) => transformApplicationRecord(record));
+// Schedule
+const transformScheduleRecord = (record: Record<FieldSet>): Schedule => {
+  return {
+    id: record.id,
+    fields: {
+      Name: record.fields['Name'] as string,
+      Type: record.fields['Type'] as EventTypes,
+      'Start Date': record.fields['Start Date'] as string,
+      'End Date': record.fields['End Date'] as string,
+      'Solo Project Deadline': record.fields['Solo Project Deadline'] as string,
+    },
+  };
 };
+
+/**
+ * Creates a function that transforms an array of Airtable records to an array of structured entities
+ *
+ * @template T The return type of the transformer
+ * @param {(record: Record<FieldSet>) => T} recordTransformer Function that transforms a single record
+ * @returns {(records: Records<FieldSet>) => T[]} Function that transforms an array of records
+ */
+
+const createMultipleRecordsTransformer = <T>(
+  recordTransformer: (record: Record<FieldSet>) => T
+): ((records: Records<FieldSet>) => T[]) => {
+  return (records: Records<FieldSet>): T[] => {
+    return records.map(recordTransformer);
+  };
+};
+
+const transformSoloProjectRecords = createMultipleRecordsTransformer<SoloProjectSubmission>(
+  transformSoloProjectRecord
+);
+const transformVoyageSignupRecords = createMultipleRecordsTransformer<VoyageSignup>(
+  transformVoyageSignupRecord
+);
+const transformApplicationRecords = createMultipleRecordsTransformer<Application>(
+  transformApplicationRecord
+);
+const transformCheckinRecords = createMultipleRecordsTransformer<CheckIn>(transformCheckinRecord);
 
 /*********
  * Helper functions
@@ -311,13 +256,12 @@ export const createOrFilter = (
 export {
   applicationTable,
   checkinTable,
-  soloProjectFields,
   table,
-  transformApplicationData,
-  transformCheckinData,
-  transformSoloProjectData,
+  transformApplicationRecords,
+  transformCheckinRecords,
   transformSoloProjectRecord,
-  transformVoyageSignupData,
+  transformSoloProjectRecords,
+  transformVoyageSignupRecords,
   userTable,
   voyageSignupTable,
 };
