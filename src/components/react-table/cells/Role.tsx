@@ -7,7 +7,7 @@ const ReactTableRoleCell = ({
   status = 'Active',
 }: {
   role: VoyageRole;
-  status: string;
+  status?: string;
 }) => {
   if (!role) return null;
   const classColor =
