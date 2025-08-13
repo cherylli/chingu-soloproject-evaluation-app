@@ -40,7 +40,7 @@ const SingleVoyageSignupPage = async ({
         label="Back to Voyages"
       />
       <AirtableLinkButton
-        path={getATBaseURL('schedule')}
+        path={getATBaseURL('voyage-signup')}
         label="Go to airtable"
       />
       <H1>Voyage {parsedParams.voyageNum} Signups</H1>
