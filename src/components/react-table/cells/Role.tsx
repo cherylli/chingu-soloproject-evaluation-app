@@ -1,14 +1,20 @@
-import { getRole } from '@/lib/getRole';
 import { roleColors } from '@/styles/roles';
-import { SoloProjectSubmission } from '@/types/SoloProjectTypes';
-import { Row } from '@tanstack/table-core';
+import { VoyageRole } from '@/types/SoloProjectTypes';
 
 // TODO: update this component so it works with Role soloProjectFields from all tables
-const ReactTableRoleCell = ({ row }: { row: Row<SoloProjectSubmission> }) => {
-  const role = getRole(row.original.fields);
+const ReactTableRoleCell = ({
+  role,
+  status = 'Active',
+}: {
+  role: VoyageRole;
+  status?: string;
+}) => {
   if (!role) return null;
-  const className = roleColors[role]?.text ?? '';
-  return <span className={className}>{role}</span>;
+  const classColor =
+    status === 'Active'
+      ? roleColors[role]?.text
+      : 'text-gray-500';
+  return <span className={classColor}>{role}</span>;
 };
 
 export default ReactTableRoleCell;

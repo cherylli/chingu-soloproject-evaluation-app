@@ -1,13 +1,12 @@
-"use server"
+'use server';
 
-import {getAllSoloProjectsByUser} from "@/services/soloProjects";
-import {getAllVoyageSignupsByMember} from "@/services/voyages";
-import {getApplicationsByMember} from "@/services/applications";
-import {getRecordsByFilter} from "@/services/common";
-import {createOrFilter} from "@/lib/airtable";
-import {SearchableFields} from "@/types";
-import {MemberDetails} from "@/types/MemberTypes";
-
+import { createOrFilter } from '@/lib/airtable';
+import { getApplicationsByMember } from '@/services/applications';
+import { getRecordsByFilter } from '@/services/common';
+import { getAllSoloProjectsByUser } from '@/services/soloProjects';
+import { getAllVoyageSignupsByMember } from '@/services/voyages';
+import { ActionResponse, SearchableFields } from '@/types';
+import { MemberDetails } from '@/types/MemberTypes';
 
 /**
  * Given member's discord ID, find all emails associated with this discordID
@@ -16,83 +15,118 @@ import {MemberDetails} from "@/types/MemberTypes";
  * @param {string} discordId - The Discord ID of the member to retrieve emails for.
  * @returns {Promise<string[]>} A promise that resolves to an array of unique email addresses.
  */
-const getMemberEmailsByDiscordId= async (discordId: string): Promise<string[]>  => {
-    const emails: Set<string> = new Set<string>()
-    // get application,
-    // there should only be 1 application per person, but sometimes people sign up multiple times with different emails
-    const applications = await getApplicationsByMember(discordId)
+const getMemberEmailsByDiscordId = async (
+  discordId: string
+): Promise<ActionResponse<string[]>> => {
+  const emails: Set<string> = new Set<string>();
+  // get application,
+  // there should only be 1 application per person, but sometimes people sign up multiple times with different emails
+  const applications =
+    await getApplicationsByMember(discordId);
+
+  if (applications.success) {
+    applications.data
+      .map((app) => app.fields.Email)
+      .forEach((email) => emails.add(email));
+  }
+  // get solo project(s) using discordID
+  const soloProjects =
+    await getAllSoloProjectsByUser(discordId);
+
+  if (soloProjects.success)
+    soloProjects.data
+      .map((sp) => sp.fields.Email)
+      .forEach((email) => emails.add(email));
+
+  // get voyage signups(s)
+  const voyageSignups =
+    await getAllVoyageSignupsByMember(discordId);
+
+  if (voyageSignups.success) {
+    // push unique emails
+    voyageSignups.data
+      .map((vs) => vs.fields.Email)
+      .forEach((email) => emails.add(email));
+  }
+
+  return {
+    success: true,
+    data: [...emails],
+    message: `Successfully get member emails by discordId.`,
+  };
+};
+
+export const getMemberDetailsByDiscordId = async (
+  discordId: string
+): Promise<ActionResponse<MemberDetails>> => {
+  // create an array of emails to re-search all the tables
+  // some members have used multiple emails
+
+  try {
+    const allRecords: MemberDetails = {
+      applications: [],
+      soloProjects: [],
+      voyageSignups: [],
+    };
+
+    // get all emails using the given discord Id
+    const emails =
+      await getMemberEmailsByDiscordId(discordId);
+    console.log(`emails: ${emails}`);
+
+    // search again with all emails (even when there's only 1 email) for cases like
+    // 1. records with different emails,
+    // 2. records with no discordId
+
+    const conditions = [
+      {
+        field: 'Discord ID' as SearchableFields,
+        value: discordId,
+      },
+    ];
+    if (emails.success) {
+      emails.data.forEach((email) => {
+        conditions.push({
+          field: 'Email' as SearchableFields,
+          value: email,
+        });
+      });
+    }
+    const soloProjects = await getRecordsByFilter(
+      'soloProject',
+      () => createOrFilter(conditions)
+    );
+
+    if (soloProjects.success) {
+      allRecords.soloProjects = soloProjects.data;
+    }
+
+    const applications = await getRecordsByFilter(
+      'application',
+      () => createOrFilter(conditions)
+    );
 
     if (applications.success) {
-        applications.data.map(app => app.fields.Email).forEach(email => emails.add(email))
+      allRecords.applications = applications.data;
     }
-    // get solo project(s) using discordID
-    const soloProjects = await getAllSoloProjectsByUser(discordId)
-    soloProjects.map(sp => sp.fields.Email).forEach(email => emails.add(email))
 
-    // get voyage signups(s)
-    const voyageSignups = await getAllVoyageSignupsByMember(discordId)
+    const voyageSignups = await getRecordsByFilter(
+      'voyageSignup',
+      () => createOrFilter(conditions)
+    );
 
     if (voyageSignups.success) {
-        // push unique emails
-        voyageSignups.data.map(vs => vs.fields.Email).forEach(email => emails.add(email))
+      allRecords.voyageSignups = voyageSignups.data;
     }
 
-    return [...emails]
-}
-
-export const getMemberDetailsByDiscordId = async (discordId: string) => {
-    // create an array of emails to re-search all the tables
-    // some members have used multiple emails
-
-    try {
-        const allRecords: MemberDetails = {
-            applications: [],
-            soloProjects: [],
-            voyageSignups: [],
-        }
-
-        // get all emails
-        const emails = await getMemberEmailsByDiscordId(discordId)
-        console.log(`emails: ${emails}`)
-
-        // search again with all emails (even when there's only 1 email) for cases like
-        // 1. records with different emails,
-        // 2. records with no discordId
-
-        const conditions = emails
-            .map(email => ({field: "Email" as SearchableFields, value: email}))
-        conditions.push({field: "Discord ID", value: discordId})
-
-
-        const soloProjects = await getRecordsByFilter(
-            "soloProject",
-            () => createOrFilter(conditions)
-        )
-
-        if(soloProjects.success) {
-            allRecords.soloProjects = soloProjects.data
-        }
-
-        const applications = await getRecordsByFilter(
-            "application",
-            () => createOrFilter(conditions)
-        )
-
-        if(applications.success) {
-            allRecords.applications = applications.data
-        }
-
-        const voyageSignups = await getRecordsByFilter(
-            "voyageSignup",
-            () => createOrFilter(conditions)
-        )
-
-        if(voyageSignups.success) {
-            allRecords.voyageSignups = voyageSignups.data
-        }
-
-        return allRecords
-    }catch (e) {
-        throw new Error(`Failed to get member details. Error: ${e}`)
-    }
-}
+    return {
+      success: true,
+      data: allRecords,
+      message: `Successfully get member details by discordId.`,
+    };
+  } catch (e) {
+    throw new Error(
+      `Failed to get member details. Error: ${e}`
+    );
+  }
+};

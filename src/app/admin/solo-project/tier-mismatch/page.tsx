@@ -9,6 +9,9 @@ export const dynamic = 'force-dynamic';
 
 const SoloProjectTierMismatchPage = async () => {
   const records = await getTierMismatchedSoloProjects();
+  if (!records.success) {
+    return <div>Error fetching Solo Projects</div>;
+  }
 
   return (
     <div>
@@ -25,7 +28,7 @@ const SoloProjectTierMismatchPage = async () => {
         buttons
       </P>
       <TierMismatchTable
-        records={records}
+        records={records.data}
         baseUrl={getATBaseURL('solo-project')}
       />
     </div>

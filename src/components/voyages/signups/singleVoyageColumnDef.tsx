@@ -1,4 +1,4 @@
-import { roleColors } from '@/styles/roles';
+import Role from '@/components/react-table/cells/Role';
 import { VoyageSignup } from '@/types/VoyageSignupTypes';
 import { SiAirtable } from '@icons-pack/react-simple-icons';
 import { createColumnHelper } from '@tanstack/table-core';
@@ -19,15 +19,22 @@ export const singleVoyageColumnDef = (baseURL: string) => [
     id: 'Links',
     cell: ({ row }) => (
       <div>
-        <a href={`${baseURL}/${row.original.id}`} target="_blank" rel="noreferrer">
+        <a
+          href={`${baseURL}/${row.original.id}`}
+          target="_blank"
+          rel="noreferrer"
+        >
           <SiAirtable />
         </a>
       </div>
     ),
   }),
-  columnHelper.accessor((row) => row.fields['Discord Name'], {
-    header: 'Discord Name',
-  }),
+  columnHelper.accessor(
+    (row) => row.fields['Discord Name'],
+    {
+      header: 'Discord Name',
+    }
+  ),
   columnHelper.accessor((row) => row.fields['GitHub ID'], {
     header: 'Github Id',
   }),
@@ -36,13 +43,11 @@ export const singleVoyageColumnDef = (baseURL: string) => [
   }),
   columnHelper.accessor((row) => row.fields['Role'], {
     header: 'Role',
-    cell: ({ row }) => {
-      const classColor =
-        row.original.fields.Status === 'Active'
-          ? roleColors[row.original.fields['Role']]?.text
-          : '';
-
-      return <span className={classColor}>{row.original.fields['Role']}</span>;
-    },
+    cell: ({ row }) => (
+      <Role
+        role={row.original.fields['Role']}
+        status={row.original.fields['Status']}
+      />
+    ),
   }),
 ];
