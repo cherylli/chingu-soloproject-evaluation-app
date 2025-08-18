@@ -1,11 +1,13 @@
 import AirtableLinkCell from '@/components/react-table/cells/AirtableLink';
 import Role from '@/components/react-table/cells/Role';
+import TooltipWithLink from '@/components/react-table/cells/TooltipWithLink';
 import ReactTableVoyageStatusCell from '@/components/react-table/cells/VoyageStatus';
 import { VoyageSignup } from '@/types/VoyageSignupTypes';
 import { createColumnHelper } from '@tanstack/table-core';
 
 const columnHelper = createColumnHelper<VoyageSignup>();
 
+// voyage Signup column Definitions for Member Profile Page
 export const vsColDef = (baseURL: string) => [
   columnHelper.display({
     id: 'Airtable Link',
@@ -21,6 +23,16 @@ export const vsColDef = (baseURL: string) => [
   columnHelper.accessor((row) => row.fields['Voyage'], {
     id: 'Voyage',
     header: 'Voyage',
+    cell: ({ row }) => {
+      const voyageNum = row.original.fields.Voyage.slice(1);
+      return (
+        <TooltipWithLink
+          tooltip={`Go to V${voyageNum}`}
+          link={`/admin/voyage/${voyageNum}/signups`}
+          linkText={`V${voyageNum}`}
+        />
+      );
+    },
   }),
   columnHelper.accessor((row) => row.fields['Status'], {
     id: 'Status',
