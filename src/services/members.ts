@@ -6,7 +6,7 @@ import { getRecordsByFilter } from '@/services/common';
 import { getAllSoloProjectsByUser } from '@/services/soloProjects';
 import { getAllVoyageSignupsByMember } from '@/services/voyages';
 import { ActionResponse, SearchableFields } from '@/types';
-import { MemberDetails } from '@/types/MemberTypes';
+import { MemberDetailsType } from '@/types/MemberTypes';
 
 /**
  * Given member's discord ID, find all emails associated with this discordID
@@ -58,12 +58,12 @@ const getMemberEmailsByDiscordId = async (
 
 export const getMemberDetailsByDiscordId = async (
   discordId: string
-): Promise<ActionResponse<MemberDetails>> => {
+): Promise<ActionResponse<MemberDetailsType>> => {
   // create an array of emails to re-search all the tables
   // some members have used multiple emails
 
   try {
-    const allRecords: MemberDetails = {
+    const allRecords: MemberDetailsType = {
       applications: [],
       soloProjects: [],
       voyageSignups: [],
