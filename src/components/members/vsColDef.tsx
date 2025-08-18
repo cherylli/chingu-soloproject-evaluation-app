@@ -34,6 +34,28 @@ export const vsColDef = (baseURL: string) => [
       );
     },
   }),
+  columnHelper.accessor((row) => row.fields['Tier'], {
+    id: 'Tier',
+    header: 'Tier',
+    cell: ({ row }) => {
+      return <span>{row.original.fields['Tier'][5]}</span>;
+    },
+  }),
+  columnHelper.accessor((row) => row.fields['Team No.'], {
+    id: 'Team No.',
+    header: 'Team No.',
+    cell: ({ row }) => {
+      const voyageNum = row.original.fields.Voyage.slice(1);
+      const teamNum = row.original.fields['Team No.'];
+      return (
+        <TooltipWithLink
+          tooltip={`Go to V${voyageNum} Team ${teamNum}`}
+          link={`/admin/voyage/${voyageNum}/team/${teamNum}`}
+          linkText={teamNum}
+        />
+      );
+    },
+  }),
   columnHelper.accessor((row) => row.fields['Status'], {
     id: 'Status',
     header: 'Status',
