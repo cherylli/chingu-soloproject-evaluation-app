@@ -17,6 +17,10 @@ export const vsColDef = (baseURL: string) => [
       );
     },
   }),
+  columnHelper.accessor((row) => row.fields['Voyage'], {
+    id: 'Voyage',
+    header: 'Voyage',
+  }),
   columnHelper.accessor(
     (row) => row.fields['Discord Name'],
     {

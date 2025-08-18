@@ -1,4 +1,4 @@
-import MemberDetails from '@/components/members/MemberDetails';
+import MemberProfile from '@/components/members/MemberProfile';
 import H1 from '@/components/ui/typography/h1';
 import { getATBaseURL } from '@/lib/getAirtableUrls';
 import { getMemberDetailsByDiscordId } from '@/services/members';
@@ -26,7 +26,7 @@ const MemberPage = async (props: {
   return (
     <div>
       <H1>MemberPage - {params.discordId}</H1>
-      <MemberDetails
+      <MemberProfile
         memberDetails={memberDetails.data}
         atBaseUrls={atBaseUrls}
       />
