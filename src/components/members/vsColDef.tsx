@@ -1,9 +1,11 @@
 import AirtableLinkCell from '@/components/react-table/cells/AirtableLink';
+import HoverCardCell from '@/components/react-table/cells/HoverCardCell';
 import Role from '@/components/react-table/cells/Role';
 import TooltipWithLink from '@/components/react-table/cells/TooltipWithLink';
 import ReactTableVoyageStatusCell from '@/components/react-table/cells/VoyageStatus';
 import { VoyageSignup } from '@/types/VoyageSignupTypes';
 import { createColumnHelper } from '@tanstack/table-core';
+import { Clipboard, Info } from 'lucide-react';
 
 const columnHelper = createColumnHelper<VoyageSignup>();
 
@@ -20,7 +22,14 @@ export const vsColDef = (baseURL: string) => [
       );
     },
   }),
-  columnHelper.accessor((row) => row.fields['Voyage'], {
+  columnHelper.accessor((row) => row.fields['Timestamp'], {
+    id: 'Timestamp',
+    cell: ({ getValue }) => {
+      const timestamp = getValue();
+      return new Date(timestamp).toLocaleDateString(); // or your preferred format
+    },
+  }),
+  columnHelper.display({
     id: 'Voyage',
     header: 'Voyage',
     cell: ({ row }) => {
@@ -34,14 +43,14 @@ export const vsColDef = (baseURL: string) => [
       );
     },
   }),
-  columnHelper.accessor((row) => row.fields['Tier'], {
+  columnHelper.display({
     id: 'Tier',
     header: 'Tier',
     cell: ({ row }) => {
       return <span>{row.original.fields['Tier'][5]}</span>;
     },
   }),
-  columnHelper.accessor((row) => row.fields['Team No.'], {
+  columnHelper.display({
     id: 'Team No.',
     header: 'Team No.',
     cell: ({ row }) => {
@@ -56,7 +65,7 @@ export const vsColDef = (baseURL: string) => [
       );
     },
   }),
-  columnHelper.accessor((row) => row.fields['Status'], {
+  columnHelper.display({
     id: 'Status',
     header: 'Status',
     cell: ({ row }) => {
@@ -66,6 +75,26 @@ export const vsColDef = (baseURL: string) => [
         />
       );
     },
+  }),
+  columnHelper.display({
+    id: 'Status Comment',
+    header: 'Status Comment',
+    cell: ({ row }) => (
+      <HoverCardCell
+        content={row.original.fields['Status Comment']}
+        Icon={Clipboard}
+      />
+    ),
+  }),
+  columnHelper.display({
+    id: 'Info to Share',
+    header: 'Info',
+    cell: ({ row }) => (
+      <HoverCardCell
+        content={row.original.fields['Info to Share']}
+        Icon={Info}
+      />
+    ),
   }),
   columnHelper.accessor(
     (row) => row.fields['Discord Name'],
@@ -78,7 +107,7 @@ export const vsColDef = (baseURL: string) => [
     id: 'Email',
     header: 'Email',
   }),
-  columnHelper.accessor((row) => row.fields['Role'], {
+  columnHelper.display({
     id: 'Role',
     header: 'Role',
     cell: ({ row }) => (

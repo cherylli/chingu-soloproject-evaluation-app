@@ -12,7 +12,11 @@ import { Application } from '@/types/ApplicationTypes';
 import type { MemberDetailsType } from '@/types/MemberTypes';
 import { SoloProjectSubmission } from '@/types/SoloProjectTypes';
 import { VoyageSignup } from '@/types/VoyageSignupTypes';
-import { useReactTable } from '@tanstack/react-table';
+import {
+  getSortedRowModel,
+  SortingState,
+  useReactTable,
+} from '@tanstack/react-table';
 import { getCoreRowModel } from '@tanstack/table-core';
 import { useState } from 'react';
 
@@ -28,6 +32,9 @@ const MemberProfile = ({
     Email: false,
     'Discord Name': false,
   });
+  const [vsSorting, setVsSorting] = useState<SortingState>([
+    { id: 'Timestamp', desc: true },
+  ]);
 
   const appTable = useReactTable<Application>({
     data: memberDetails.applications,
@@ -37,13 +44,16 @@ const MemberProfile = ({
       columnVisibility: appColVis,
     },
     onColumnVisibilityChange: setAppColVis,
+    onSortingChange: setVsSorting,
   });
   const vsTable = useReactTable<VoyageSignup>({
     data: memberDetails.voyageSignups,
     columns: vsColDef(atBaseUrls['voyage-signup'] ?? '#'),
     getCoreRowModel: getCoreRowModel<VoyageSignup>(),
+    getSortedRowModel: getSortedRowModel<VoyageSignup>(),
     state: {
       columnVisibility: vsColVis,
+      sorting: vsSorting,
     },
     onColumnVisibilityChange: setVsColVis,
   });
