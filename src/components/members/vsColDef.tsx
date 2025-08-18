@@ -1,5 +1,6 @@
 import AirtableLinkCell from '@/components/react-table/cells/AirtableLink';
 import Role from '@/components/react-table/cells/Role';
+import ReactTableVoyageStatusCell from '@/components/react-table/cells/VoyageStatus';
 import { VoyageSignup } from '@/types/VoyageSignupTypes';
 import { createColumnHelper } from '@tanstack/table-core';
 
@@ -20,6 +21,17 @@ export const vsColDef = (baseURL: string) => [
   columnHelper.accessor((row) => row.fields['Voyage'], {
     id: 'Voyage',
     header: 'Voyage',
+  }),
+  columnHelper.accessor((row) => row.fields['Status'], {
+    id: 'Status',
+    header: 'Status',
+    cell: ({ row }) => {
+      return (
+        <ReactTableVoyageStatusCell
+          status={row.original.fields['Status']}
+        />
+      );
+    },
   }),
   columnHelper.accessor(
     (row) => row.fields['Discord Name'],

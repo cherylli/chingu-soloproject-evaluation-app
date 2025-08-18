@@ -1,7 +1,6 @@
 import { roleColors } from '@/styles/roles';
 import { VoyageRole } from '@/types/SoloProjectTypes';
 
-// TODO: update this component so it works with Role soloProjectFields from all tables
 const ReactTableRoleCell = ({
   role,
   status = 'Active',
