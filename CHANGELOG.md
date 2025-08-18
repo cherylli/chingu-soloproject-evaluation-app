@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.11.0](https://github.com/chingu-x/chingu-soloproject-evaluation-app/compare/v1.10.0...v1.11.0) (2025-08-18)
+
+
+### Features
+
+* **member-profile:** introduce `MemberProfile` component, refactor `MemberDetails`, and add column visibility options for voyage signups ([2640874](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/2640874f695d86e5b38e3dca856d4caf85de3eea))
+* **voyage-signups:** add `HoverCardCell` for status and info columns, update sorting and column definitions ([af1ec19](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/af1ec190de21ab9449804dce83ed58b69d8e7982))
+* **voyage-signups:** add `TooltipWithLink` component and integrate tooltip-enhanced voyage links in column definitions ([d107b40](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/d107b401fa7fa60b2b0cbb8f5a3ee93bf6f145ff))
+* **voyage-status:** add `VoyageStatus` component and color mappings, update column definitions for voyage signups ([7b015e3](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/7b015e3b6c69defd88350c17cadce70b8498b58f))
+* **voyage-teams:** add `VoyageTeamPage` and tooltip-enhanced column definitions with dynamic team links ([fed905b](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/fed905b678203b6907a1f1954bab5e79e53e6c57))
+
 ## [1.10.0](https://github.com/cherylli/chingu-soloproject-evaluation-app/compare/v1.9.0...v1.10.0) (2025-08-11)
 
 
