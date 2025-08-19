@@ -119,6 +119,18 @@ export const getMemberDetailsByDiscordId = async (
       allRecords.voyageSignups = voyageSignups.data;
     }
 
+    // no record found for the given discordId
+    const isAllEmpty = Object.values(allRecords).every(
+      (arr) => Array.isArray(arr) && arr.length === 0
+    );
+
+    if (isAllEmpty) {
+      return {
+        success: false,
+        message: `No record found for discord Id ${discordId}.`,
+      };
+    }
+
     return {
       success: true,
       data: allRecords,

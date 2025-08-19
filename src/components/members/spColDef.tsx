@@ -18,6 +18,13 @@ export const spColDef = (baseURL: string) => [
       );
     },
   }),
+  columnHelper.accessor((row) => row.fields['Timestamp'], {
+    id: 'Timestamp',
+    cell: ({ getValue }) => {
+      const timestamp = getValue();
+      return new Date(timestamp).toLocaleDateString(); // or your preferred format
+    },
+  }),
   columnHelper.accessor(
     (row) => row.fields['Discord Name'],
     {
@@ -29,7 +36,21 @@ export const spColDef = (baseURL: string) => [
     id: 'Email',
     header: 'Email',
   }),
-  columnHelper.accessor((row) => row.fields['Role'], {
+  columnHelper.accessor(
+    (row) => row.fields['Evaluation Status'],
+    {
+      id: 'Evaluation Status',
+      header: 'Status',
+    }
+  ),
+  columnHelper.display({
+    id: 'Tier',
+    header: 'Tier',
+    cell: ({ row }) => {
+      return <span>{row.original.fields['Tier'][5]}</span>;
+    },
+  }),
+  columnHelper.display({
     id: 'Role',
     header: 'Role',
     cell: ({ row }) => (
