@@ -72,7 +72,6 @@ export const getMemberDetailsByDiscordId = async (
     // get all emails using the given discord Id
     const emails =
       await getMemberEmailsByDiscordId(discordId);
-    console.log(`emails: ${emails}`);
 
     // search again with all emails (even when there's only 1 email) for cases like
     // 1. records with different emails,

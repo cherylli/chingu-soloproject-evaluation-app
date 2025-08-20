@@ -19,6 +19,7 @@ const TooltipWithLink = ({
   | { linkText: string; Icon?: ComponentType }
   | { linkText?: string; Icon: ComponentType }
 )) => {
+  if (!link) return;
   return (
     <Tooltip>
       <TooltipTrigger asChild>

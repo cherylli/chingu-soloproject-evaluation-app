@@ -5,7 +5,10 @@ import { useRoleCheck } from '@/hooks/useRoleCheck';
 import { SiAirtable } from '@icons-pack/react-simple-icons';
 import { ArrowUpRight } from 'lucide-react';
 
-const BackButton = ({
+// This is the link button with airtable link shown in the top left of most pages
+// which links to the airtable table
+
+const AirtableLinkButton = ({
   path,
   label,
 }: {
@@ -32,4 +35,4 @@ const BackButton = ({
   );
 };
 
-export default BackButton;
+export default AirtableLinkButton;
