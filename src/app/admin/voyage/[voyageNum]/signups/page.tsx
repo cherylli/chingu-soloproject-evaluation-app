@@ -36,7 +36,7 @@ const SingleVoyageSignupPage = async ({
   return (
     <div>
       <BackButton
-        path="/admin/voyages/schedule"
+        path="/admin/voyage/schedule"
         label="Back to Voyages"
       />
       <AirtableLinkButton

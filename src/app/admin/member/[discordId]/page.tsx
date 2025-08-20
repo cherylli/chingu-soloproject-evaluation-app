@@ -1,5 +1,5 @@
 import MemberProfile from '@/components/members/MemberProfile';
-import H1 from '@/components/ui/typography/h1';
+import NoRecordFound from '@/components/ui/states/NoRecordFound';
 import { getATBaseURL } from '@/lib/getAirtableUrls';
 import { getMemberDetailsByDiscordId } from '@/services/members';
 import { Context } from '@/types';
@@ -13,7 +13,15 @@ const MemberPage = async (props: {
     params.discordId
   );
   if (!memberDetails.success)
-    return <div>Error fetching member details</div>;
+    return (
+      <NoRecordFound
+        message={memberDetails.message}
+        actionButton={{
+          label: 'Search by Email',
+          link: '/admin/member/search',
+        }}
+      />
+    );
 
   const atBaseUrls: Partial<Record<Context, string>> = {
     'solo-project': getATBaseURL('solo-project'),
@@ -24,13 +32,12 @@ const MemberPage = async (props: {
   // TODO: improve details display, e.g. a summary section
 
   return (
-    <div>
-      <H1>MemberPage - {params.discordId}</H1>
+    <>
       <MemberProfile
         memberDetails={memberDetails.data}
         atBaseUrls={atBaseUrls}
       />
-    </div>
+    </>
   );
 };
 

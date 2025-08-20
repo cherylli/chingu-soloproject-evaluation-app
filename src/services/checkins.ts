@@ -1,8 +1,13 @@
 'use server';
 
-import { checkinTable, transformCheckinRecords } from '@/lib/airtable';
+import {
+  checkinTable,
+  transformCheckinRecords,
+} from '@/lib/airtable';
 
-export const getCheckInsByVoyage = async (voyage: string) => {
+export const getCheckInsByVoyage = async (
+  voyage: string
+) => {
   const records = await checkinTable
     .select({
       filterByFormula: `{Voyage} = "${voyage.toUpperCase()}"`,

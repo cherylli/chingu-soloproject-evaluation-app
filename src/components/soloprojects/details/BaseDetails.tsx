@@ -14,7 +14,12 @@ import {
   CommandInput,
   CommandItem,
 } from '@/components/ui/command';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import MemberProfileLinkButton from '@/components/ui/navigation/MemberProfileLinkButton';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 import { Textarea } from '@/components/ui/textarea';
 import { useRoleCheck } from '@/hooks/useRoleCheck';
 import { getRandomPassMessage } from '@/lib/getRandomPassMessage';
@@ -26,9 +31,19 @@ import {
   setEvaluatorOnDb,
   updateSoloProjectById,
 } from '@/services/soloProjects';
-import { SoloProjectFields, SoloProjectSubmission, VoyageRole } from '@/types/SoloProjectTypes';
+import {
+  SoloProjectFields,
+  SoloProjectSubmission,
+  VoyageRole,
+} from '@/types/SoloProjectTypes';
 import { SiAirtable } from '@icons-pack/react-simple-icons';
-import { Check, ChevronsUpDown, Copy, PencilLine, XCircle } from 'lucide-react';
+import {
+  Check,
+  ChevronsUpDown,
+  Copy,
+  PencilLine,
+  XCircle,
+} from 'lucide-react';
 import { useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { toast } from 'react-hot-toast';
@@ -38,11 +53,16 @@ interface ProjectDetailProps {
   atBaseUrl: string;
 }
 
-const ProjectSubmissionDetail = ({ record: initialRecord, atBaseUrl }: ProjectDetailProps) => {
+const ProjectSubmissionDetail = ({
+  record: initialRecord,
+  atBaseUrl,
+}: ProjectDetailProps) => {
   const [statusOpen, setStatusOpen] = useState(false);
-  const [ringTheBellText, setRingTheBellText] = useState('');
+  const [ringTheBellText, setRingTheBellText] =
+    useState('');
   const [selectionLen, setSelectionLen] = useState(0);
-  const [record, setRecord] = useState<SoloProjectSubmission>(initialRecord);
+  const [record, setRecord] =
+    useState<SoloProjectSubmission>(initialRecord);
 
   const { isAdmin } = useRoleCheck();
 
@@ -51,11 +71,15 @@ const ProjectSubmissionDetail = ({ record: initialRecord, atBaseUrl }: ProjectDe
   const handleSave = async () => {
     const savingToast = toast.loading('Saving...');
     const res = await updateSoloProjectById(record.id, {
-      'Evaluation Feedback': record.fields['Evaluation Feedback'],
-      'Evaluation Status': record.fields['Evaluation Status'],
+      'Evaluation Feedback':
+        record.fields['Evaluation Feedback'],
+      'Evaluation Status':
+        record.fields['Evaluation Status'],
     });
     if (res.success) {
-      toast.success(`Saved. Status: ${res.data?.fields['Evaluation Status']}`);
+      toast.success(
+        `Saved. Status: ${res.data?.fields['Evaluation Status']}`
+      );
     } else {
       toast.error(`Error Saving: ${res.message}`);
     }
@@ -63,11 +87,18 @@ const ProjectSubmissionDetail = ({ record: initialRecord, atBaseUrl }: ProjectDe
   };
 
   const handleSetEvaluator = async () => {
-    const setEvaluatorToast = toast.loading('Setting Evaluator...');
+    const setEvaluatorToast = toast.loading(
+      'Setting Evaluator...'
+    );
     const res = await setEvaluatorOnDb(record.id);
     if (res.success) {
-      updateRecordFields('Evaluator', res.data?.fields.Evaluator as string);
-      toast.success(`Evaluator set to ${res.data?.fields.Evaluator}`);
+      updateRecordFields(
+        'Evaluator',
+        res.data?.fields.Evaluator as string
+      );
+      toast.success(
+        `Evaluator set to ${res.data?.fields.Evaluator}`
+      );
     } else {
       toast.error(`Set Evaluator FAILED: ${res.message}`);
     }
@@ -75,19 +106,25 @@ const ProjectSubmissionDetail = ({ record: initialRecord, atBaseUrl }: ProjectDe
   };
 
   const handleRemoveEvaluator = async () => {
-    const removeEvaluatorToast = toast.loading('Removing Evaluator...');
+    const removeEvaluatorToast = toast.loading(
+      'Removing Evaluator...'
+    );
     const res = await removeEvaluatorOnDb(record.id);
     if (res.success) {
       updateRecordFields('Evaluator', '');
       toast.success('Removed Evaluator');
     } else {
-      toast.error(`Remove evaluator FAILED: ${res.message}`);
+      toast.error(
+        `Remove evaluator FAILED: ${res.message}`
+      );
     }
     toast.dismiss(removeEvaluatorToast);
   };
 
   const onPassSelect = () => {
-    setRingTheBellText(getRandomPassMessage(record.fields['Discord Name']));
+    setRingTheBellText(
+      getRandomPassMessage(record.fields['Discord Name'])
+    );
   };
 
   const onSelectText = () => {
@@ -116,7 +153,10 @@ const ProjectSubmissionDetail = ({ record: initialRecord, atBaseUrl }: ProjectDe
     }
   };
 
-  const updateRecordFields = (field: keyof SoloProjectFields, value: string) => {
+  const updateRecordFields = (
+    field: keyof SoloProjectFields,
+    value: string
+  ) => {
     setRecord({
       ...record,
       fields: {
@@ -132,10 +172,17 @@ const ProjectSubmissionDetail = ({ record: initialRecord, atBaseUrl }: ProjectDe
         <BaseDetailHeader record={record} />
         <div className="flex gap-5 items-center">
           {isAdmin && (
-            <a href={`${atBaseUrl}/${record.id}`} target="_blank" rel="noreferrer">
+            <a
+              href={`${atBaseUrl}/${record.id}`}
+              target="_blank"
+              rel="noreferrer"
+            >
               <SiAirtable />
             </a>
           )}
+          <MemberProfileLinkButton
+            discordId={record.fields['Discord ID']}
+          />
           <div>{record.fields['Timestamp'].toString()}</div>
         </div>
         <div className="flex gap-5 items-center">
@@ -145,13 +192,17 @@ const ProjectSubmissionDetail = ({ record: initialRecord, atBaseUrl }: ProjectDe
 
         {record.fields['Instructions'] ? (
           <div>
-            <div className="text-gray-500">Instructions:</div>
+            <div className="text-gray-500">
+              Instructions:
+            </div>
             <div>{record.fields['Instructions']} </div>
           </div>
         ) : null}
         {record.fields['Addl. Comments'] ? (
           <div>
-            <div className="text-gray-500">Additional Comments:</div>
+            <div className="text-gray-500">
+              Additional Comments:
+            </div>
             <div>{record.fields['Addl. Comments']} </div>
           </div>
         ) : null}
@@ -182,16 +233,26 @@ const ProjectSubmissionDetail = ({ record: initialRecord, atBaseUrl }: ProjectDe
         <Textarea
           className="h-[500px]"
           value={record.fields['Evaluation Feedback']}
-          onChange={(e) => updateRecordFields('Evaluation Feedback', e.target.value)}
+          onChange={(e) =>
+            updateRecordFields(
+              'Evaluation Feedback',
+              e.target.value
+            )
+          }
           onMouseUp={onSelectText}
         />
         <div className="text-right text-gray-500">
-          {selectionLen}/{record.fields['Evaluation Feedback']?.length ?? '0'}
+          {selectionLen}/
+          {record.fields['Evaluation Feedback']?.length ??
+            '0'}
         </div>
 
         <div className="flex gap-5 items-center">
           <div>Evaluation Status</div>
-          <Popover open={statusOpen} onOpenChange={setStatusOpen}>
+          <Popover
+            open={statusOpen}
+            onOpenChange={setStatusOpen}
+          >
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
@@ -206,13 +267,18 @@ const ProjectSubmissionDetail = ({ record: initialRecord, atBaseUrl }: ProjectDe
             <PopoverContent className="w-[200px] p-0">
               <Command>
                 <CommandInput placeholder="Search status..." />
-                <CommandEmpty>No status found.</CommandEmpty>
+                <CommandEmpty>
+                  No status found.
+                </CommandEmpty>
                 <CommandGroup>
                   {evalStatusValues.map((status) => (
                     <CommandItem
                       key={status.value}
                       onSelect={(_) => {
-                        updateRecordFields('Evaluation Status', status.value);
+                        updateRecordFields(
+                          'Evaluation Status',
+                          status.value
+                        );
                         if (status.value === 'Passed') {
                           onPassSelect();
                         }
@@ -222,7 +288,9 @@ const ProjectSubmissionDetail = ({ record: initialRecord, atBaseUrl }: ProjectDe
                       <Check
                         className={cn(
                           'mr-2 h-4 w-4',
-                          record.fields['Evaluation Status'] === status.value
+                          record.fields[
+                            'Evaluation Status'
+                          ] === status.value
                             ? 'opacity-100'
                             : 'opacity-0'
                         )}

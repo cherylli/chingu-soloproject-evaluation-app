@@ -1,13 +1,12 @@
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
-import { VoyageSignup } from '@/types/VoyageSignupTypes';
 import { Column } from '@tanstack/table-core';
 
-export const ColumnToggle = ({
+export function ColumnToggle<T>({
   columns,
 }: {
-  columns: Column<VoyageSignup>[];
-}) => {
+  columns: Column<T>[];
+}) {
   return (
     <div className="flex gap-2">
       {columns.map((column) => {
@@ -31,4 +30,4 @@ export const ColumnToggle = ({
       })}
     </div>
   );
-};
+}

@@ -32,7 +32,14 @@ const MemberProfile = ({
     Email: false,
     'Discord Name': false,
   });
+  const [spColVis, setSpColVis] = useState<{}>({
+    Email: false,
+    'Discord Name': false,
+  });
   const [vsSorting, setVsSorting] = useState<SortingState>([
+    { id: 'Timestamp', desc: true },
+  ]);
+  const [spSorting, setSpSorting] = useState<SortingState>([
     { id: 'Timestamp', desc: true },
   ]);
 
@@ -62,6 +69,13 @@ const MemberProfile = ({
     columns: spColDef(atBaseUrls['solo-project'] ?? '#'),
     getCoreRowModel:
       getCoreRowModel<SoloProjectSubmission>(),
+    getSortedRowModel:
+      getSortedRowModel<SoloProjectSubmission>(),
+    state: {
+      columnVisibility: spColVis,
+      sorting: spSorting,
+    },
+    onColumnVisibilityChange: setSpColVis,
   });
 
   return (
@@ -76,6 +90,12 @@ const MemberProfile = ({
       />
       <StandardReactTable table={vsTable} />
       <H1>Solo Projects</H1>
+      <ColumnToggle
+        columns={[
+          spTable.getColumn('Email')!,
+          spTable.getColumn('Discord Name')!,
+        ]}
+      />
       <StandardReactTable table={spTable} />
       <H1>Applications</H1>
       <StandardReactTable table={appTable} />

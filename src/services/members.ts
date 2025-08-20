@@ -72,7 +72,6 @@ export const getMemberDetailsByDiscordId = async (
     // get all emails using the given discord Id
     const emails =
       await getMemberEmailsByDiscordId(discordId);
-    console.log(`emails: ${emails}`);
 
     // search again with all emails (even when there's only 1 email) for cases like
     // 1. records with different emails,
@@ -117,6 +116,18 @@ export const getMemberDetailsByDiscordId = async (
 
     if (voyageSignups.success) {
       allRecords.voyageSignups = voyageSignups.data;
+    }
+
+    // no record found for the given discordId
+    const isAllEmpty = Object.values(allRecords).every(
+      (arr) => Array.isArray(arr) && arr.length === 0
+    );
+
+    if (isAllEmpty) {
+      return {
+        success: false,
+        message: `No record found for discord Id ${discordId}.`,
+      };
     }
 
     return {
