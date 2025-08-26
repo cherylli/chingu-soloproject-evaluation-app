@@ -46,7 +46,7 @@ const SoloProjectPage = async (props: {
       >
         <div className="hidden lg:h-[calc(100vh-110px)] lg:block lg:overflow-y-auto">
           <FeedbackContainer
-            discordName={record.data.fields['Discord Name']}
+            discordId={record.data.fields['Discord ID']}
           />
         </div>
       </ResizablePanel>
