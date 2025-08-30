@@ -1,9 +1,9 @@
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 
-import FeedbackContainer from "@/components/feedback/FeedbackContainer";
+import FeedbackContainer from '@/components/feedback/FeedbackContainer';
 
 const FeedbackPage = () => {
-    return <FeedbackContainer discordName=""/>
- }
+  return <FeedbackContainer discordId="" />;
+};
 
- export default FeedbackPage
+export default FeedbackPage;
