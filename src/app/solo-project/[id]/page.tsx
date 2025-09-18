@@ -10,8 +10,8 @@ import {
 } from '@/components/ui/resizable';
 import { getATBaseURL } from '@/lib/getAirtableUrls';
 import {
-  getAllSoloProjectsByUser,
   getSoloProjectById,
+  getSoloProjectsByMemberDiscordId,
 } from '@/services/soloProjects';
 
 const SoloProjectPage = async (props: {
@@ -22,9 +22,8 @@ const SoloProjectPage = async (props: {
   if (!record.success)
     return <div>Error fetching Project</div>;
 
-  const projects = await getAllSoloProjectsByUser(
-    record.data.fields['Discord ID'],
-    record.data.fields.Email
+  const projects = await getSoloProjectsByMemberDiscordId(
+    record.data.fields['Discord ID']
   );
 
   if (!projects.success)

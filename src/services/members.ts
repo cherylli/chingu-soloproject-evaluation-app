@@ -3,7 +3,7 @@
 import { createOrFilter } from '@/lib/airtable';
 import { getApplicationsByMember } from '@/services/applications';
 import { getRecordsByFilter } from '@/services/common';
-import { getAllSoloProjectsByUser } from '@/services/soloProjects';
+import { getAllSoloProjectsByMember } from '@/services/soloProjects';
 import { getAllVoyageSignupsByMember } from '@/services/voyages';
 import { ActionResponse, SearchableFields } from '@/types';
 import { MemberDetailsType } from '@/types/MemberTypes';
@@ -15,7 +15,7 @@ import { MemberDetailsType } from '@/types/MemberTypes';
  * @param {string} discordId - The Discord ID of the member to retrieve emails for.
  * @returns {Promise<string[]>} A promise that resolves to an array of unique email addresses.
  */
-const getMemberEmailsByDiscordId = async (
+export const getMemberEmailsByDiscordId = async (
   discordId: string
 ): Promise<ActionResponse<string[]>> => {
   const emails: Set<string> = new Set<string>();
@@ -31,7 +31,7 @@ const getMemberEmailsByDiscordId = async (
   }
   // get solo project(s) using discordID
   const soloProjects =
-    await getAllSoloProjectsByUser(discordId);
+    await getAllSoloProjectsByMember(discordId);
 
   if (soloProjects.success)
     soloProjects.data
