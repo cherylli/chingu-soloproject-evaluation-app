@@ -13,9 +13,14 @@ import {
   CommandInput,
   CommandItem,
 } from '@/components/ui/command';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 import { Textarea } from '@/components/ui/textarea';
 import { evalStatusValues } from '@/lib/options';
+import { urlLinkParser } from '@/lib/urlLinkParser';
 import { cn } from '@/lib/utils';
 import { updateSoloProjectById } from '@/services/soloProjects';
 import { SoloProjectSubmission } from '@/types/SoloProjectTypes';
@@ -27,9 +32,13 @@ interface ProjectDetailProps {
   record: SoloProjectSubmission;
 }
 
-const ReadOnlyDetails = ({ record }: ProjectDetailProps) => {
+const ReadOnlyDetails = ({
+  record,
+}: ProjectDetailProps) => {
   const [statusOpen, setStatusOpen] = useState(false);
-  const [evalStatus, setEvalStatus] = useState(record.fields['Evaluation Status']);
+  const [evalStatus, setEvalStatus] = useState(
+    record.fields['Evaluation Status']
+  );
 
   const handleStatusChange = async () => {
     const savingToast = toast.loading('Saving...');
@@ -37,7 +46,9 @@ const ReadOnlyDetails = ({ record }: ProjectDetailProps) => {
       'Evaluation Status': evalStatus,
     });
     if (res.success) {
-      toast.success(`Saved. Status: ${res.data?.fields['Evaluation Status']}`);
+      toast.success(
+        `Saved. Status: ${res.data?.fields['Evaluation Status']}`
+      );
     } else {
       toast.error(`Error Saving: ${res.message}`);
     }
@@ -51,13 +62,16 @@ const ReadOnlyDetails = ({ record }: ProjectDetailProps) => {
 
         <div>{record.fields['Timestamp'].toString()}</div>
         <div>{record.fields.Tier}</div>
-        {record.fields['Role'] === 'Software Developer' || record.fields['Role'] === 'Developer' ? (
+        {record.fields['Role'] === 'Software Developer' ||
+        record.fields['Role'] === 'Developer' ? (
           <div>
             <div>
               Github Repo:
               <a
                 className="px-4 text-blue-500 hover:underline"
-                href={record.fields['GitHub Repo URL']}
+                href={urlLinkParser(
+                  record.fields['GitHub Repo URL']
+                )}
               >
                 {record.fields['GitHub Repo URL']}
               </a>
@@ -66,7 +80,9 @@ const ReadOnlyDetails = ({ record }: ProjectDetailProps) => {
               Deployed Url:
               <a
                 className="px-4 text-blue-500 hover:underline"
-                href={record.fields['GitHub Repo URL']}
+                href={urlLinkParser(
+                  record.fields['GitHub Repo URL']
+                )}
               >
                 {record.fields['Deployed App URL']}
               </a>
@@ -78,7 +94,9 @@ const ReadOnlyDetails = ({ record }: ProjectDetailProps) => {
             UI/UX Project URL:
             <a
               className="px-4 text-blue-500 hover:underline"
-              href={record.fields['UI/UX Project URL']}
+              href={urlLinkParser(
+                record.fields['UI/UX Project URL']
+              )}
             >
               {record.fields['UI/UX Project URL']}
             </a>
@@ -88,7 +106,9 @@ const ReadOnlyDetails = ({ record }: ProjectDetailProps) => {
             PO Product Backlog URL:
             <a
               className="px-4 text-blue-500 hover:underline"
-              href={record.fields['PO Product Backlog URL']}
+              href={urlLinkParser(
+                record.fields['PO Product Backlog URL']
+              )}
             >
               {record.fields['PO Product Backlog URL']}
             </a>
@@ -97,13 +117,17 @@ const ReadOnlyDetails = ({ record }: ProjectDetailProps) => {
 
         {record.fields['Instructions'] ? (
           <div>
-            <div className="text-gray-500">Instructions:</div>
+            <div className="text-gray-500">
+              Instructions:
+            </div>
             <div>{record.fields['Instructions']} </div>
           </div>
         ) : null}
         {record.fields['Addl. Comments'] ? (
           <div>
-            <div className="text-gray-500">Additional Comments:</div>
+            <div className="text-gray-500">
+              Additional Comments:
+            </div>
             <div>{record.fields['Addl. Comments']} </div>
           </div>
         ) : null}
@@ -113,11 +137,18 @@ const ReadOnlyDetails = ({ record }: ProjectDetailProps) => {
           <div>{record.fields.Evaluator}</div>
         </div>
 
-        <Textarea readOnly className="h-[200px]" value={record.fields['Evaluation Feedback']} />
+        <Textarea
+          readOnly
+          className="h-[200px]"
+          value={record.fields['Evaluation Feedback']}
+        />
 
         <div className="flex gap-5 items-center">
           <div>Evaluation Status</div>
-          <Popover open={statusOpen} onOpenChange={setStatusOpen}>
+          <Popover
+            open={statusOpen}
+            onOpenChange={setStatusOpen}
+          >
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
@@ -132,7 +163,9 @@ const ReadOnlyDetails = ({ record }: ProjectDetailProps) => {
             <PopoverContent className="w-[200px] p-0">
               <Command>
                 <CommandInput placeholder="Search status..." />
-                <CommandEmpty>No status found.</CommandEmpty>
+                <CommandEmpty>
+                  No status found.
+                </CommandEmpty>
                 <CommandGroup>
                   {evalStatusValues.map((status) => (
                     <CommandItem
@@ -145,7 +178,9 @@ const ReadOnlyDetails = ({ record }: ProjectDetailProps) => {
                       <Check
                         className={cn(
                           'mr-2 h-4 w-4',
-                          evalStatus === status.value ? 'opacity-100' : 'opacity-0'
+                          evalStatus === status.value
+                            ? 'opacity-100'
+                            : 'opacity-0'
                         )}
                       />
                       {status.label}
