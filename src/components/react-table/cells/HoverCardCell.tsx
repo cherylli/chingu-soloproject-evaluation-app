@@ -23,7 +23,9 @@ const HoverCardCell = ({
       <HoverCardTrigger>
         <Icon />
       </HoverCardTrigger>
-      <HoverCardContent>{content}</HoverCardContent>
+      <HoverCardContent className="w-[500px] max-w-[90vw] max-h-[50vh] overflow-y-auto whitespace-pre-wrap break-words">
+        {content}
+      </HoverCardContent>
     </HoverCard>
   );
 };
