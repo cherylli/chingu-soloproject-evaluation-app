@@ -1,14 +1,25 @@
 import SetTierBtn from '@/components/soloprojects/tiers/SetTierBtn';
-import { SoloProjectSubmission, SoloProjectTier } from '@/types/SoloProjectTypes';
-import { SiAirtable, SiGithub } from '@icons-pack/react-simple-icons';
+import { urlLinkParser } from '@/lib/urlLinkParser';
+import {
+  SoloProjectSubmission,
+  SoloProjectTier,
+} from '@/types/SoloProjectTypes';
+import {
+  SiAirtable,
+  SiGithub,
+} from '@icons-pack/react-simple-icons';
 import { createColumnHelper } from '@tanstack/table-core';
 import { ExternalLink, LinkIcon } from 'lucide-react';
 import Link from 'next/link';
 
-const columnHelper = createColumnHelper<SoloProjectSubmission>();
+const columnHelper =
+  createColumnHelper<SoloProjectSubmission>();
 
 export const tierMismatchColumnDef = (
-  refreshRow: (id: string, newTier: SoloProjectTier) => void,
+  refreshRow: (
+    id: string,
+    newTier: SoloProjectTier
+  ) => void,
   baseURL: string,
   isAdmin: boolean = false
 ) => [
@@ -18,7 +29,11 @@ export const tierMismatchColumnDef = (
           id: 'Airtable Link',
           cell: ({ row }) => {
             return (
-              <a href={`${baseURL}/${row.original.id}`} target="_blank" rel="noreferrer">
+              <a
+                href={`${baseURL}/${row.original.id}`}
+                target="_blank"
+                rel="noreferrer"
+              >
                 <SiAirtable />
               </a>
             );
@@ -26,33 +41,53 @@ export const tierMismatchColumnDef = (
         }),
       ]
     : []),
-  columnHelper.accessor((row) => row.fields['Discord Name'], {
-    header: 'User',
-    cell: ({ getValue, row }) => {
-      return (
-        <div className="flex gap-2">
-          <div className="flex flex-col gap-2">
-            <div className="font-bold mr-6">{getValue()}</div>
-            <div className="text-gray-500">
-              <div>{row.original.fields['Evaluation Status']}</div>
-              <div>{row.original.fields['Role']}</div>
+  columnHelper.accessor(
+    (row) => row.fields['Discord Name'],
+    {
+      header: 'User',
+      cell: ({ getValue, row }) => {
+        return (
+          <div className="flex gap-2">
+            <div className="flex flex-col gap-2">
+              <div className="font-bold mr-6">
+                {getValue()}
+              </div>
+              <div className="text-gray-500">
+                <div>
+                  {row.original.fields['Evaluation Status']}
+                </div>
+                <div>{row.original.fields['Role']}</div>
+              </div>
             </div>
           </div>
-        </div>
-      );
-    },
-  }),
+        );
+      },
+    }
+  ),
   columnHelper.display({
     id: 'Links',
     cell: ({ row }) => (
       <div className="flex gap-2 items-center">
-        <Link href={`/solo-project/${row.original.id}`} target="_blank">
+        <Link
+          href={`/solo-project/${row.original.id}`}
+          target="_blank"
+        >
           <ExternalLink />
         </Link>
-        <a href={row.original.fields['GitHub Repo URL']} target="_blank">
+        <a
+          href={urlLinkParser(
+            row.original.fields['GitHub Repo URL']
+          )}
+          target="_blank"
+        >
           <SiGithub />
         </a>
-        <a href={row.original.fields['Deployed App URL']} target="_blank">
+        <a
+          href={urlLinkParser(
+            row.original.fields['Deployed App URL']
+          )}
+          target="_blank"
+        >
           <LinkIcon />
         </a>
       </div>
@@ -70,7 +105,9 @@ export const tierMismatchColumnDef = (
         <SetTierBtn
           soloProjectId={row.original.id}
           tier={row.original.fields.Tier}
-          onSuccess={(newTier) => refreshRow(row.original.id, newTier)}
+          onSuccess={(newTier) =>
+            refreshRow(row.original.id, newTier)
+          }
         >
           Accept
         </SetTierBtn>
@@ -88,7 +125,9 @@ export const tierMismatchColumnDef = (
               key={tier}
               soloProjectId={row.original.id}
               tier={tier.toString()}
-              onSuccess={(newTier) => refreshRow(row.original.id, newTier)}
+              onSuccess={(newTier) =>
+                refreshRow(row.original.id, newTier)
+              }
             >
               {tier}
             </SetTierBtn>

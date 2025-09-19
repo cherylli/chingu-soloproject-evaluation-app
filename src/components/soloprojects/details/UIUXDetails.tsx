@@ -1,7 +1,12 @@
+import { urlLinkParser } from '@/lib/urlLinkParser';
 import { SoloProjectFields } from '@/types/SoloProjectTypes';
 import Link from 'next/link';
 
-const UIUXDetails = ({ fields }: { fields: SoloProjectFields }) => {
+const UIUXDetails = ({
+  fields,
+}: {
+  fields: SoloProjectFields;
+}) => {
   return (
     <table className="table-auto">
       <thead></thead>
@@ -10,7 +15,9 @@ const UIUXDetails = ({ fields }: { fields: SoloProjectFields }) => {
           <td>UI/UX Project URL: </td>
           <td className="px-4 text-blue-500 hover:underline">
             <Link
-              href={fields['UI/UX Project URL'] || ''}
+              href={urlLinkParser(
+                fields['UI/UX Project URL']
+              )}
               target="_blank"
               rel="noopener noreferrer"
             >
