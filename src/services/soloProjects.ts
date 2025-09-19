@@ -7,6 +7,8 @@ import {
   transformSoloProjectRecords,
 } from '@/lib/airtable';
 import { getDate } from '@/lib/getDate';
+import { getRecordsByFilter } from '@/services/common';
+import { getMemberEmailsByDiscordId } from '@/services/members';
 import { ActionResponse } from '@/types';
 import {
   type SoloProjectSearchableFields,
@@ -90,9 +92,7 @@ export const getSoloProjectById = async (
  * @throws {Error} If neither discordId nor email is provided
  */
 
-// TODO: rename to getAllSoloProjectsByMember to avoid confusion
-// TODO: refactor this like getAllVoyageSignupsByMember
-export const getAllSoloProjectsByUser = async (
+export const getAllSoloProjectsByMember = async (
   discordId?: string,
   email?: string
 ): Promise<ActionResponse<SoloProjectSubmission[]>> => {
@@ -137,6 +137,65 @@ export const getAllSoloProjectsByUser = async (
     throw new Error(
       `Failed to get solo project submissions. Error: ${e}`
     );
+  }
+};
+
+// Get all solo projects by member's discord id, this also searches for multiple emails'
+/**
+ * Fetches solo projects associated with a member's Discord ID.
+ *
+ * This function retrieves the ALL email addresses linked to the specified Discord ID
+ * and uses them to query solo projects. It returns a response containing either
+ * the solo project submissions or an error message if the operation fails.
+ *
+ * @param {string} discordId - The Discord ID of the member whose solo projects are to be retrieved.
+ * @returns {Promise<ActionResponse<SoloProjectSubmission[]>>} A promise that resolves to an ActionResponse object.
+ * The response's `success` field indicates the status of the operation,
+ * the `data` field contains the solo project submissions on success, and the
+ * `message` field provides additional information about the operation.
+ */
+export const getSoloProjectsByMemberDiscordId = async (
+  discordId: string
+): Promise<ActionResponse<SoloProjectSubmission[]>> => {
+  const emails =
+    await getMemberEmailsByDiscordId(discordId);
+  if (!emails.success) {
+    return {
+      success: false,
+      message: "Failed to get member's emails.",
+    };
+  }
+
+  try {
+    const soloProjects = await getRecordsByFilter(
+      'soloProject',
+      () =>
+        createOrFilter(
+          emails.data.map((email) => ({
+            field: 'Email',
+            value: email,
+          }))
+        )
+    );
+
+    if (!soloProjects.success) {
+      return {
+        success: false,
+        message:
+          "Failed to get solo projects by member's discord id.",
+      };
+    }
+
+    return {
+      success: true,
+      data: soloProjects.data,
+      message: `Successfully fetched user solo projects. DiscordId: ${discordId}`,
+    };
+  } catch (e) {
+    return {
+      success: false,
+      message: `Failed to get solo projects by member's discord id. Error: ${e}`,
+    };
   }
 };
 
