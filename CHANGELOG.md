@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.12.0](https://github.com/chingu-x/chingu-soloproject-evaluation-app/compare/v1.11.0...v1.12.0) (2025-09-19)
+
+
+### Features
+
+* [SPA-22] (solo-project) add URL parser utility and apply for external links across solo project details ([ad09733](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/ad09733e9507386fb9f1db2f748a6023a3fb501b))
+* **admin-ui:** add reusable components for error and no-record states, refactor member details and check-in flows ([3292254](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/3292254175449208e594a36f995594342f488f76))
+* **memberProfile:** Complete Solo project table ([ef63366](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/ef63366a4aaaf6af37d7a93dda81a870422edb46))
+
+
+### Bug Fixes
+
+* [SPA-50] (solo project) fix compact list not fetching all solo projects ([647e927](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/647e9272f11d0401e35c676a9f6d35a1422f5d61))
+* [SPA-52](voyage signup) fix voyage team github url ([538d01a](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/538d01a2c4e7c607890bee2bbed0ba70a9f28786))
+
 ## [1.11.0](https://github.com/chingu-x/chingu-soloproject-evaluation-app/compare/v1.10.0...v1.11.0) (2025-08-18)
 
 
