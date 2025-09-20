@@ -7,7 +7,6 @@ import * as BackButtonModule from './BackButton';
 
 // Support both named and default exports for BackButton
 const BackButtonComponent =
-  // @ts-expect-error allow fallback to either export style
   (BackButtonModule as any).BackButton ??
   (BackButtonModule as any).default;
 
