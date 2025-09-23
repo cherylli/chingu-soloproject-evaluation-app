@@ -1,0 +1,32 @@
+{
+  "categories": [
+    {
+      "id": "solo-project",
+      "name": "Solo Project",
+      "description": "Solo Project Related Links",
+      "links": [
+        {
+          "name": "Solo Project Submission Form",
+          "url": "https://docs.google.com/forms/d/12wQ1gyZPojCjIYg7gMTSHLcjSopJUzw5H7KcSEKRlc0"
+        },
+        {
+          "name": "Tier Requirements",
+          "url": "https://github.com/chingu-voyages/Handbook/blob/main/docs/guides/soloproject/soloproject.md#1-choose-your-tier-1%EF%B8%8F%E2%83%A3-2%EF%B8%8F%E2%83%A3-3%EF%B8%8F%E2%83%A3",
+          "description": "Tier Requirements",
+          "isAdmin": false
+        }
+      ]
+    },
+    {
+      "id": "voyage",
+      "name": "Voyage",
+      "description": "Voyage Related Links",
+      "links": [
+        {
+          "name": "Signup for Voyage",
+          "url": "https://forms.gle/DajSfXQCX4qbMAu8A"
+        }
+      ]
+    }
+  ]
+}
