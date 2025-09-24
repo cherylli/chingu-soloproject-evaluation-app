@@ -157,6 +157,12 @@ export const getAllSoloProjectsByMember = async (
 export const getSoloProjectsByMemberDiscordId = async (
   discordId: string
 ): Promise<ActionResponse<SoloProjectSubmission[]>> => {
+  if (!discordId) {
+    return {
+      success: false,
+      message: 'Discord Id missing.',
+    };
+  }
   const emails =
     await getMemberEmailsByDiscordId(discordId);
   if (!emails.success) {

@@ -8,6 +8,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from '@/components/ui/resizable';
+import ErrorMsg from '@/components/ui/states/ErrorMsg';
 import { getATBaseURL } from '@/lib/getAirtableUrls';
 import {
   getSoloProjectById,
@@ -26,10 +27,13 @@ const SoloProjectPage = async (props: {
     record.data.fields['Discord ID']
   );
 
-  if (!projects.success)
-    return (
-      <div>Error fetching other projects by the user</div>
-    );
+  // if (!projects.success)
+  //   return (
+  //     <div>
+  //       Error fetching other projects by the user:{' '}
+  //       {projects.message}
+  //     </div>
+  //   );
 
   return record.data.fields['Evaluation Status'] ===
     'Passed' ? (
@@ -55,9 +59,19 @@ const SoloProjectPage = async (props: {
         className="basis-auto! lg:basis-0!"
       >
         <div className="lg:h-[calc(100vh-110px)] lg:overflow-y-auto">
-          {projects.data.length > 1 && (
-            <CompactList records={projects.data} />
+          {projects.success ? (
+            projects.data.length > 1 && (
+              <CompactList records={projects.data} />
+            )
+          ) : (
+            <div className="w-[80%] m-auto">
+              <ErrorMsg
+                message={`Error fetching other projects by the user:
+            ${projects.message}`}
+              />
+            </div>
           )}
+
           <ProjectSubmissionDetail
             record={record.data}
             atBaseUrl={getATBaseURL('solo-project')}
