@@ -32,6 +32,7 @@ import {
   ChevronRight,
   ExternalLinkIcon,
   MoreVertical,
+  SquareChevronRight,
 } from 'lucide-react';
 import { Fragment, useMemo, useState } from 'react';
 
@@ -137,6 +138,14 @@ const SingleVoyageSignupTable = ({
                               <DropdownMenuLabel className="flex items-center gap-2">
                                 <ExternalLinkIcon /> Github
                                 repo
+                              </DropdownMenuLabel>
+                            </a>
+                            <a
+                              href={`/admin/voyage/${row.original.fields.Voyage.slice(1)}/team/${row.original.fields['Team No.']}`}
+                            >
+                              <DropdownMenuLabel className="flex items-center gap-2">
+                                <SquareChevronRight /> Team
+                                Page
                               </DropdownMenuLabel>
                             </a>
                           </DropdownMenuContent>
