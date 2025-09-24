@@ -7,6 +7,7 @@ import SMDetails from '@/components/soloprojects/details/SMDetails';
 import UIUXDetails from '@/components/soloprojects/details/UIUXDetails';
 import TierSuggestion from '@/components/soloprojects/tiers/TierSuggestion';
 import { Button } from '@/components/ui/button';
+import ButtonIconWithAction from '@/components/ui/buttons/ButtonIconWithAction';
 import {
   Command,
   CommandEmpty,
@@ -26,6 +27,7 @@ import { getRandomPassMessage } from '@/lib/getRandomPassMessage';
 import { getRole } from '@/lib/getRole';
 import { evalStatusValues } from '@/lib/options';
 import { cn } from '@/lib/utils';
+import { sendMessageToDiscordRingTheBell } from '@/services/discord';
 import {
   removeEvaluatorOnDb,
   setEvaluatorOnDb,
@@ -42,6 +44,7 @@ import {
   ChevronsUpDown,
   Copy,
   PencilLine,
+  SendIcon,
   XCircle,
 } from 'lucide-react';
 import { useState } from 'react';
@@ -121,9 +124,21 @@ const ProjectSubmissionDetail = ({
     toast.dismiss(removeEvaluatorToast);
   };
 
+  const handleSendRingTheBellMessage = async () => {
+    const sendPromise =
+      sendMessageToDiscordRingTheBell(ringTheBellText);
+
+    toast.promise(sendPromise, {
+      loading:
+        'Sending message to discord #ring-the-bell channel...',
+      success: 'Sent!',
+      error: 'Error Sending!',
+    });
+  };
+
   const onPassSelect = () => {
     setRingTheBellText(
-      getRandomPassMessage(record.fields['Discord Name'])
+      getRandomPassMessage(record.fields['Discord ID'])
     );
   };
 
@@ -310,12 +325,18 @@ const ProjectSubmissionDetail = ({
               <Button
                 variant="outline"
                 size="icon"
-                className="ml-2 h-8 w-8"
+                className="ml-2 h-8 w-8 cursor-pointer"
                 onClick={() => toast('Copied!')}
               >
                 <Copy className="h-4 w-4" />
               </Button>
             </CopyToClipboard>
+            <ButtonIconWithAction
+              className="ml-2"
+              Icon={SendIcon}
+              onClick={handleSendRingTheBellMessage}
+              tooltip="Send to Discord"
+            />
           </div>
         ) : null}
         <Button onClick={handleSave}>Save</Button>

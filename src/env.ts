@@ -8,7 +8,9 @@ const envSchema = z.object({
   AIRTABLE_USERS_TABLEID: z.string().startsWith('tbl'),
   AIRTABLE_APP_TABLEID: z.string().startsWith('tbl'),
   AIRTABLE_CHECKIN_TABLEID: z.string().startsWith('tbl'),
-  AIRTABLE_VOYAGE_SIGNUP_TABLEID: z.string().startsWith('tbl'),
+  AIRTABLE_VOYAGE_SIGNUP_TABLEID: z
+    .string()
+    .startsWith('tbl'),
   AIRTABLE_SCHEDULE_TABLEID: z.string().startsWith('tbl'),
   AIRTABLE_PAT: z.string().startsWith('pat'),
   // auth (next-auth and github)
@@ -20,9 +22,20 @@ const envSchema = z.object({
   // firebase
   FIREBASE_STORAGE_BUCKET: z.string(),
   // sentry
-  SENTRY_AUTH_TOKEN: z.string().startsWith('sntrys_').optional(),
+  SENTRY_AUTH_TOKEN: z
+    .string()
+    .startsWith('sntrys_')
+    .optional(),
+  // discord
+  DISCORD_RING_THE_BELL_WEBHOOK_URL: z
+    .string()
+    .startsWith('https://discord.com/api/webhooks/'),
+  // github
+  GITHUB_TOKEN: z.string().startsWith('github_pat_'),
   // general app keys
-  NEXT_PUBLIC_MAINTENANCE: z.coerce.boolean().default(false),
+  NEXT_PUBLIC_MAINTENANCE: z.coerce
+    .boolean()
+    .default(false),
 });
 
 const parsedEnv = envSchema.safeParse(process.env);

@@ -20,6 +20,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
+import { useRoleCheck } from '@/hooks/useRoleCheck';
 import { Home } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
@@ -33,6 +34,8 @@ const Nav = () => {
       redirect('/api/auth/signin?callbackUrl=/');
     },
   });
+
+  const { isAdmin } = useRoleCheck();
 
   if (status === 'loading') {
     return <NavSkeleton />;
@@ -68,7 +71,7 @@ const Nav = () => {
               </MenubarItem>
             </MenubarContent>
           </MenubarMenu>
-          {session?.user.roles.includes('admin') && (
+          {isAdmin && (
             <MenubarMenu>
               <MenubarTrigger>Admin</MenubarTrigger>
               <MenubarContent>
@@ -130,6 +133,17 @@ const Nav = () => {
               </MenubarContent>
             </MenubarMenu>
           )}
+          <MenubarMenu>
+            <MenubarTrigger>Resources</MenubarTrigger>
+            <MenubarContent>
+              <MenubarItem>
+                <Link href="/resources/links">Links</Link>
+              </MenubarItem>
+              <MenubarItem>
+                <Link href="/feedback">Feedback</Link>
+              </MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
         </Menubar>
       </div>
       {session?.user ? (

@@ -1,7 +1,9 @@
-import {messages} from "@/data/passMessages";
-import {emojis} from "@/data/discordEmoji";
+import { emojis } from '@/data/discordEmoji';
+import { messages } from '@/data/passMessages';
 
-export const getRandomPassMessage = (discordName: string) => {
-    return `${messages[Math.floor(Math.random() * messages.length)].replace('{name}', discordName)} `+
-        `${emojis[Math.floor(Math.random() * emojis.length)]} \n\nWe have DM'd you your feedback. Please also check your message requests or spam.`
-}
+export const getRandomPassMessage = (discordId: string) => {
+  return (
+    `${messages[Math.floor(Math.random() * messages.length)].replace('{discordId}', discordId)} ` +
+    `${emojis[Math.floor(Math.random() * emojis.length)]} \n\nWe have DM'd you your feedback. Please also check your message requests or spam.`
+  );
+};
