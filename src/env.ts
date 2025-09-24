@@ -30,6 +30,8 @@ const envSchema = z.object({
   DISCORD_RING_THE_BELL_WEBHOOK_URL: z
     .string()
     .startsWith('https://discord.com/api/webhooks/'),
+  // github
+  GITHUB_TOKEN: z.string().startsWith('github_pat_'),
   // general app keys
   NEXT_PUBLIC_MAINTENANCE: z.coerce
     .boolean()

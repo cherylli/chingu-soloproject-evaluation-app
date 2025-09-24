@@ -1,4 +1,9 @@
 import { Button } from '@/components/ui/button';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { IconType } from '@icons-pack/react-simple-icons';
 import { LucideIcon } from 'lucide-react';
 
@@ -6,12 +11,14 @@ const ButtonIconWithAction = ({
   className,
   Icon,
   onClick,
+  tooltip,
 }: {
   className?: string;
   Icon: LucideIcon | IconType;
   onClick: () => void;
+  tooltip?: string;
 }) => {
-  return (
+  const buttonElement = (
     <Button
       variant="outline"
       size="icon"
@@ -20,6 +27,19 @@ const ButtonIconWithAction = ({
     >
       <Icon className="h-4 w-4" />
     </Button>
+  );
+
+  if (!tooltip) {
+    return buttonElement;
+  }
+
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        {buttonElement}
+      </TooltipTrigger>
+      <TooltipContent>{tooltip}</TooltipContent>
+    </Tooltip>
   );
 };
 

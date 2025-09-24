@@ -335,6 +335,7 @@ const ProjectSubmissionDetail = ({
               className="ml-2"
               Icon={SendIcon}
               onClick={handleSendRingTheBellMessage}
+              tooltip="Send to Discord"
             />
           </div>
         ) : null}
