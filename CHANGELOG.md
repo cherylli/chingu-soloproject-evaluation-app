@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.13.0](https://github.com/chingu-x/chingu-soloproject-evaluation-app/compare/v1.12.0...v1.13.0) (2025-09-24)
+
+
+### Features
+
+* [SPA-48] Add new links page ([699f9dd](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/699f9ddcc87aeb381e3aa48acba0a8ab2bcb2465))
+* [SPA-53] Add button to directly send the pass message to ring the bell ([b104eb9](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/b104eb9740a408719405e8c87cf2fdad680a0f81))
+
+
+### Bug Fixes
+
+* [SPA-59] remove blocking error on solo project page if past project failed to fetch ([3e211b7](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/3e211b7b5c77720958390cb8b19ba762eae20b3c))
+
 ## [1.12.0](https://github.com/chingu-x/chingu-soloproject-evaluation-app/compare/v1.11.0...v1.12.0) (2025-09-19)
 
 
