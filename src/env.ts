@@ -32,6 +32,9 @@ const envSchema = z.object({
     .startsWith('https://discord.com/api/webhooks/'),
   // github
   GITHUB_TOKEN: z.string().startsWith('github_pat_'),
+  // n8n
+  N8N_WEBHOOK_SEND_DISCORD_MSG: z.string(),
+  N8N_CHINGU_API_KEY: z.string().startsWith('chingu_'),
   // general app keys
   NEXT_PUBLIC_MAINTENANCE: z.coerce
     .boolean()
