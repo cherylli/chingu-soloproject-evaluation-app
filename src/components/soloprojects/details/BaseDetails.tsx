@@ -5,6 +5,7 @@ import DeveloperDetails from '@/components/soloprojects/details/Developer';
 import PODetails from '@/components/soloprojects/details/PODetails';
 import SMDetails from '@/components/soloprojects/details/SMDetails';
 import UIUXDetails from '@/components/soloprojects/details/UIUXDetails';
+import DiscordDMSheet from '@/components/soloprojects/DiscordDMSheet';
 import TierSuggestion from '@/components/soloprojects/tiers/TierSuggestion';
 import { Button } from '@/components/ui/button';
 import ButtonIconWithAction from '@/components/ui/buttons/ButtonIconWithAction';
@@ -182,166 +183,179 @@ const ProjectSubmissionDetail = ({
   };
 
   return (
-    <div>
-      <section className="flex flex-col gap-5 w-[90%] mx-auto">
-        <BaseDetailHeader record={record} />
-        <div className="flex gap-5 items-center">
-          {isAdmin && (
-            <a
-              href={`${atBaseUrl}/${record.id}`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <SiAirtable />
-            </a>
-          )}
-          <MemberProfileLinkButton
-            discordId={record.fields['Discord ID']}
-          />
-          <div>{record.fields['Timestamp'].toString()}</div>
-        </div>
-        <div className="flex gap-5 items-center">
-          <div>{record.fields.Tier}</div>
-          <TierSuggestion onSuccess={updateRecordFields} />
-        </div>
-
-        {record.fields['Instructions'] ? (
-          <div>
-            <div className="text-gray-500">
-              Instructions:
-            </div>
-            <div>{record.fields['Instructions']} </div>
-          </div>
-        ) : null}
-        {record.fields['Addl. Comments'] ? (
-          <div>
-            <div className="text-gray-500">
-              Additional Comments:
-            </div>
-            <div>{record.fields['Addl. Comments']} </div>
-          </div>
-        ) : null}
-
-        <div className="flex">
-          <div className="mr-3">Evaluator:</div>
-          <div>{record.fields.Evaluator}</div>
-          {record.fields.Evaluator && (
-            <XCircle
-              color="#A30000"
-              className="ml-2 cursor-pointer"
-              onClick={handleRemoveEvaluator}
+    <>
+      <div>
+        <section className="flex flex-col gap-5 w-[90%] mx-auto">
+          <BaseDetailHeader record={record} />
+          <div className="flex gap-5 items-center">
+            {isAdmin && (
+              <a
+                href={`${atBaseUrl}/${record.id}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <SiAirtable />
+              </a>
+            )}
+            <MemberProfileLinkButton
+              discordId={record.fields['Discord ID']}
             />
-          )}
-        </div>
+            <div>
+              {record.fields['Timestamp'].toString()}
+            </div>
+          </div>
+          <div className="flex gap-5 items-center">
+            <div>{record.fields.Tier}</div>
+            <TierSuggestion
+              onSuccess={updateRecordFields}
+            />
+          </div>
 
-        <Button
-          className="bg-green-700 light:text-white-200 hover:bg-green-900 disabled:bg-gray-500"
-          disabled={!!record.fields.Evaluator}
-          onClick={handleSetEvaluator}
-        >
-          <PencilLine className="mr-2 h-4 w-4" />
-          Evaluate This
-        </Button>
+          {record.fields['Instructions'] ? (
+            <div>
+              <div className="text-gray-500">
+                Instructions:
+              </div>
+              <div>{record.fields['Instructions']} </div>
+            </div>
+          ) : null}
+          {record.fields['Addl. Comments'] ? (
+            <div>
+              <div className="text-gray-500">
+                Additional Comments:
+              </div>
+              <div>{record.fields['Addl. Comments']} </div>
+            </div>
+          ) : null}
 
-        {getRoleComponent(getRole(record.fields))}
+          <div className="flex">
+            <div className="mr-3">Evaluator:</div>
+            <div>{record.fields.Evaluator}</div>
+            {record.fields.Evaluator && (
+              <XCircle
+                color="#A30000"
+                className="ml-2 cursor-pointer"
+                onClick={handleRemoveEvaluator}
+              />
+            )}
+          </div>
 
-        <Textarea
-          className="h-[500px]"
-          value={record.fields['Evaluation Feedback']}
-          onChange={(e) =>
-            updateRecordFields(
-              'Evaluation Feedback',
-              e.target.value
-            )
-          }
-          onMouseUp={onSelectText}
-        />
-        <div className="text-right text-gray-500">
-          {selectionLen}/
-          {record.fields['Evaluation Feedback']?.length ??
-            '0'}
-        </div>
-
-        <div className="flex gap-5 items-center">
-          <div>Evaluation Status</div>
-          <Popover
-            open={statusOpen}
-            onOpenChange={setStatusOpen}
+          <Button
+            className="bg-green-700 light:text-white-200 hover:bg-green-900 disabled:bg-gray-500"
+            disabled={!!record.fields.Evaluator}
+            onClick={handleSetEvaluator}
           >
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                role="combobox"
-                aria-expanded={statusOpen}
-                className="w-[200px] justify-between"
-              >
-                {record.fields['Evaluation Status']}
-                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-[200px] p-0">
-              <Command>
-                <CommandInput placeholder="Search status..." />
-                <CommandEmpty>
-                  No status found.
-                </CommandEmpty>
-                <CommandGroup>
-                  {evalStatusValues.map((status) => (
-                    <CommandItem
-                      key={status.value}
-                      onSelect={(_) => {
-                        updateRecordFields(
-                          'Evaluation Status',
-                          status.value
-                        );
-                        if (status.value === 'Passed') {
-                          onPassSelect();
-                        }
-                        setStatusOpen(false);
-                      }}
-                    >
-                      <Check
-                        className={cn(
-                          'mr-2 h-4 w-4',
-                          record.fields[
-                            'Evaluation Status'
-                          ] === status.value
-                            ? 'opacity-100'
-                            : 'opacity-0'
-                        )}
-                      />
-                      {status.label}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              </Command>
-            </PopoverContent>
-          </Popover>
-        </div>
-        {record.fields['Evaluation Status'] === 'Passed' ? (
-          <div className="whitespace-pre-line">
-            {ringTheBellText}
-            <CopyToClipboard text={ringTheBellText}>
-              <Button
-                variant="outline"
-                size="icon"
-                className="ml-2 h-8 w-8 cursor-pointer"
-                onClick={() => toast('Copied!')}
-              >
-                <Copy className="h-4 w-4" />
-              </Button>
-            </CopyToClipboard>
-            <ButtonIconWithAction
-              className="ml-2"
-              Icon={SendIcon}
-              onClick={handleSendRingTheBellMessage}
-              tooltip="Send to Discord"
-            />
+            <PencilLine className="mr-2 h-4 w-4" />
+            Evaluate This
+          </Button>
+
+          {getRoleComponent(getRole(record.fields))}
+
+          <Textarea
+            className="h-[500px]"
+            value={record.fields['Evaluation Feedback']}
+            onChange={(e) =>
+              updateRecordFields(
+                'Evaluation Feedback',
+                e.target.value
+              )
+            }
+            onMouseUp={onSelectText}
+          />
+          <div className="text-right text-gray-500">
+            {selectionLen}/
+            {record.fields['Evaluation Feedback']?.length ??
+              '0'}
           </div>
-        ) : null}
-        <Button onClick={handleSave}>Save</Button>
-      </section>
-    </div>
+
+          <div className="flex gap-5 items-center">
+            <div>Evaluation Status</div>
+            <Popover
+              open={statusOpen}
+              onOpenChange={setStatusOpen}
+            >
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  role="combobox"
+                  aria-expanded={statusOpen}
+                  className="w-[200px] justify-between"
+                >
+                  {record.fields['Evaluation Status']}
+                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-[200px] p-0">
+                <Command>
+                  <CommandInput placeholder="Search status..." />
+                  <CommandEmpty>
+                    No status found.
+                  </CommandEmpty>
+                  <CommandGroup>
+                    {evalStatusValues.map((status) => (
+                      <CommandItem
+                        key={status.value}
+                        onSelect={(_) => {
+                          updateRecordFields(
+                            'Evaluation Status',
+                            status.value
+                          );
+                          if (status.value === 'Passed') {
+                            onPassSelect();
+                          }
+                          setStatusOpen(false);
+                        }}
+                      >
+                        <Check
+                          className={cn(
+                            'mr-2 h-4 w-4',
+                            record.fields[
+                              'Evaluation Status'
+                            ] === status.value
+                              ? 'opacity-100'
+                              : 'opacity-0'
+                          )}
+                        />
+                        {status.label}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </Command>
+              </PopoverContent>
+            </Popover>
+          </div>
+          {record.fields['Evaluation Status'] ===
+          'Passed' ? (
+            <div className="whitespace-pre-line">
+              {ringTheBellText}
+              <CopyToClipboard text={ringTheBellText}>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="ml-2 h-8 w-8 cursor-pointer"
+                  onClick={() => toast('Copied!')}
+                >
+                  <Copy className="h-4 w-4" />
+                </Button>
+              </CopyToClipboard>
+              <ButtonIconWithAction
+                className="ml-2"
+                Icon={SendIcon}
+                onClick={handleSendRingTheBellMessage}
+                tooltip="Send to Discord"
+              />
+            </div>
+          ) : null}
+          <Button
+            className="cursor-pointer"
+            onClick={handleSave}
+          >
+            Save
+          </Button>
+        </section>
+      </div>
+      <DiscordDMSheet discordId="139615488295698432" />
+    </>
   );
 };
 
