@@ -1,3 +1,13 @@
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -20,6 +30,7 @@ import {
   CheckCircleIcon,
   CircleXIcon,
   RefreshCcw,
+  SendHorizontal,
   SendIcon,
 } from 'lucide-react';
 import { useState } from 'react';
@@ -119,35 +130,12 @@ const DiscordDMSheet = ({
   const [message, setMessage] = useState<string>('');
   //const [showTextarea, setShowTextarea] =
   //  useState<boolean>(true);
-  const [status, setStatus] = useState<Status>('sent');
+  const [status, setStatus] = useState<Status>('error');
   const [resData, setResData] =
     useState<N8NWebhookResponse>();
 
   const isResetable =
     status === 'sent' || status === 'error';
-
-  const mockRes: N8NWebhookResponse = {
-    success: true,
-    message: 'Message sent successfully',
-    data: {
-      id: '1234567890',
-      author: 'Titan',
-      timestamp: '2024-01-01T00:00:00.000Z',
-      workflowName: 'Send Discord DM',
-      chunks: [
-        {
-          chunkNumber: 1,
-          chunkLength: 300,
-          chunkContent: 'Test message start...',
-        },
-        {
-          chunkNumber: 2,
-          chunkLength: 203,
-          chunkContent: 'Second message start...',
-        },
-      ],
-    },
-  };
 
   const handleSendDiscordDM = async () => {
     if (!message) {
@@ -173,10 +161,12 @@ const DiscordDMSheet = ({
       }
 
       setResData(parsedRes.data);
-      parsedRes.data.success
-        ? setStatus('sent')
-        : setStatus('error');
-      setMessage('');
+      if (parsedRes.data.success) {
+        setStatus('sent');
+        setMessage('');
+      } else {
+        setStatus('error');
+      }
     } catch (error) {
       setStatus('error');
       throw error;
@@ -192,7 +182,10 @@ const DiscordDMSheet = ({
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline">Send DM</Button>
+        <Button className="mt-5 ml-[5%]">
+          <SendHorizontal />
+          Send DM
+        </Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
@@ -210,9 +203,9 @@ const DiscordDMSheet = ({
             onChange={(e) => setMessage(e.target.value)}
           />
         ) : status === 'sent' ? (
-          <WebhookResponseCard res={mockRes} />
+          <WebhookResponseCard res={resData} />
         ) : (
-          <>Error</>
+          <WebhookResponseCard res={resData} />
         )}
 
         <SheetFooter>
@@ -226,14 +219,34 @@ const DiscordDMSheet = ({
               <RefreshCcw /> Send Another Message
             </Button>
           ) : (
-            <Button
-              variant="outline"
-              className="cursor-pointer"
-              onClick={handleSendDiscordDM}
-              disabled={status !== 'idle'}
-            >
-              <SendIcon /> Send
-            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="cursor-pointer"
+                  disabled={status !== 'idle'}
+                >
+                  <SendIcon /> Send
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>
+                    Send DM to Member?
+                  </AlertDialogTitle>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>
+                    Cancel
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={handleSendDiscordDM}
+                  >
+                    Continue
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           )}
         </SheetFooter>
       </SheetContent>

@@ -45,6 +45,7 @@ import {
   ChevronsUpDown,
   Copy,
   PencilLine,
+  SaveIcon,
   SendIcon,
   XCircle,
 } from 'lucide-react';
@@ -350,11 +351,13 @@ const ProjectSubmissionDetail = ({
             className="cursor-pointer"
             onClick={handleSave}
           >
-            Save
+            <SaveIcon /> Save
           </Button>
         </section>
       </div>
-      <DiscordDMSheet discordId="139615488295698432" />
+      <DiscordDMSheet
+        discordId={record.fields['Discord ID']}
+      />
     </>
   );
 };
