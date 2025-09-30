@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.0](https://github.com/chingu-x/chingu-soloproject-evaluation-app/compare/v1.13.0...v1.14.0) (2025-09-30)
+
+
+### Features
+
+* (solo-project) [SPA-54] send Discord DM from App ([a6ccda0](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/a6ccda037ce302ee945a147fceacdfc63d1c339e))
+
 ## [1.13.0](https://github.com/chingu-x/chingu-soloproject-evaluation-app/compare/v1.12.0...v1.13.0) (2025-09-24)
 
 
