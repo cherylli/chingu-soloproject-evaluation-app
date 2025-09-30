@@ -35,6 +35,7 @@ import {
   updateSoloProjectById,
 } from '@/services/soloProjects';
 import {
+  EvaluationStatus,
   SoloProjectFields,
   SoloProjectSubmission,
   VoyageRole,
@@ -73,13 +74,19 @@ const ProjectSubmissionDetail = ({
 
   if (!record) return;
 
-  const handleSave = async () => {
+  // optional Evaluation Status for autosave on Evaluation Status change
+  // due to react state update async issue
+  // otherwise, just use what's in the record state
+  const handleSave = async (
+    evaluationStatus: EvaluationStatus = record.fields[
+      'Evaluation Status'
+    ]
+  ) => {
     const savingToast = toast.loading('Saving...');
     const res = await updateSoloProjectById(record.id, {
       'Evaluation Feedback':
         record.fields['Evaluation Feedback'],
-      'Evaluation Status':
-        record.fields['Evaluation Status'],
+      'Evaluation Status': evaluationStatus,
     });
     if (res.success) {
       toast.success(
@@ -124,6 +131,18 @@ const ProjectSubmissionDetail = ({
       );
     }
     toast.dismiss(removeEvaluatorToast);
+  };
+
+  const handleEvaluationStatusChange = async (
+    statusValue: EvaluationStatus
+  ) => {
+    if (statusValue === 'Passed') {
+      onPassSelect();
+    }
+    updateRecordFields('Evaluation Status', statusValue);
+    setStatusOpen(false);
+
+    await handleSave(statusValue);
   };
 
   const handleSendRingTheBellMessage = async () => {
@@ -296,16 +315,11 @@ const ProjectSubmissionDetail = ({
                     {evalStatusValues.map((status) => (
                       <CommandItem
                         key={status.value}
-                        onSelect={(_) => {
-                          updateRecordFields(
-                            'Evaluation Status',
+                        onSelect={() =>
+                          handleEvaluationStatusChange(
                             status.value
-                          );
-                          if (status.value === 'Passed') {
-                            onPassSelect();
-                          }
-                          setStatusOpen(false);
-                        }}
+                          )
+                        }
                       >
                         <Check
                           className={cn(
@@ -349,7 +363,7 @@ const ProjectSubmissionDetail = ({
           ) : null}
           <Button
             className="cursor-pointer"
-            onClick={handleSave}
+            onClick={() => handleSave()}
           >
             <SaveIcon /> Save
           </Button>
