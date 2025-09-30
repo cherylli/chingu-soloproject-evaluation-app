@@ -29,6 +29,7 @@ import { sendDiscordDM } from '@/services/discord';
 import {
   CheckCircleIcon,
   CircleXIcon,
+  MessageCircleWarningIcon,
   RefreshCcw,
   SendHorizontal,
   SendIcon,
@@ -39,6 +40,7 @@ import { z } from 'zod';
 
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 
+//region Webhook Response Schema and Response Card for Display
 const N8NWebhookResponseSchema = z.object({
   success: z.boolean(),
   message: z.string(),
@@ -71,7 +73,7 @@ const WebhookResponseCard = ({
   if (!res) {
     return (
       <Card className="max-w-[90%] mx-auto p-4">
-        No response
+        Error: No response
       </Card>
     );
   }
@@ -121,6 +123,10 @@ const WebhookResponseCard = ({
     </Card>
   );
 };
+//endregion
+
+//region Sheet for sending DM to Discord
+const DiscordIdSchema = z.coerce.string().length(18);
 
 const DiscordDMSheet = ({
   discordId,
@@ -130,12 +136,15 @@ const DiscordDMSheet = ({
   const [message, setMessage] = useState<string>('');
   //const [showTextarea, setShowTextarea] =
   //  useState<boolean>(true);
-  const [status, setStatus] = useState<Status>('error');
+  const [status, setStatus] = useState<Status>('idle');
   const [resData, setResData] =
     useState<N8NWebhookResponse>();
 
   const isResetable =
     status === 'sent' || status === 'error';
+
+  const validatedDiscordId =
+    DiscordIdSchema.safeParse(discordId);
 
   const handleSendDiscordDM = async () => {
     if (!message) {
@@ -145,7 +154,7 @@ const DiscordDMSheet = ({
     try {
       setStatus('sending');
       const res = await sendDiscordDM(
-        '139615488295698432',
+        discordId.toString(),
         message
       );
       const parsedRes =
@@ -193,65 +202,75 @@ const DiscordDMSheet = ({
           <SheetDescription>
             Paste your message here to send to the user via
             DM from Titan. <br /> <br />
+            {!validatedDiscordId.success && (
+              <span className="flex items-center gap-2 text-red-500">
+                <MessageCircleWarningIcon /> DiscordId
+                Error: DiscordId must be a 18 digit string
+              </span>
+            )}
             Recipient discord id: {discordId}.
           </SheetDescription>
         </SheetHeader>
-        {status === 'idle' || status === 'sending' ? (
-          <Textarea
-            className="w-[90%] mx-auto h-[60%]"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
-        ) : status === 'sent' ? (
-          <WebhookResponseCard res={resData} />
-        ) : (
-          <WebhookResponseCard res={resData} />
-        )}
-
-        <SheetFooter>
-          {isResetable ? (
-            <Button
-              variant="outline"
-              className="cursor-pointer"
-              onClick={handleReset}
-              disabled={!isResetable}
-            >
-              <RefreshCcw /> Send Another Message
-            </Button>
+        {validatedDiscordId.success &&
+          (status === 'idle' || status === 'sending' ? (
+            <Textarea
+              className="w-[90%] mx-auto h-[60%]"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+          ) : status === 'sent' ? (
+            <WebhookResponseCard res={resData} />
           ) : (
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button
-                  variant="outline"
-                  className="cursor-pointer"
-                  disabled={status !== 'idle'}
-                >
-                  <SendIcon /> Send
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>
-                    Send DM to Member?
-                  </AlertDialogTitle>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>
-                    Cancel
-                  </AlertDialogCancel>
-                  <AlertDialogAction
-                    onClick={handleSendDiscordDM}
+            <WebhookResponseCard res={resData} />
+          ))}
+
+        {validatedDiscordId.success && (
+          <SheetFooter>
+            {isResetable ? (
+              <Button
+                variant="outline"
+                className="cursor-pointer"
+                onClick={handleReset}
+                disabled={!isResetable}
+              >
+                <RefreshCcw /> Send Another Message
+              </Button>
+            ) : (
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="cursor-pointer"
+                    disabled={status !== 'idle'}
                   >
-                    Continue
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-          )}
-        </SheetFooter>
+                    <SendIcon /> Send
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Send DM to Member?
+                    </AlertDialogTitle>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>
+                      Cancel
+                    </AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleSendDiscordDM}
+                    >
+                      Continue
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            )}
+          </SheetFooter>
+        )}
       </SheetContent>
     </Sheet>
   );
 };
+//endregion
 
 export default DiscordDMSheet;
