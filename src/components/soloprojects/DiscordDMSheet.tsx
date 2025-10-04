@@ -26,6 +26,7 @@ import {
 } from '@/components/ui/sheet';
 import { Textarea } from '@/components/ui/textarea';
 import { sendDiscordDM } from '@/services/discord';
+import { DiscordIdSchema } from '@/types/validationSchema';
 import {
   CheckCircleIcon,
   CircleXIcon,
@@ -126,7 +127,6 @@ const WebhookResponseCard = ({
 //endregion
 
 //region Sheet for sending DM to Discord
-const DiscordIdSchema = z.coerce.string().length(18);
 
 const DiscordDMSheet = ({
   discordId,

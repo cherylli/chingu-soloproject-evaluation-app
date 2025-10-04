@@ -1,8 +1,22 @@
 import { env } from '@/env';
 import { SearchableFields } from '@/types';
 import { Application } from '@/types/ApplicationTypes';
-import { CheckIn, CheckinFormRole, ProgressRating, SprintNumber, Tier } from '@/types/CheckinTypes';
-import { EventTypes, Schedule } from '@/types/ScheduleTypes';
+import {
+  CheckIn,
+  CheckinFormRole,
+  ProgressRating,
+  SprintNumber,
+  Tier,
+} from '@/types/CheckinTypes';
+import {
+  FinanceRevenue,
+  ProductType,
+  SubscriptionStatusType,
+} from '@/types/FinanceRevenueType';
+import {
+  EventTypes,
+  Schedule,
+} from '@/types/ScheduleTypes';
 import {
   EvaluationStatus,
   SoloProjectSubmission,
@@ -10,40 +24,67 @@ import {
   VoyageRole,
 } from '@/types/SoloProjectTypes';
 import { VoyageSignup } from '@/types/VoyageSignupTypes';
-import Airtable, { FieldSet, Record, Records } from 'airtable';
+import Airtable, {
+  FieldSet,
+  Record,
+  Records,
+} from 'airtable';
 
-const base = new Airtable({ apiKey: env.AIRTABLE_PAT }).base(env.AIRTABLE_BASEID);
+const base = new Airtable({
+  apiKey: env.AIRTABLE_PAT,
+}).base(env.AIRTABLE_BASEID);
 
 const soloProjectTable = base(env.AIRTABLE_TABLEID);
 const userTable = base(env.AIRTABLE_USERS_TABLEID);
 const checkinTable = base(env.AIRTABLE_CHECKIN_TABLEID);
-const voyageSignupTable = base(env.AIRTABLE_VOYAGE_SIGNUP_TABLEID);
+const voyageSignupTable = base(
+  env.AIRTABLE_VOYAGE_SIGNUP_TABLEID
+);
 const applicationTable = base(env.AIRTABLE_APP_TABLEID);
 const scheduleTable = base(env.AIRTABLE_SCHEDULE_TABLEID);
+const financeRevenueTable = base(
+  env.AIRTABLE_FINANCE_REVENUE_TABLEID
+);
 
 /*********
  * Single record transformers: raw airtable record -> structured entity
  ************/
 
 // solo project
-const transformSoloProjectRecord = (record: Record<FieldSet>) => {
+const transformSoloProjectRecord = (
+  record: Record<FieldSet>
+) => {
   return {
     id: record.id,
     commentCount: record.commentCount as number,
     fields: {
       Email: record.fields['Email'] as string,
-      'Discord Name': record.fields['Discord Name'] as string,
+      'Discord Name': record.fields[
+        'Discord Name'
+      ] as string,
       'GitHub ID': record.fields['GitHub ID'] as string,
       Timestamp: record.fields['Timestamp'] as string,
       Tier: record.fields['Tier'] as SoloProjectTier,
-      'GitHub Repo URL': record.fields['GitHub Repo URL'] as string,
-      'Deployed App URL': record.fields['Deployed App URL'] as string,
-      'UI/UX Project URL': record.fields['UI/UX Project URL'] as string,
-      'Evaluation Status': record.fields['Evaluation Status'] as EvaluationStatus,
+      'GitHub Repo URL': record.fields[
+        'GitHub Repo URL'
+      ] as string,
+      'Deployed App URL': record.fields[
+        'Deployed App URL'
+      ] as string,
+      'UI/UX Project URL': record.fields[
+        'UI/UX Project URL'
+      ] as string,
+      'Evaluation Status': record.fields[
+        'Evaluation Status'
+      ] as EvaluationStatus,
       Evaluator: record.fields['Evaluator'] as string,
-      'Evaluation Feedback': record.fields['Evaluation Feedback'] as string,
+      'Evaluation Feedback': record.fields[
+        'Evaluation Feedback'
+      ] as string,
       Instructions: record.fields['Instructions'] as string,
-      'Addl. Comments': record.fields['Addl. Comments'] as string,
+      'Addl. Comments': record.fields[
+        'Addl. Comments'
+      ] as string,
       'Voyage Role (from Applications link)': record.fields[
         'Voyage Role (from Applications link)'
       ] as VoyageRole,
@@ -51,12 +92,18 @@ const transformSoloProjectRecord = (record: Record<FieldSet>) => {
       'Role Type': record.fields['Role Type'] as string,
       'Discord ID': record.fields['Discord ID'] as string,
       // PO
-      'PO: Certification': record.fields['PO: Certification'] as string,
-      'PO: Highest Certification': record.fields['PO: Highest Certification'] as string,
+      'PO: Certification': record.fields[
+        'PO: Certification'
+      ] as string,
+      'PO: Highest Certification': record.fields[
+        'PO: Highest Certification'
+      ] as string,
       'PO: Participated in Project as PO': record.fields[
         'PO: Participated in Project as PO'
       ] as string,
-      'PO: Project Details': record.fields['PO: Project Details'] as string,
+      'PO: Project Details': record.fields[
+        'PO: Project Details'
+      ] as string,
       PO05: record.fields['PO05'] as string,
       PO06: record.fields['PO06'] as string,
       PO07: record.fields['PO07'] as string,
@@ -74,14 +121,22 @@ const transformSoloProjectRecord = (record: Record<FieldSet>) => {
       PO19: record.fields['PO19'] as string,
       PO20: record.fields['PO20'] as string,
       PO21: record.fields['PO21'] as string,
-      'PO Product Backlog URL': record.fields['PO Product Backlog URL'] as string,
+      'PO Product Backlog URL': record.fields[
+        'PO Product Backlog URL'
+      ] as string,
       // SM
-      'SM: Certification': record.fields['SM: Certification'] as string,
-      'SM: Highest Certification': record.fields['SM: Highest Certification'] as string,
+      'SM: Certification': record.fields[
+        'SM: Certification'
+      ] as string,
+      'SM: Highest Certification': record.fields[
+        'SM: Highest Certification'
+      ] as string,
       'SM: Participated in Project as SM': record.fields[
         'SM: Participated in Project as SM'
       ] as string,
-      'SM: Project Details': record.fields['SM: Project Details'] as string,
+      'SM: Project Details': record.fields[
+        'SM: Project Details'
+      ] as string,
       SM05: record.fields['SM05'] as string,
       SM06: record.fields['SM06'] as string,
       SM07: record.fields['SM07'] as string,
@@ -105,51 +160,88 @@ const transformSoloProjectRecord = (record: Record<FieldSet>) => {
 };
 
 // voyage check in
-const transformCheckinRecord = (record: Record<FieldSet>) => {
+const transformCheckinRecord = (
+  record: Record<FieldSet>
+) => {
   return {
     id: record.id,
     fields: {
       Timestamp: record.fields['Timestamp'] as string,
       Email: record.fields['Email'] as string,
-      'Discord Name': record.fields['Discord Name'] as string,
+      'Discord Name': record.fields[
+        'Discord Name'
+      ] as string,
       'Team Name': record.fields['Team Name'] as Tier,
       'Team No.': record.fields['Team No.'] as string,
-      'Team Communications': record.fields['Team Communications'] as string,
-      'Time Spent - Pair programming': record.fields['Time Spent - Pair programming'] as string,
-      'Time Spent - On Your Own': record.fields['Time Spent - On Your Own'] as string,
-      'Time Spent - Team Activities': record.fields['Time Spent - Team Activities'] as string,
-      'Progress Rating': record.fields['Progress Rating'] as ProgressRating,
-      'Deployed to Prod': record.fields['Deployed to Prod'] as string,
-      'Inactive Teammates': record.fields['Inactive Teammates'] as string,
-      'Helpful Teammates': record.fields['Helpful Teammates'] as string,
-      'Team Achievements': record.fields['Team Achievements'] as string,
+      'Team Communications': record.fields[
+        'Team Communications'
+      ] as string,
+      'Time Spent - Pair programming': record.fields[
+        'Time Spent - Pair programming'
+      ] as string,
+      'Time Spent - On Your Own': record.fields[
+        'Time Spent - On Your Own'
+      ] as string,
+      'Time Spent - Team Activities': record.fields[
+        'Time Spent - Team Activities'
+      ] as string,
+      'Progress Rating': record.fields[
+        'Progress Rating'
+      ] as ProgressRating,
+      'Deployed to Prod': record.fields[
+        'Deployed to Prod'
+      ] as string,
+      'Inactive Teammates': record.fields[
+        'Inactive Teammates'
+      ] as string,
+      'Helpful Teammates': record.fields[
+        'Helpful Teammates'
+      ] as string,
+      'Team Achievements': record.fields[
+        'Team Achievements'
+      ] as string,
       Voyage: record.fields['Voyage'] as string,
-      'Sprint No.': record.fields['Sprint No.'] as SprintNumber,
+      'Sprint No.': record.fields[
+        'Sprint No.'
+      ] as SprintNumber,
       'Time Spent - Learning & Research': record.fields[
         'Time Spent - Learning & Research'
       ] as string,
-      'Individual Feedback Sent': record.fields['Individual Feedback Sent'] as string,
-      'Ack. Email Sent': record.fields['Ack. Email Sent'] as string,
+      'Individual Feedback Sent': record.fields[
+        'Individual Feedback Sent'
+      ] as string,
+      'Ack. Email Sent': record.fields[
+        'Ack. Email Sent'
+      ] as string,
       Role: record.fields['Role'] as CheckinFormRole,
-      'Addl. Comments': record.fields['Addl. Comments'] as string,
+      'Addl. Comments': record.fields[
+        'Addl. Comments'
+      ] as string,
     },
   };
 };
 
 // voyage signup
-const transformVoyageSignupRecord = (record: Record<FieldSet>) => {
+const transformVoyageSignupRecord = (
+  record: Record<FieldSet>
+) => {
   return {
     id: record.id,
     fields: {
       Timestamp: record.fields['Timestamp'] as string,
       Email: record.fields['Email'] as string,
-      'Discord Name': record.fields['Discord Name'] as string,
+      'Discord Name': record.fields[
+        'Discord Name'
+      ] as string,
       'GitHub ID': record.fields['GitHub ID'] as string,
-      'Evaluation Status (from Solo Project Link)': record.fields[
+      'Evaluation Status (from Solo Project Link)': record
+        .fields[
         'Evaluation Status (from Solo Project Link)'
       ] as string,
       Status: record.fields['Status'] as string,
-      'Status Comment': record.fields['Status Comment'] as string,
+      'Status Comment': record.fields[
+        'Status Comment'
+      ] as string,
       Voyage: record.fields['Voyage'] as string,
       'Team Name': record.fields['Team Name'] as string,
       'Team No.': record.fields['Team No.'] as string,
@@ -157,34 +249,51 @@ const transformVoyageSignupRecord = (record: Record<FieldSet>) => {
       Role: record.fields['Role'] as VoyageRole,
       'Role Type': record.fields['Role Type'] as string,
       Tier: record.fields['Tier'] as SoloProjectTier,
-      'Info to Share': record.fields['Info to Share'] as string,
-      'Application Link': record.fields['Application Link'] as string,
-      'Solo Project Link': record.fields['Solo Project Link'] as string,
-      'Confirmation Form Completed': record.fields['Confirmation Form Completed'] as boolean,
-      'Showcase Name Permission?': record.fields['Showcase Name Permission?'] as boolean,
-      'Discord ID': record.fields['Discord ID'] as string,
-      'Product (from Most Recent Subscriptions & Product Sales)': record.fields[
-        'Product (from Most Recent Subscriptions & Product Sales)'
+      'Info to Share': record.fields[
+        'Info to Share'
       ] as string,
+      'Application Link': record.fields[
+        'Application Link'
+      ] as string,
+      'Solo Project Link': record.fields[
+        'Solo Project Link'
+      ] as string,
+      'Confirmation Form Completed': record.fields[
+        'Confirmation Form Completed'
+      ] as boolean,
+      'Showcase Name Permission?': record.fields[
+        'Showcase Name Permission?'
+      ] as boolean,
+      'Discord ID': record.fields['Discord ID'] as string,
+      'Product (from Most Recent Subscriptions & Product Sales)':
+        record.fields[
+          'Product (from Most Recent Subscriptions & Product Sales)'
+        ] as string,
     },
   };
 };
 
 // Applications
-const transformApplicationRecord = (record: Record<FieldSet>): Application => {
+const transformApplicationRecord = (
+  record: Record<FieldSet>
+): Application => {
   return {
     id: record.id,
     fields: {
       Timestamp: record.fields['Timestamp'] as string,
       Email: record.fields['Email'] as string,
-      'Discord Name': record.fields['Discord Name'] as string,
+      'Discord Name': record.fields[
+        'Discord Name'
+      ] as string,
       'Discord ID': record.fields['Discord ID'] as string,
     },
   };
 };
 
 // Schedule
-const transformScheduleRecord = (record: Record<FieldSet>): Schedule => {
+const transformScheduleRecord = (
+  record: Record<FieldSet>
+): Schedule => {
   return {
     id: record.id,
     fields: {
@@ -192,7 +301,50 @@ const transformScheduleRecord = (record: Record<FieldSet>): Schedule => {
       Type: record.fields['Type'] as EventTypes,
       'Start Date': record.fields['Start Date'] as string,
       'End Date': record.fields['End Date'] as string,
-      'Solo Project Deadline': record.fields['Solo Project Deadline'] as string,
+      'Solo Project Deadline': record.fields[
+        'Solo Project Deadline'
+      ] as string,
+    },
+  };
+};
+
+// Revenue / Subscription
+const transformFinanceRevenueRecord = (
+  record: Record<FieldSet>
+): FinanceRevenue => {
+  return {
+    id: record.id,
+    fields: {
+      'Payee Email': record.fields['Payee Email'] as string,
+      'Transaction Date': record.fields[
+        'Transaction Date'
+      ] as string,
+      'Discord ID (from Applications)': record.fields[
+        'Discord ID'
+      ] as string,
+      'Subscription Status': record.fields[
+        'Subscription Status'
+      ] as SubscriptionStatusType[],
+      'Payment Source': record.fields[
+        'Payment Source'
+      ] as string,
+      Product: record.fields['Product'] as ProductType,
+      'Certificate Voyage': record.fields[
+        'Certificate Voyage'
+      ] as string,
+      'Payment Amount': record.fields[
+        'Payment Amount'
+      ] as number,
+      'Transaction Fee': record.fields[
+        'Transaction Fee'
+      ] as number,
+      'Net Payment': record.fields['Net Payment'] as number,
+      'Refund Amount': record.fields[
+        'Refund Amount'
+      ] as number,
+      'Month (from Formula)': record.fields[
+        'Month (from Formula)'
+      ] as string,
     },
   };
 };
@@ -217,19 +369,32 @@ const createMultipleRecordsTransformer = <T>(
   };
 };
 
-const transformSoloProjectRecords = createMultipleRecordsTransformer<SoloProjectSubmission>(
-  transformSoloProjectRecord
-);
-const transformVoyageSignupRecords = createMultipleRecordsTransformer<VoyageSignup>(
-  transformVoyageSignupRecord
-);
-const transformApplicationRecords = createMultipleRecordsTransformer<Application>(
-  transformApplicationRecord
-);
-const transformCheckinRecords = createMultipleRecordsTransformer<CheckIn>(transformCheckinRecord);
+const transformSoloProjectRecords =
+  createMultipleRecordsTransformer<SoloProjectSubmission>(
+    transformSoloProjectRecord
+  );
+const transformVoyageSignupRecords =
+  createMultipleRecordsTransformer<VoyageSignup>(
+    transformVoyageSignupRecord
+  );
+const transformApplicationRecords =
+  createMultipleRecordsTransformer<Application>(
+    transformApplicationRecord
+  );
+const transformCheckinRecords =
+  createMultipleRecordsTransformer<CheckIn>(
+    transformCheckinRecord
+  );
 
 const transformScheduleRecords =
-  createMultipleRecordsTransformer<Schedule>(transformScheduleRecord);
+  createMultipleRecordsTransformer<Schedule>(
+    transformScheduleRecord
+  );
+
+const transformFinanceRevenueRecords =
+  createMultipleRecordsTransformer<FinanceRevenue>(
+    transformFinanceRevenueRecord
+  );
 
 /*********
  * Helper functions
@@ -253,12 +418,16 @@ export const createOrFilter = (
   }[]
 ): string => {
   if (conditions.length === 0) {
-    throw new Error('[CreateOrFilter]: At least one condition must be provided.');
+    throw new Error(
+      '[CreateOrFilter]: At least one condition must be provided.'
+    );
   }
 
-  const filterFields = conditions.map(({ field, value }) => {
-    return `{${field}} = "${value}"`;
-  });
+  const filterFields = conditions.map(
+    ({ field, value }) => {
+      return `{${field}} = "${value}"`;
+    }
+  );
 
   return `OR(${filterFields.join(',')})`;
 };
@@ -266,10 +435,12 @@ export const createOrFilter = (
 export {
   applicationTable,
   checkinTable,
+  financeRevenueTable,
   scheduleTable,
   soloProjectTable,
   transformApplicationRecords,
   transformCheckinRecords,
+  transformFinanceRevenueRecords,
   transformScheduleRecords,
   transformSoloProjectRecord,
   transformSoloProjectRecords,
