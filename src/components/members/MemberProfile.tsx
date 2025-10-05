@@ -2,13 +2,16 @@
 
 import { appColDef } from '@/components/members/appColDef';
 import MemberDetails from '@/components/members/MemberDetails';
+import { paymentColDef } from '@/components/members/paymentColDef';
 import { spColDef } from '@/components/members/spColDef';
 import { ColumnToggle } from '@/components/members/TableColumnToggle';
 import { vsColDef } from '@/components/members/vsColDef';
 import StandardReactTable from '@/components/react-table/StandardReactTable';
+import PaginationButtons from '@/components/ui/buttons/PaginationButtons';
 import H1 from '@/components/ui/typography/h1';
 import { Context } from '@/types';
 import { Application } from '@/types/ApplicationTypes';
+import { FinanceRevenue } from '@/types/FinanceRevenueType';
 import type { MemberDetailsType } from '@/types/MemberTypes';
 import { SoloProjectSubmission } from '@/types/SoloProjectTypes';
 import { VoyageSignup } from '@/types/VoyageSignupTypes';
@@ -17,7 +20,10 @@ import {
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
-import { getCoreRowModel } from '@tanstack/table-core';
+import {
+  getCoreRowModel,
+  getPaginationRowModel,
+} from '@tanstack/table-core';
 import { useState } from 'react';
 
 const MemberProfile = ({
@@ -42,6 +48,13 @@ const MemberProfile = ({
   const [spSorting, setSpSorting] = useState<SortingState>([
     { id: 'Timestamp', desc: true },
   ]);
+  const [paymentSorting, setPaymentSorting] =
+    useState<SortingState>([{ id: 'date', desc: true }]);
+  const [paymentPagination, setPaymentPagination] =
+    useState({
+      pageIndex: 0,
+      pageSize: 5,
+    });
 
   const appTable = useReactTable<Application>({
     data: memberDetails.applications,
@@ -78,6 +91,20 @@ const MemberProfile = ({
     onColumnVisibilityChange: setSpColVis,
   });
 
+  const revenueTable = useReactTable<FinanceRevenue>({
+    data: memberDetails.payments,
+    columns: paymentColDef,
+    getCoreRowModel: getCoreRowModel<FinanceRevenue>(),
+    getSortedRowModel: getSortedRowModel<FinanceRevenue>(),
+    getPaginationRowModel:
+      getPaginationRowModel<FinanceRevenue>(),
+    onPaginationChange: setPaymentPagination,
+    state: {
+      sorting: paymentSorting,
+      pagination: paymentPagination,
+    },
+  });
+
   return (
     <div>
       <MemberDetails memberDetails={memberDetails} />
@@ -99,6 +126,9 @@ const MemberProfile = ({
       <StandardReactTable table={spTable} />
       <H1>Applications</H1>
       <StandardReactTable table={appTable} />
+      <H1>Products, Subscriptions and Donations</H1>
+      <StandardReactTable table={revenueTable} />
+      <PaginationButtons table={revenueTable} />
     </div>
   );
 };

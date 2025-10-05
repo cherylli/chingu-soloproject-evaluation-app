@@ -5,7 +5,7 @@ import { FinanceRevenue } from '@/types/FinanceRevenueType';
 import { DiscordIdSchema } from '@/types/validationSchema';
 import { z } from 'zod';
 
-export const getSubscriptionbyMember = async (
+export const getRevenueRecordsbyMember = async (
   discordId?: string,
   email?: string
 ): Promise<ActionResponse<FinanceRevenue[]>> => {

@@ -3,6 +3,7 @@
 import { createOrFilter } from '@/lib/airtable';
 import { getApplicationsByMember } from '@/services/applications';
 import { getRecordsByFilter } from '@/services/common';
+import { getRevenueRecordsbyMember } from '@/services/revenue';
 import { getAllSoloProjectsByMember } from '@/services/soloProjects';
 import { getAllVoyageSignupsByMember } from '@/services/voyages';
 import { ActionResponse, SearchableFields } from '@/types';
@@ -67,6 +68,7 @@ export const getMemberDetailsByDiscordId = async (
       applications: [],
       soloProjects: [],
       voyageSignups: [],
+      payments: [],
     };
 
     // get all emails using the given discord Id
@@ -104,6 +106,17 @@ export const getMemberDetailsByDiscordId = async (
       'application',
       () => createOrFilter(conditions)
     );
+
+    // subscriptions, donation or products
+    // search by discordId, rely on airtable records being correct
+    const payments = await getRevenueRecordsbyMember(
+      discordId,
+      emails?.success ? emails.data[0] : undefined
+    );
+
+    if (payments.success) {
+      allRecords.payments = payments.data;
+    }
 
     if (applications.success) {
       allRecords.applications = applications.data;
