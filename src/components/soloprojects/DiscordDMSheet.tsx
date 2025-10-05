@@ -74,7 +74,8 @@ const WebhookResponseCard = ({
   if (!res) {
     return (
       <Card className="max-w-[90%] mx-auto p-4">
-        Error: No response
+        Error: No response. Possibly wrong discord ID or
+        member not in discord.
       </Card>
     );
   }

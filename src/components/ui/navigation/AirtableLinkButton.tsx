@@ -18,20 +18,21 @@ const AirtableLinkButton = ({
   const { isAdmin } = useRoleCheck();
   if (!isAdmin) return null;
   return (
-    <a
-      href={path}
-      target="_blank"
-      rel="noreferrer"
+    <Button
+      variant="link"
+      className="cursor-pointer self-start"
+      asChild
     >
-      <Button
-        variant="link"
-        className="cursor-pointer"
+      <a
+        href={path}
+        target="_blank"
+        rel="noreferrer"
       >
         <SiAirtable />
         {label}
         <ArrowUpRight />
-      </Button>
-    </a>
+      </a>
+    </Button>
   );
 };
 
