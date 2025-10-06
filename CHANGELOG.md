@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.15.0](https://github.com/chingu-x/chingu-soloproject-evaluation-app/compare/v1.14.0...v1.15.0) (2025-09-30)
+
+
+### Features
+
+* (solo-project) Add autosave on status change ([aa29ec4](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/aa29ec4017e7605eab6ecdb34ac502d677f9b113))
+
+
+### Bug Fixes
+
+* (comments) [SPA-62] prevent comment submission when comment text… ([9ecbae5](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/9ecbae5ed605a166bec6d32c67c2bf714b5849fb))
+* (comments) [SPA-62] prevent comment submission when comment text… ([9ecbae5](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/9ecbae5ed605a166bec6d32c67c2bf714b5849fb))
+* (comments) [SPA-62] prevent comment submission when comment textarea is empty ([01775b9](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/01775b9c7d1d53dd9b35e4fb7496cb7ece76ade7))
+
 ## [1.14.0](https://github.com/chingu-x/chingu-soloproject-evaluation-app/compare/v1.13.0...v1.14.0) (2025-09-30)
 
 
