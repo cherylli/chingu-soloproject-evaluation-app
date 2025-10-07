@@ -26,11 +26,9 @@ import {
 } from '@/components/ui/sheet';
 import { Textarea } from '@/components/ui/textarea';
 import { sendDiscordDM } from '@/services/discord';
-import { DiscordIdSchema } from '@/types/validationSchema';
 import {
   CheckCircleIcon,
   CircleXIcon,
-  MessageCircleWarningIcon,
   RefreshCcw,
   SendHorizontal,
   SendIcon,
@@ -144,9 +142,6 @@ const DiscordDMSheet = ({
   const isResetable =
     status === 'sent' || status === 'error';
 
-  const validatedDiscordId =
-    DiscordIdSchema.safeParse(discordId);
-
   const handleSendDiscordDM = async () => {
     if (!message) {
       toast.error('Please enter a message');
@@ -203,29 +198,22 @@ const DiscordDMSheet = ({
           <SheetDescription>
             Paste your message here to send to the user via
             DM from Titan. <br /> <br />
-            {!validatedDiscordId.success && (
-              <span className="flex items-center gap-2 text-red-500">
-                <MessageCircleWarningIcon /> DiscordId
-                Error: DiscordId must be a 18 digit string
-              </span>
-            )}
-            Recipient discord id: {discordId}.
+            Recipient discord id: {discordId}
           </SheetDescription>
         </SheetHeader>
-        {validatedDiscordId.success &&
-          (status === 'idle' || status === 'sending' ? (
-            <Textarea
-              className="w-[90%] mx-auto h-[60%]"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            />
-          ) : status === 'sent' ? (
-            <WebhookResponseCard res={resData} />
-          ) : (
-            <WebhookResponseCard res={resData} />
-          ))}
+        {status === 'idle' || status === 'sending' ? (
+          <Textarea
+            className="w-[90%] mx-auto h-[60%]"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+        ) : status === 'sent' ? (
+          <WebhookResponseCard res={resData} />
+        ) : (
+          <WebhookResponseCard res={resData} />
+        )}
 
-        {validatedDiscordId.success && (
+        {
           <SheetFooter>
             {isResetable ? (
               <Button
@@ -267,7 +255,7 @@ const DiscordDMSheet = ({
               </AlertDialog>
             )}
           </SheetFooter>
-        )}
+        }
       </SheetContent>
     </Sheet>
   );

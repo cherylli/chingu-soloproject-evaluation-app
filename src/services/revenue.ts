@@ -2,7 +2,6 @@ import { createOrFilter } from '@/lib/airtable';
 import { getRecordsByFilter } from '@/services/common';
 import { ActionResponse, SearchableFields } from '@/types';
 import { FinanceRevenue } from '@/types/FinanceRevenueType';
-import { DiscordIdSchema } from '@/types/validationSchema';
 import { z } from 'zod';
 
 export const getRevenueRecordsbyMember = async (
@@ -11,7 +10,7 @@ export const getRevenueRecordsbyMember = async (
 ): Promise<ActionResponse<FinanceRevenue[]>> => {
   const validation = z
     .object({
-      discordId: DiscordIdSchema.optional(),
+      discordId: z.string().optional(),
       email: z.email().optional(),
     })
     .refine(
