@@ -29,7 +29,6 @@ import { sendDiscordDM } from '@/services/discord';
 import {
   CheckCircleIcon,
   CircleXIcon,
-  MessageCircleWarningIcon,
   RefreshCcw,
   SendHorizontal,
   SendIcon,
@@ -73,7 +72,8 @@ const WebhookResponseCard = ({
   if (!res) {
     return (
       <Card className="max-w-[90%] mx-auto p-4">
-        Error: No response
+        Error: No response. Possibly wrong discord ID or
+        member not in discord.
       </Card>
     );
   }
@@ -126,7 +126,6 @@ const WebhookResponseCard = ({
 //endregion
 
 //region Sheet for sending DM to Discord
-const DiscordIdSchema = z.coerce.string().length(18);
 
 const DiscordDMSheet = ({
   discordId,
@@ -142,9 +141,6 @@ const DiscordDMSheet = ({
 
   const isResetable =
     status === 'sent' || status === 'error';
-
-  const validatedDiscordId =
-    DiscordIdSchema.safeParse(discordId);
 
   const handleSendDiscordDM = async () => {
     if (!message) {
@@ -202,29 +198,22 @@ const DiscordDMSheet = ({
           <SheetDescription>
             Paste your message here to send to the user via
             DM from Titan. <br /> <br />
-            {!validatedDiscordId.success && (
-              <span className="flex items-center gap-2 text-red-500">
-                <MessageCircleWarningIcon /> DiscordId
-                Error: DiscordId must be a 18 digit string
-              </span>
-            )}
-            Recipient discord id: {discordId}.
+            Recipient discord id: {discordId}
           </SheetDescription>
         </SheetHeader>
-        {validatedDiscordId.success &&
-          (status === 'idle' || status === 'sending' ? (
-            <Textarea
-              className="w-[90%] mx-auto h-[60%]"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            />
-          ) : status === 'sent' ? (
-            <WebhookResponseCard res={resData} />
-          ) : (
-            <WebhookResponseCard res={resData} />
-          ))}
+        {status === 'idle' || status === 'sending' ? (
+          <Textarea
+            className="w-[90%] mx-auto h-[60%]"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+        ) : status === 'sent' ? (
+          <WebhookResponseCard res={resData} />
+        ) : (
+          <WebhookResponseCard res={resData} />
+        )}
 
-        {validatedDiscordId.success && (
+        {
           <SheetFooter>
             {isResetable ? (
               <Button
@@ -266,7 +255,7 @@ const DiscordDMSheet = ({
               </AlertDialog>
             )}
           </SheetFooter>
-        )}
+        }
       </SheetContent>
     </Sheet>
   );

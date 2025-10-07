@@ -3,7 +3,11 @@ import {
   ApplicationFields,
   ApplicationSearchableFields,
 } from '@/types/ApplicationTypes';
-import { CheckIn, CheckInFields } from '@/types/CheckinTypes';
+import {
+  CheckIn,
+  CheckInFields,
+} from '@/types/CheckinTypes';
+import { FinanceRevenueSearchableFields } from '@/types/FinanceRevenueType';
 import {
   SoloProjectFields,
   SoloProjectSearchableFields,
@@ -26,16 +30,23 @@ type ActionFailure = {
   message: string;
 };
 
-export type ActionResponse<T> = ActionSuccess<T> | ActionFailure;
+export type ActionResponse<T> =
+  | ActionSuccess<T>
+  | ActionFailure;
 
 // TODO: update all services to use ActionResponse
 
 export type SearchableFields =
   | ApplicationSearchableFields
   | VoyageSignupSearchableFields
-  | SoloProjectSearchableFields;
+  | SoloProjectSearchableFields
+  | FinanceRevenueSearchableFields;
 
-export type AirtableData = SoloProjectSubmission | VoyageSignup | Application | CheckIn;
+export type AirtableData =
+  | SoloProjectSubmission
+  | VoyageSignup
+  | Application
+  | CheckIn;
 
 export type AirtableFields =
   | SoloProjectFields

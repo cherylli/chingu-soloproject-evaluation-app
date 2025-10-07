@@ -12,6 +12,9 @@ const envSchema = z.object({
     .string()
     .startsWith('tbl'),
   AIRTABLE_SCHEDULE_TABLEID: z.string().startsWith('tbl'),
+  AIRTABLE_FINANCE_REVENUE_TABLEID: z
+    .string()
+    .startsWith('tbl'),
   AIRTABLE_PAT: z.string().startsWith('pat'),
   // auth (next-auth and github)
   NEXTAUTH_URL: z.url().optional(),
