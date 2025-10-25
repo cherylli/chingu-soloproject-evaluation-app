@@ -7,23 +7,30 @@ const UIUXDetails = ({
 }: {
   fields: SoloProjectFields;
 }) => {
+  const parsedProjectUrl = urlLinkParser(
+    fields['UI/UX Project URL']
+  );
   return (
     <table className="table-auto">
       <thead></thead>
       <tbody>
         <tr>
           <td>UI/UX Project URL: </td>
-          <td className="px-4 text-blue-500 hover:underline">
-            <Link
-              href={urlLinkParser(
-                fields['UI/UX Project URL']
-              )}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+          {parsedProjectUrl ? (
+            <td className="px-4 text-blue-500 hover:underline">
+              <Link
+                href={parsedProjectUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {fields['UI/UX Project URL']}
+              </Link>
+            </td>
+          ) : (
+            <td className="px-4">
               {fields['UI/UX Project URL']}
-            </Link>
-          </td>
+            </td>
+          )}
         </tr>
       </tbody>
     </table>
