@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.15.1](https://github.com/chingu-x/chingu-soloproject-evaluation-app/compare/v1.15.0...v1.15.1) (2025-10-07)
+
+
+### Bug Fixes
+
+* remove discord id validation ([8c010a9](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/8c010a921f5b62b85878f7bf3631836d837f3a9d))
+
 ## [1.15.0](https://github.com/chingu-x/chingu-soloproject-evaluation-app/compare/v1.14.0...v1.15.0) (2025-09-30)
 
 
