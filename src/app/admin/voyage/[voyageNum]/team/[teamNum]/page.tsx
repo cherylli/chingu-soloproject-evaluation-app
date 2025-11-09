@@ -1,3 +1,9 @@
+import ExternalLinkButton from '@/components/ui/buttons/ExternalLinkButton';
+import ErrorMsg from '@/components/ui/states/ErrorMsg';
+import H1 from '@/components/ui/typography/h1';
+import { githubTeamUrl } from '@/lib/urls';
+import { getTeamByVoyageNumAndTeamNum } from '@/services/voyages';
+import { SiGithub } from '@icons-pack/react-simple-icons';
 import { z } from 'zod';
 
 const paramsSchema = z.object({
@@ -27,10 +33,27 @@ const VoyageTeamPage = async ({
   params: Promise<{ voyageNum: string; teamNum: string }>;
 }) => {
   const parsedParams = paramsSchema.parse(await params);
+
+  const team = await getTeamByVoyageNumAndTeamNum(
+    parsedParams.voyageNum,
+    parsedParams.teamNum
+  );
+  if (!team.success) {
+    return <ErrorMsg message="Error fetching team" />;
+  }
+
+  const teamData = team.data;
+
   return (
     <div>
-      VoyageTeamPage - Placeholder for v
-      {parsedParams.voyageNum} team {parsedParams.teamNum}
+      <H1>
+        {`Voyage ${parsedParams.voyageNum} Team ${parsedParams.teamNum}`}
+      </H1>
+      <ExternalLinkButton
+        url={githubTeamUrl(teamData[0].fields)}
+        Icon={SiGithub}
+        text={'Team Github'}
+      />
     </div>
   );
 };

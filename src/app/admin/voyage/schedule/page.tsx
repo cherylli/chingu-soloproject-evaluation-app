@@ -1,6 +1,7 @@
 // TODO: this will be a page to show all the voyages, links to signups, checkin etc
 import ScheduleTable from '@/components/schedule/ScheduleTable';
 import AirtableLinkButton from '@/components/ui/navigation/AirtableLinkButton';
+import ErrorMsg from '@/components/ui/states/ErrorMsg';
 import H1 from '@/components/ui/typography/h1';
 import { getATBaseURL } from '@/lib/getAirtableUrls';
 import { getVoyageSchedule } from '@/services/schedule';
@@ -8,9 +9,8 @@ import { getVoyageSchedule } from '@/services/schedule';
 const VoyageSchedule = async () => {
   const schedule = await getVoyageSchedule();
 
-  // TODO make new component for errors
   if (!schedule.success) {
-    return <div>Error fetching Schedule</div>;
+    return <ErrorMsg message="Error fetching schedule" />;
   }
   return (
     <>
