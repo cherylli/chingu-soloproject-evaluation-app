@@ -1,6 +1,8 @@
 import ExternalLinkButton from '@/components/ui/buttons/ExternalLinkButton';
 import ErrorMsg from '@/components/ui/states/ErrorMsg';
 import H1 from '@/components/ui/typography/h1';
+import VoyageTeamPageMemberTable from '@/components/voyages/team-page/VoyageTeamPageTable';
+import { getATBaseURL } from '@/lib/getAirtableUrls';
 import { githubTeamUrl } from '@/lib/urls';
 import { getTeamByVoyageNumAndTeamNum } from '@/services/voyages';
 import { SiGithub } from '@icons-pack/react-simple-icons';
@@ -53,6 +55,11 @@ const VoyageTeamPage = async ({
         url={githubTeamUrl(teamData[0].fields)}
         Icon={SiGithub}
         text={'Team Github'}
+      />
+      <div className="h-5" />
+      <VoyageTeamPageMemberTable
+        records={teamData}
+        atBaseUrl={getATBaseURL('voyage-signup')}
       />
     </div>
   );

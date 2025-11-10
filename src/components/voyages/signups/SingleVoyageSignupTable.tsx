@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/table';
 import { singleVoyageColumnDef } from '@/components/voyages/signups/singleVoyageColumnDef';
 import { githubTeamUrl } from '@/lib/urls';
-import { voyageStatusColors } from '@/styles/voyageStatus';
+import { rowClassByStatus } from '@/styles/voyageStatus';
 import { VoyageSignup } from '@/types/VoyageSignupTypes';
 import {
   flexRender,
@@ -156,14 +156,12 @@ const SingleVoyageSignupTable = ({
                 </TableRow>
                 {row.getIsExpanded() &&
                   row.subRows.map((subRow) => {
-                    const rowClassByStatus =
-                      voyageStatusColors[
-                        subRow.original.fields.Status
-                      ]?.text || '';
                     return (
                       <TableRow
                         key={subRow.id}
-                        className={rowClassByStatus}
+                        className={rowClassByStatus(
+                          subRow.original.fields.Status
+                        )}
                       >
                         {subRow
                           .getVisibleCells()
