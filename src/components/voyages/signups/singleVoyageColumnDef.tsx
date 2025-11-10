@@ -1,33 +1,40 @@
+import AirtableLinkCell from '@/components/react-table/cells/AirtableLink';
 import Role from '@/components/react-table/cells/Role';
 import { VoyageSignup } from '@/types/VoyageSignupTypes';
-import { SiAirtable } from '@icons-pack/react-simple-icons';
 import { createColumnHelper } from '@tanstack/table-core';
 
 const columnHelper = createColumnHelper<VoyageSignup>();
 
-export const singleVoyageColumnDef = (baseURL: string) => [
-  columnHelper.accessor((row) => row.fields['Team No.'], {
-    id: 'teamNum',
-    header: 'Team',
-    enableGrouping: true,
-    enableSorting: true,
-    getGroupingValue: (row) =>
-      `${row.fields['Team Name']} - ${row.fields['Team No.'] || 'no team'}`,
-    // TODO: show how many active in the team
-  }),
+export const singleVoyageColumnDef = (
+  baseURL: string,
+  withGrouping: boolean = true
+) => [
+  ...(withGrouping
+    ? [
+        columnHelper.accessor(
+          (row) => row.fields['Team No.'],
+          {
+            id: 'teamNum',
+            header: 'Team',
+            enableGrouping: true,
+            enableSorting: true,
+            getGroupingValue: (row) =>
+              `${row.fields['Team Name']} - ${row.fields['Team No.'] || 'no team'}`,
+            // TODO: show how many active in the team
+          }
+        ),
+      ]
+    : []),
   columnHelper.display({
-    id: 'Links',
-    cell: ({ row }) => (
-      <div>
-        <a
-          href={`${baseURL}/${row.original.id}`}
-          target="_blank"
-          rel="noreferrer"
-        >
-          <SiAirtable />
-        </a>
-      </div>
-    ),
+    id: 'Airtable Link',
+    cell: ({ row }) => {
+      return (
+        <AirtableLinkCell
+          row={row}
+          baseUrl={baseURL}
+        />
+      );
+    },
   }),
   columnHelper.accessor(
     (row) => row.fields['Discord Name'],
