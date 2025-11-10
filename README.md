@@ -146,6 +146,8 @@ Here are some sample feedback (https://github.com/chingu-voyages/soloproject-eva
 <br/>
 We copy and paste some pre-defined feedback from the feedback pane but feel free to use your own or add to our collection of feedback by making a pull request in the feedback repository where you can find the link in frontpage of the app.
 <br/><br/>
+The feedback has to include the passed message or one of the requested changes messages. We then aim to provide 7-10 feedback.
+<br/><br/>
 <b>Note</b>: we don't include feedback with "requested changes" now, as most of the time we don't get a response from them
 
 So with a `requested changes` project, we would send something like
@@ -191,15 +193,28 @@ Sometimes, they will directly respond to the evaluator in DM which is OK, only i
 
 ![](https://i.imgur.com/1fxZtsK.png)
 
-### 6. DM member with the feedback on discord
+We can also use the send to discord button, which uses a webhook to send the message to ring-the-bell channel <br/>
+![](https://github.com/user-attachments/assets/daa4a753-5f4a-452f-ba21-c4f69d5780e2)
+ 
 
-Note: Comments can also be added if necessary. Due to the limitations of the airtable API, all comments will be shown as posted by the person who owns the API key, regardless of the user logged in
+### 6. DM member with the feedback on discord
+Feedback can be sent using the "Send DM" feature on the app (message will be sent from titan), or directly DM to the member. 
+<br/>
+<img width="151" height="59" alt="image" src="https://github.com/user-attachments/assets/77547942-f9f6-40f9-b1c3-fdd80c7fbe43" />
+
+
+### Note: Comments 
+Comments can also be added if necessary. Due to the limitations of the airtable API, all comments will be shown as posted by the person who owns the API key, regardless of the user logged in
 
 ![comments.png](docs/images/comments.png)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-![flowchart.png](docs/images/flowchart.png)
+Tier requirements can be found here: https://github.com/chingu-voyages/Handbook/blob/main/docs/guides/soloproject/topics/tier_developer.md
+<br/>
+
+<img width="752" height="922" alt="image" src="https://github.com/user-attachments/assets/7b4a033c-e4c9-4738-ab30-49207e2759e5" />
+
 
 <!-- ROADMAP -->
 

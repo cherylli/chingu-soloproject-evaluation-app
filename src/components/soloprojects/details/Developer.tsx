@@ -7,37 +7,53 @@ const DeveloperDetails = ({
 }: {
   fields: SoloProjectFields;
 }) => {
+  const parsedDeployedAppUrl = urlLinkParser(
+    fields['Deployed App URL']
+  );
+  const parsedRepoUrl = urlLinkParser(
+    fields['GitHub Repo URL']
+  );
   return (
     <table className="table-auto">
       <thead></thead>
       <tbody>
         <tr>
           <td>Deployed App URL:</td>
-          <td className="px-4 text-blue-500 hover:underline">
-            <Link
-              href={urlLinkParser(
-                fields['Deployed App URL']
-              )}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+
+          {parsedDeployedAppUrl ? (
+            <td className="px-4 text-blue-500 hover:underline">
+              <Link
+                href={parsedDeployedAppUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {fields['Deployed App URL']}
+              </Link>
+            </td>
+          ) : (
+            <td className="px-4">
               {fields['Deployed App URL']}
-            </Link>
-          </td>
+            </td>
+          )}
         </tr>
         <tr>
           <td>Github Repo URL:</td>
-          <td className="px-4 text-blue-500 hover:underline">
-            <Link
-              href={urlLinkParser(
-                fields['GitHub Repo URL']
-              )}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+
+          {parsedRepoUrl ? (
+            <td className="px-4 text-blue-500 hover:underline">
+              <Link
+                href={parsedRepoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {fields['GitHub Repo URL']}
+              </Link>
+            </td>
+          ) : (
+            <td className="px-4">
               {fields['GitHub Repo URL']}
-            </Link>
-          </td>
+            </td>
+          )}
         </tr>
       </tbody>
     </table>

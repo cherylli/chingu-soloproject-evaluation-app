@@ -55,6 +55,19 @@ const ReadOnlyDetails = ({
     toast.dismiss(savingToast);
   };
 
+  const parsedDeployedAppUrl = urlLinkParser(
+    record.fields['Deployed App URL']
+  );
+  const parsedRepoUrl = urlLinkParser(
+    record.fields['GitHub Repo URL']
+  );
+  const parsedBacklogUrl = urlLinkParser(
+    record.fields['PO Product Backlog URL']
+  );
+  const parsedProjectUrl = urlLinkParser(
+    record.fields['UI/UX Project URL']
+  );
+
   return (
     <div>
       <section className="flex flex-col gap-5 w-[90%] mx-auto pb-20">
@@ -67,51 +80,83 @@ const ReadOnlyDetails = ({
           <div>
             <div>
               Github Repo:
-              <a
-                className="px-4 text-blue-500 hover:underline"
-                href={urlLinkParser(
-                  record.fields['GitHub Repo URL']
-                )}
-              >
-                {record.fields['GitHub Repo URL']}
-              </a>
+              {parsedRepoUrl ? (
+                <a
+                  className="px-4 text-blue-500 hover:underline cursor-pointer"
+                  href={urlLinkParser(
+                    record.fields['GitHub Repo URL']
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {record.fields['GitHub Repo URL']}
+                </a>
+              ) : (
+                <div>
+                  {record.fields['GitHub Repo URL']}
+                </div>
+              )}
             </div>
             <div>
               Deployed Url:
-              <a
-                className="px-4 text-blue-500 hover:underline"
-                href={urlLinkParser(
-                  record.fields['GitHub Repo URL']
-                )}
-              >
-                {record.fields['Deployed App URL']}
-              </a>
+              {parsedDeployedAppUrl ? (
+                <a
+                  className="px-4 text-blue-500 hover:underline cursor-pointer"
+                  href={urlLinkParser(
+                    record.fields['Deployed App URL']
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {record.fields['Deployed App URL']}
+                </a>
+              ) : (
+                <div>
+                  {record.fields['Deployed App URL']}
+                </div>
+              )}
             </div>
           </div>
         ) : record.fields['Role'] === 'UI/UX Designer' ||
           record.fields['Role'] === 'UI / UX Designer' ? (
           <div>
             UI/UX Project URL:
-            <a
-              className="px-4 text-blue-500 hover:underline"
-              href={urlLinkParser(
-                record.fields['UI/UX Project URL']
-              )}
-            >
-              {record.fields['UI/UX Project URL']}
-            </a>
+            {parsedProjectUrl ? (
+              <a
+                className="px-4 text-blue-500 hover:underline cursor-pointer"
+                href={urlLinkParser(
+                  record.fields['UI/UX Project URL']
+                )}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {record.fields['UI/UX Project URL']}
+              </a>
+            ) : (
+              <div>
+                {record.fields['UI/UX Project URL']}
+              </div>
+            )}
           </div>
         ) : record.fields['Role'] === 'Product Owner' ? (
           <div>
             PO Product Backlog URL:
-            <a
-              className="px-4 text-blue-500 hover:underline"
-              href={urlLinkParser(
-                record.fields['PO Product Backlog URL']
-              )}
-            >
-              {record.fields['PO Product Backlog URL']}
-            </a>
+            {parsedBacklogUrl ? (
+              <a
+                className="px-4 text-blue-500 hover:underline cursor-pointer"
+                href={urlLinkParser(
+                  record.fields['PO Product Backlog URL']
+                )}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {record.fields['PO Product Backlog URL']}
+              </a>
+            ) : (
+              <div>
+                {record.fields['PO Product Backlog URL']}
+              </div>
+            )}
           </div>
         ) : null}
 

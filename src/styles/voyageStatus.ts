@@ -12,3 +12,6 @@ export const voyageStatusColors: Record<
     text: 'dark:text-amber-200 text-amber-600',
   },
 };
+
+export const rowClassByStatus = (status: string) =>
+  voyageStatusColors[status]?.text || '';

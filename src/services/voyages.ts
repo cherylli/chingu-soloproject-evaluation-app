@@ -1,10 +1,19 @@
 'use server';
 
-import { createOrFilter, transformVoyageSignupRecords, voyageSignupTable } from '@/lib/airtable';
+import {
+  createOrFilter,
+  transformVoyageSignupRecords,
+  voyageSignupTable,
+} from '@/lib/airtable';
 import { ActionResponse } from '@/types';
-import { VoyageSignup, VoyageSignupSearchableFields } from '@/types/VoyageSignupTypes';
+import {
+  VoyageSignup,
+  VoyageSignupSearchableFields,
+} from '@/types/VoyageSignupTypes';
 
-export const getLastestVoyageSignups = async (): Promise<ActionResponse<VoyageSignup[]>> => {
+export const getLastestVoyageSignups = async (): Promise<
+  ActionResponse<VoyageSignup[]>
+> => {
   try {
     const records = await voyageSignupTable
       .select({
@@ -15,11 +24,14 @@ export const getLastestVoyageSignups = async (): Promise<ActionResponse<VoyageSi
 
     return {
       success: true,
-      message: 'Successfully get latest voyage signup data.',
+      message:
+        'Successfully get latest voyage signup data.',
       data: transformVoyageSignupRecords(records),
     };
   } catch (e) {
-    throw new Error(`Failed to get latest voyage signup data. Error: ${e}`);
+    throw new Error(
+      `Failed to get latest voyage signup data. Error: ${e}`
+    );
   }
 };
 
@@ -45,7 +57,38 @@ export const getVoyageSignupByVoyageNum = async (
       data: transformVoyageSignupRecords(records),
     };
   } catch (e) {
-    throw new Error(`Failed to get voyage signup data for V${voyageNum}. Error: ${e}`);
+    throw new Error(
+      `Failed to get voyage signup data for V${voyageNum}. Error: ${e}`
+    );
+  }
+};
+
+export const getTeamByVoyageNumAndTeamNum = async (
+  voyageNum: number,
+  teamNum: number
+): Promise<ActionResponse<VoyageSignup[]>> => {
+  try {
+    const records = await voyageSignupTable
+      .select({
+        filterByFormula: `AND({Voyage} = "V${voyageNum}", {Team No.} = ${teamNum})`,
+        sort: [
+          {
+            field: 'Timestamp',
+            direction: 'desc',
+          },
+        ],
+      })
+      .all();
+
+    return {
+      success: true,
+      message: `Successfully get voyage signup data for V${voyageNum} and Team No. ${teamNum}`,
+      data: transformVoyageSignupRecords(records),
+    };
+  } catch (e) {
+    throw new Error(
+      `Failed to get voyage signup data for V${voyageNum} and Team No. ${teamNum}. Error: ${e}`
+    );
   }
 };
 
@@ -56,15 +99,22 @@ export const getAllVoyageSignupsByMember = async (
   if (!discordId && !email) {
     return {
       success: false,
-      message: 'Either discordId or email must be provided.',
+      message:
+        'Either discordId or email must be provided.',
     };
   }
 
   try {
-    const conditions: { field: VoyageSignupSearchableFields; value: string }[] = [];
+    const conditions: {
+      field: VoyageSignupSearchableFields;
+      value: string;
+    }[] = [];
 
     if (discordId) {
-      conditions.push({ field: 'Discord ID', value: discordId });
+      conditions.push({
+        field: 'Discord ID',
+        value: discordId,
+      });
     }
     if (email) {
       conditions.push({ field: 'Email', value: email });
@@ -84,6 +134,8 @@ export const getAllVoyageSignupsByMember = async (
       message: 'Successfully get voyage signup data.',
     };
   } catch (e) {
-    throw new Error(`Failed to get voyage signup data. Error: ${e}`);
+    throw new Error(
+      `Failed to get voyage signup data. Error: ${e}`
+    );
   }
 };

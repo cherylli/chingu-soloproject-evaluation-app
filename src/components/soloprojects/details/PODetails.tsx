@@ -22,7 +22,9 @@ const ProductOwnerDetails = ({
     fields,
     questions.PO as Answer[]
   );
-
+  const parsedBacklogUrl = urlLinkParser(
+    fields['PO Product Backlog URL']
+  );
   return (
     <>
       <table>
@@ -31,17 +33,21 @@ const ProductOwnerDetails = ({
             <td>PO Product Backlog URL:</td>
           </tr>
           <tr>
-            <td className="px-4 text-blue-500 hover:underline">
-              <Link
-                href={urlLinkParser(
-                  fields['PO Product Backlog URL']
-                )}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+            {parsedBacklogUrl ? (
+              <td className="px-4 text-blue-500 hover:underline">
+                <Link
+                  href={parsedBacklogUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {fields['PO Product Backlog URL']}
+                </Link>
+              </td>
+            ) : (
+              <td className="px-4">
                 {fields['PO Product Backlog URL']}
-              </Link>
-            </td>
+              </td>
+            )}
           </tr>
         </tbody>
       </table>
