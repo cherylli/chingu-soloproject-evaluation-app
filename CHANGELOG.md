@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.16.0](https://github.com/chingu-x/chingu-soloproject-evaluation-app/compare/v1.15.1...v1.16.0) (2025-11-11)
+
+
+### Features
+
+* **VoyageTeamPage:** Add team member table ([cf74b7f](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/cf74b7f6daff974814ce321776e7624fe53c9ed1))
+
 ## [1.15.1](https://github.com/chingu-x/chingu-soloproject-evaluation-app/compare/v1.15.0...v1.15.1) (2025-10-07)
 
 
