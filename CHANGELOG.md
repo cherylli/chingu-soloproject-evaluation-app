@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.17.0](https://github.com/chingu-x/chingu-soloproject-evaluation-app/compare/v1.16.0...v1.17.0) (2025-12-09)
+
+
+### Features
+
+* update navbar to use shadcn navigation menu component ([bb1b608](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/bb1b608b2bb8fff7cd42f92c92aa45b589c54328))
+
 ## [1.16.0](https://github.com/chingu-x/chingu-soloproject-evaluation-app/compare/v1.15.1...v1.16.0) (2025-11-11)
 
 
