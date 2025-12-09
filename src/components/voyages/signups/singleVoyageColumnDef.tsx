@@ -1,5 +1,6 @@
 import AirtableLinkCell from '@/components/react-table/cells/AirtableLink';
 import Role from '@/components/react-table/cells/Role';
+import MemberProfileLinkButton from '@/components/ui/navigation/MemberProfileLinkButton';
 import { VoyageSignup } from '@/types/VoyageSignupTypes';
 import { createColumnHelper } from '@tanstack/table-core';
 
@@ -35,6 +36,14 @@ export const singleVoyageColumnDef = (
         />
       );
     },
+  }),
+  columnHelper.display({
+    id: 'Member Profile Link',
+    cell: ({ row }) => (
+      <MemberProfileLinkButton
+        discordId={row.original.fields['Discord ID']}
+      />
+    ),
   }),
   columnHelper.accessor(
     (row) => row.fields['Discord Name'],

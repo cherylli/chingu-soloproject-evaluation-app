@@ -11,6 +11,9 @@ export const voyageStatusColors: Record<
   Inactive: {
     text: 'dark:text-amber-200 text-amber-600',
   },
+  SkipVoyage: {
+    text: 'text-gray-500',
+  },
 };
 
 export const rowClassByStatus = (status: string) =>

@@ -8,13 +8,21 @@ export const appColDef = (baseURL: string) => [
   columnHelper.display({
     id: 'Airtable Link',
     cell: ({ row }) => {
-      return <AirtableLinkCell row={row} baseUrl={baseURL} />;
+      return (
+        <AirtableLinkCell
+          row={row}
+          baseUrl={baseURL}
+        />
+      );
     },
   }),
-  columnHelper.accessor((row) => row.fields['Discord Name'], {
-    id: 'Discord Name',
-    header: 'Discord Name',
-  }),
+  columnHelper.accessor(
+    (row) => row.fields['Discord Name'],
+    {
+      id: 'Discord Name',
+      header: 'Discord Name',
+    }
+  ),
   columnHelper.accessor((row) => row.fields['Email'], {
     id: 'Email',
     header: 'Email',
