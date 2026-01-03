@@ -52,6 +52,8 @@ const SingleVoyageSignupTable = ({
     []
   );
 
+  console.log(records);
+
   const columns = singleVoyageColumnDef(atBaseUrl);
 
   const table = useReactTable<VoyageSignup>({
