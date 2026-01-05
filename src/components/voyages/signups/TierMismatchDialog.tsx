@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import LinkButton from '@/components/ui/buttons/LinkButton';
 import {
   Dialog,
   DialogContent,
@@ -20,6 +21,7 @@ const handleTierMismatch = async (
   closeDialog: () => void
 ) => {
   if (!discordId) throw new Error('No discord ID');
+
   const message = `Hi <@${discordId}>, you have signed up for ${signupTier.toString().substring(0, 6)}, but your solo project is ${soloProjectTier.toString().substring(0, 6)}. We will move you to ${soloProjectTier.toString().substring(0, 6)}.`;
   // TODO: start sending toast
 
@@ -33,6 +35,7 @@ const handleTierMismatch = async (
         error: 'Failed to change tier',
       }
     );
+    // TODO: also change "team name" to the right tier
     if (res.success) closeDialog();
   } catch (error) {
     if (error instanceof Error) toast.error(error.message);
@@ -49,6 +52,10 @@ export function TierMismatchDialog({
   fields: VoyageSignupFields;
 }) {
   const [open, setOpen] = useState<boolean>(false);
+
+  console.log(fields);
+
+  const soloProjectLink = `/solo-project/${fields['Solo Project Link'][0]}`;
 
   const soloProjectTier =
     fields['Solo Project Tier (Lookup)']?.[0] || '';
@@ -91,6 +98,9 @@ export function TierMismatchDialog({
             </span>
           </DialogDescription>
         </DialogHeader>
+        <div>
+          <LinkButton url={soloProjectLink} />
+        </div>
         <Button
           className="cursor-pointer"
           onClick={() =>

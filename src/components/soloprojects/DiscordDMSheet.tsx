@@ -129,8 +129,10 @@ const WebhookResponseCard = ({
 
 const DiscordDMSheet = ({
   discordId,
+  style = 'standard',
 }: {
   discordId: string;
+  style?: 'standard' | 'compact';
 }) => {
   const [message, setMessage] = useState<string>('');
   //const [showTextarea, setShowTextarea] =
@@ -187,10 +189,14 @@ const DiscordDMSheet = ({
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button className="mt-5 ml-[5%]">
-          <SendHorizontal />
-          Send DM
-        </Button>
+        {style === 'compact' ? (
+          <SendHorizontal className="cursor-pointer" />
+        ) : (
+          <Button className="mt-5 ml-[5%]">
+            <SendHorizontal />
+            Send DM
+          </Button>
+        )}
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>

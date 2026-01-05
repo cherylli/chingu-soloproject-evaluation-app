@@ -1,5 +1,6 @@
 import AirtableLinkCell from '@/components/react-table/cells/AirtableLink';
 import Role from '@/components/react-table/cells/Role';
+import DiscordDMSheet from '@/components/soloprojects/DiscordDMSheet';
 import MemberProfileLinkButton from '@/components/ui/navigation/MemberProfileLinkButton';
 import { TierMismatchDialog } from '@/components/voyages/signups/TierMismatchDialog';
 import { VoyageSignup } from '@/types/VoyageSignupTypes';
@@ -27,6 +28,15 @@ export const singleVoyageColumnDef = (
         ),
       ]
     : []),
+  columnHelper.display({
+    id: 'action button',
+    cell: ({ row }) => (
+      <DiscordDMSheet
+        discordId={row.original.fields['Discord ID']}
+        style={'compact'}
+      />
+    ),
+  }),
   columnHelper.display({
     id: 'Airtable Link',
     cell: ({ row }) => {
