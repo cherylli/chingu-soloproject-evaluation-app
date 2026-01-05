@@ -10,7 +10,10 @@ import {
 } from '@/components/ui/dialog';
 import { sendDiscordDM } from '@/services/discord';
 import { VoyageSignupFields } from '@/types/VoyageSignupTypes';
-import { AlertTriangle } from 'lucide-react';
+import {
+  AlertTriangle,
+  StepForwardIcon,
+} from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 
@@ -99,7 +102,11 @@ export function TierMismatchDialog({
           </DialogDescription>
         </DialogHeader>
         <div>
-          <LinkButton url={soloProjectLink} />
+          <LinkButton
+            url={soloProjectLink}
+            Icon={StepForwardIcon}
+            tooltip="View Solo Project"
+          />
         </div>
         <Button
           className="cursor-pointer"
