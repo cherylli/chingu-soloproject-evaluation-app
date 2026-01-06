@@ -8,11 +8,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { sendDiscordDM } from '@/services/discord';
 import { VoyageSignupFields } from '@/types/VoyageSignupTypes';
 import {
   AlertTriangle,
   StepForwardIcon,
+  UserIcon,
 } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
@@ -56,9 +62,12 @@ export function TierMismatchDialog({
 }) {
   const [open, setOpen] = useState<boolean>(false);
 
-  console.log(fields);
-
-  const soloProjectLink = `/solo-project/${fields['Solo Project Link'][0]}`;
+  const soloProjectLink = fields['Solo Project Link']?.[0]
+    ? `/solo-project/${fields['Solo Project Link'][0]}`
+    : undefined;
+  const memberDetailsPage = fields['Discord ID']
+    ? `/members/${fields['Discord ID']}`
+    : undefined;
 
   const soloProjectTier =
     fields['Solo Project Tier (Lookup)']?.[0] || '';
@@ -70,10 +79,17 @@ export function TierMismatchDialog({
       open={open}
       onOpenChange={setOpen}
     >
-      <DialogTrigger asChild>
-        {/* add a tooltip */}
-        <AlertTriangle className="h-6 w-6 text-red-500 cursor-pointer" />
-      </DialogTrigger>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <DialogTrigger asChild>
+            <AlertTriangle className="h-6 w-6 text-red-500 cursor-pointer" />
+          </DialogTrigger>
+        </TooltipTrigger>
+        <TooltipContent>
+          {`Tier mismatch detected. Solo project tier:
+            ${soloProjectTier.slice(0, 6)}`}
+        </TooltipContent>
+      </Tooltip>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
@@ -101,12 +117,21 @@ export function TierMismatchDialog({
             </span>
           </DialogDescription>
         </DialogHeader>
-        <div>
-          <LinkButton
-            url={soloProjectLink}
-            Icon={StepForwardIcon}
-            tooltip="View Solo Project"
-          />
+        <div className="flex gap-2">
+          {soloProjectLink && (
+            <LinkButton
+              url={soloProjectLink}
+              Icon={StepForwardIcon}
+              tooltip="View solo project"
+            />
+          )}
+          {memberDetailsPage && (
+            <LinkButton
+              url={memberDetailsPage}
+              Icon={UserIcon}
+              tooltip="Member profile"
+            />
+          )}
         </div>
         <Button
           className="cursor-pointer"
