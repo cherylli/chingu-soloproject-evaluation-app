@@ -55,6 +55,16 @@ const handleTierMismatch = async (
   }
 };
 
+/**
+ * Display a dialog that surfaces and manages tier mismatches for a voyage signup.
+ *
+ * Shows the detected solo project tier and the applied team tier, indicates pending
+ * tier confirmation when applicable, and provides optional links to the solo project
+ * and member profile along with an action to notify the member and update the signup tier.
+ *
+ * @param fields - The voyage signup fields for the affected member
+ * @returns A React element rendering the tier mismatch dialog
+ */
 export function TierMismatchDialog({
   fields,
 }: {
