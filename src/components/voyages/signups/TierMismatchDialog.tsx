@@ -1,3 +1,15 @@
+/**
+ * @file TierMismatchDialog.tsx
+ * @description Provides a UI component for administrators to handle discrepancies between a members's
+ * applied Voyage tier and their evaluated Solo Project tier.
+ *
+ * Features:
+ * - Detects and displays tier mismatches via a warning icon and tooltip.
+ * - Opens a dialog with details about the solo project and applied tiers.
+ * - Automates the correction process by sending a Discord DM to the member and
+ *   updating the Airtable record to the correct tier in one click.
+ */
+
 import { Button } from '@/components/ui/button';
 import LinkButton from '@/components/ui/buttons/LinkButton';
 import {
@@ -41,6 +53,16 @@ const tierMap: Record<
   '*Tier3': 'Tier 3',
 };
 
+/**
+ * Orchestrates the automated resolution of a tier mismatch.
+ *
+ * @param voyageSignupRecordId - The unique ID of the signup record in airtable.
+ * @param discordId - Member's Discord ID for messaging.
+ * @param signupTier - The tier the member originally signed up for.
+ * @param soloProjectTier - The tier determined by their solo project evaluation.
+ * @param closeDialog - Callback to close the UI dialog on success.
+ * @param router - Next.js router instance to refresh the server-side data.
+ */
 const handleTierMismatch = async (
   voyageSignupRecordId: string,
   discordId: string | number,
@@ -99,6 +121,13 @@ const handleTierMismatch = async (
   }
 };
 
+/**
+ * A dialog component that triggers when a tier mismatch is detected.
+ * It shows a warning icon that, when clicked, allows admins to synchronize the tiers.
+ *
+ * @param recordId - The database record ID for the specific signup.
+ * @param fields - The data object containing the user's signup and solo project information.
+ */
 export function TierMismatchDialog({
   recordId,
   fields,
