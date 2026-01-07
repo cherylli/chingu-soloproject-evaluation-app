@@ -14,29 +14,70 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { sendDiscordDM } from '@/services/discord';
-import { VoyageSignupFields } from '@/types/VoyageSignupTypes';
+import { updateVoyageSignupTierByRecordId } from '@/services/voyages';
+import { SoloProjectTier } from '@/types/SoloProjectTypes';
+import {
+  VoyageSignupFields,
+  VoyageSignupTeamNameType,
+} from '@/types/VoyageSignupTypes';
 import {
   AlertTriangle,
   StepForwardIcon,
   UserIcon,
 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 
+const tierMap: Record<
+  SoloProjectTier,
+  VoyageSignupTeamNameType
+> = {
+  'Tier 1 - Beginner (ONLY for Developer role)': 'Tier 1',
+  'Tier 2  - Intermediate (All roles)': 'Tier 2',
+  'Tier 3 - Experienced (All roles)': 'Tier 3',
+  '*Tier1': 'Tier 1',
+  '*Tier2': 'Tier 2',
+  '*Tier3': 'Tier 3',
+};
+
 const handleTierMismatch = async (
+  voyageSignupRecordId: string,
   discordId: string | number,
   signupTier: string,
   soloProjectTier: string,
-  closeDialog: () => void
+  closeDialog: () => void,
+  router: ReturnType<typeof useRouter>
 ) => {
   if (!discordId) throw new Error('No discord ID');
 
   const message = `Hi <@${discordId}>, you have signed up for ${signupTier.toString().substring(0, 6)}, but your solo project is ${soloProjectTier.toString().substring(0, 6)}. We will move you to ${soloProjectTier.toString().substring(0, 6)}.`;
-  // TODO: start sending toast
 
   try {
     const res = await toast.promise(
-      sendDiscordDM(discordId.toString(), message),
+      (async () => {
+        const discordMsgRes = await sendDiscordDM(
+          discordId.toString(),
+          message
+        );
+
+        if (!discordMsgRes.success)
+          throw new Error(
+            `[Tier Mismatch Dialog]: fail to send discord message - ${discordMsgRes.message}`
+          );
+
+        const updateTierRes =
+          await updateVoyageSignupTierByRecordId(
+            voyageSignupRecordId,
+            tierMap[soloProjectTier as SoloProjectTier]
+          );
+
+        if (!updateTierRes.success)
+          throw new Error(
+            `[Tier Mismatch Dialog]: fail to update tier - ${updateTierRes.message}`
+          );
+        return updateTierRes;
+      })(),
       {
         loading: 'Sending Discord Message...',
         success:
@@ -45,7 +86,10 @@ const handleTierMismatch = async (
       }
     );
     // TODO: also change "team name" to the right tier
-    if (res.success) closeDialog();
+    if (res.success) {
+      closeDialog();
+      router.refresh();
+    }
   } catch (error) {
     if (error instanceof Error) toast.error(error.message);
     else
@@ -56,11 +100,14 @@ const handleTierMismatch = async (
 };
 
 export function TierMismatchDialog({
+  recordId,
   fields,
 }: {
+  recordId: string;
   fields: VoyageSignupFields;
 }) {
   const [open, setOpen] = useState<boolean>(false);
+  const router = useRouter();
 
   const soloProjectLink = fields['Solo Project Link']?.[0]
     ? `/solo-project/${fields['Solo Project Link'][0]}`
@@ -137,10 +184,12 @@ export function TierMismatchDialog({
           className="cursor-pointer"
           onClick={() =>
             handleTierMismatch(
+              recordId,
               fields['Discord ID'],
               fields['Tier'],
               fields['Solo Project Tier (Lookup)'],
-              () => setOpen(false)
+              () => setOpen(false),
+              router
             )
           }
         >

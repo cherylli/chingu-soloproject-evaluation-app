@@ -71,7 +71,10 @@ export const singleVoyageColumnDef = (
         ].trim();
       if (!isMismatch) return null;
       return (
-        <TierMismatchDialog fields={row.original.fields} />
+        <TierMismatchDialog
+          recordId={row.original.id}
+          fields={row.original.fields}
+        />
       );
     },
   }),

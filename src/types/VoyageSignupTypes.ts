@@ -8,6 +8,11 @@ export type VoyageSignup = {
   fields: VoyageSignupFields;
 };
 
+export type VoyageSignupTeamNameType =
+  | 'Tier 1'
+  | 'Tier 2'
+  | 'Tier 3';
+
 export type VoyageSignupFields = {
   Timestamp: string;
   Email: string;
