@@ -138,17 +138,19 @@ export function TierMismatchDialog({
   const router = useRouter();
 
   const soloProjectLink = fields['Solo Project Link']?.[0]
-    ? `/solo-project/${fields['Solo Project Link'][0]}`
+    ? `/solo-project/${fields['Solo Project Link']?.[0]}`
     : undefined;
   const memberDetailsPage = fields['Discord ID']
-    ? `/admin/member/${fields['Discord ID']}`
+    ? `/admin/member/${fields['Discord ID']?.[0]}`
     : undefined;
 
   const soloProjectTier =
     fields['Solo Project Tier (Lookup)']?.[0] || '';
   const appliedTier = fields['Team Name'];
   const isPendingTierConfirmation =
-    fields['Solo Project Tier (Lookup)']?.[0] === '*'; // starts with *
+    fields['Solo Project Tier (Lookup)']?.[0]?.startsWith(
+      '*'
+    ) ?? false; // starts with *
   return (
     <Dialog
       open={open}
@@ -210,6 +212,11 @@ export function TierMismatchDialog({
         </div>
         <Button
           className="cursor-pointer"
+          disabled={
+            !fields['Discord ID']?.[0] ||
+            !fields['Tier'] ||
+            !fields['Solo Project Tier (Lookup)']?.[0]
+          }
           onClick={() =>
             handleTierMismatch(
               recordId,

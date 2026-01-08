@@ -22,8 +22,7 @@ const LinkButtonPropSchema = z.object({
 type LinkProps = z.infer<typeof LinkButtonPropSchema>;
 
 const LinkButton = (props: LinkProps) => {
-  const parsedProps =
-    LinkButtonPropSchema.parse(props) || 'Invalid link';
+  const parsedProps = LinkButtonPropSchema.parse(props);
 
   const buttonElement = (
     <a
