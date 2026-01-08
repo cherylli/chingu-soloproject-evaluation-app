@@ -21,7 +21,7 @@ const meta: Meta<T> = {
     docs: {
       description: {
         component:
-          'A button that opens the provided URL in a new tab using a secure external link (noopener, noreferrer). Optionally renders a custom icon and/or text. Extends LinkButton',
+          'A button that opens the provided URL in a new tab using a secure external link (noopener, noreferrer). Optionally renders a custom icon and/or text.',
       },
     },
   },
@@ -54,22 +54,12 @@ const meta: Meta<T> = {
       description:
         'Icon component to render inside the button',
     },
-    tooltip: {
-      control: 'text',
-      description: 'Optional tooltip text to show on hover',
-    },
   },
 };
 
 export default meta;
 
 type Story = StoryObj<T>;
-
-export const Default: Story = {
-  args: {
-    url: 'https://example.com',
-  } as any,
-};
 
 export const IconOnly: Story = {
   args: {
@@ -98,14 +88,5 @@ export const LongUrl: Story = {
   args: {
     url: 'https://example.com/some/very/long/path?with=query&and=params#section',
     Icon: 'Link2',
-  } as any,
-};
-
-export const WithTooltip: Story = {
-  args: {
-    url: 'https://example.com',
-    Icon: 'ExternalLink',
-    text: 'Hover me',
-    tooltip: 'Click to open example.com',
   } as any,
 };

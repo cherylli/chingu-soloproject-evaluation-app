@@ -269,12 +269,6 @@ const transformVoyageSignupRecord = (
         record.fields[
           'Product (from Most Recent Subscriptions & Product Sales)'
         ] as string,
-      'Solo Project Exceptions': record.fields[
-        'Solo Project Exceptions'
-      ] as string,
-      'Solo Project Tier (Lookup)': record.fields[
-        'Solo Project Tier (Lookup)'
-      ] as string,
     },
   };
 };

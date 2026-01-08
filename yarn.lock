@@ -2746,7 +2746,7 @@
 
 "@storybook/types@^8.6.14":
   version "8.6.14"
-  resolved "https://registry.yarnpkg.com/@storybook/types/-/types-8.6.14.tgz#05954b748f59dcebe1b2f744059b219c3b1b8491"
+  resolved "https://registry.npmjs.org/@storybook/types/-/types-8.6.14.tgz"
   integrity sha512-33kzHZa7h6/EygeLZDcm1PNRTlybokz8dzAh2JYjpETf77pG8jhPmEfrI2oHSAdgNeK7A3OMcGA/EwEN7EJdzw==
 
 "@swc/helpers@0.5.15":
