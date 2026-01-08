@@ -107,7 +107,6 @@ const handleTierMismatch = async (
         error: 'Failed to change tier',
       }
     );
-    // TODO: also change "team name" to the right tier
     if (res.success) {
       closeDialog();
       router.refresh();
@@ -142,7 +141,7 @@ export function TierMismatchDialog({
     ? `/solo-project/${fields['Solo Project Link'][0]}`
     : undefined;
   const memberDetailsPage = fields['Discord ID']
-    ? `/members/${fields['Discord ID']}`
+    ? `/admin/member/${fields['Discord ID']}`
     : undefined;
 
   const soloProjectTier =
@@ -214,9 +213,9 @@ export function TierMismatchDialog({
           onClick={() =>
             handleTierMismatch(
               recordId,
-              fields['Discord ID'],
+              fields['Discord ID']?.[0],
               fields['Tier'],
-              fields['Solo Project Tier (Lookup)'],
+              fields['Solo Project Tier (Lookup)']?.[0],
               () => setOpen(false),
               router
             )

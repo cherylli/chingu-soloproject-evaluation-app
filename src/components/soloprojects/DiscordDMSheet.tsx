@@ -190,7 +190,10 @@ const DiscordDMSheet = ({
     <Sheet>
       <SheetTrigger asChild>
         {style === 'compact' ? (
-          <SendHorizontal className="cursor-pointer" />
+          <SendHorizontal
+            className="cursor-pointer"
+            aria-label="Send Discord DM"
+          />
         ) : (
           <Button className="mt-5 ml-[5%]">
             <SendHorizontal />
