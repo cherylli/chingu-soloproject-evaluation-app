@@ -76,7 +76,7 @@ export const IconOnly: Story = {
 export const TextAndIcon: Story = {
   args: {
     link: 'https://chingu.io',
-    linkText: 'Chingu ',
+    linkText: 'Chingu',
     Icon: 'Link2',
     tooltip: 'Go to Chingu website',
   },

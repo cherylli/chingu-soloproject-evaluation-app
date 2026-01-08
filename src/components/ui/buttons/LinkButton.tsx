@@ -22,8 +22,7 @@ const LinkButtonPropSchema = z.object({
 type LinkProps = z.infer<typeof LinkButtonPropSchema>;
 
 const LinkButton = (props: LinkProps) => {
-  const parsedProps =
-    LinkButtonPropSchema.parse(props) || 'Invalid link';
+  const parsedProps = LinkButtonPropSchema.parse(props);
 
   const buttonElement = (
     <a
@@ -33,11 +32,17 @@ const LinkButton = (props: LinkProps) => {
     >
       <Button
         variant="outline"
-        size={props.text ? 'default' : 'icon'}
+        size={parsedProps.text ? 'default' : 'icon'}
         className="cursor-pointer"
       >
-        {props.Icon ? <props.Icon /> : <ExternalLink />}
-        {props.text && <span>{props.text}</span>}
+        {parsedProps.Icon ? (
+          <parsedProps.Icon />
+        ) : (
+          <ExternalLink />
+        )}
+        {parsedProps.text && (
+          <span>{parsedProps.text}</span>
+        )}
       </Button>
     </a>
   );

@@ -32,7 +32,7 @@ export const singleVoyageColumnDef = (
     id: 'action button',
     cell: ({ row }) => (
       <DiscordDMSheet
-        discordId={row.original.fields['Discord ID']}
+        discordId={row.original.fields['Discord ID']?.[0]}
         style={'compact'}
       />
     ),
@@ -52,7 +52,7 @@ export const singleVoyageColumnDef = (
     id: 'Member Profile Link',
     cell: ({ row }) => (
       <MemberProfileLinkButton
-        discordId={row.original.fields['Discord ID']}
+        discordId={row.original.fields['Discord ID']?.[0]}
       />
     ),
   }),
@@ -68,10 +68,13 @@ export const singleVoyageColumnDef = (
       const isMismatch =
         !!row.original.fields[
           'Solo Project Exceptions'
-        ].trim();
+        ]?.trim();
       if (!isMismatch) return null;
       return (
-        <TierMismatchDialog fields={row.original.fields} />
+        <TierMismatchDialog
+          recordId={row.original.id}
+          fields={row.original.fields}
+        />
       );
     },
   }),

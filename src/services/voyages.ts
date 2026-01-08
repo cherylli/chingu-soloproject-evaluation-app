@@ -9,6 +9,7 @@ import { ActionResponse } from '@/types';
 import {
   VoyageSignup,
   VoyageSignupSearchableFields,
+  VoyageSignupTeamNameType,
 } from '@/types/VoyageSignupTypes';
 
 export const getLastestVoyageSignups = async (): Promise<
@@ -137,5 +138,28 @@ export const getAllVoyageSignupsByMember = async (
     throw new Error(
       `Failed to get voyage signup data. Error: ${e}`
     );
+  }
+};
+
+export const updateVoyageSignupTierByRecordId = async (
+  recordId: string,
+  newTier: VoyageSignupTeamNameType
+) => {
+  try {
+    const updatedRecord = await voyageSignupTable.update([
+      {
+        id: recordId,
+        fields: {
+          'Team Name': newTier,
+        },
+      },
+    ]);
+    return {
+      success: true,
+      message: `Successfully update tier for ${recordId}.`,
+      data: transformVoyageSignupRecords(updatedRecord)[0],
+    };
+  } catch (e) {
+    throw new Error(`Failed to update tier. Error: ${e}`);
   }
 };
