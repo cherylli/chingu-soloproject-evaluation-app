@@ -2,34 +2,36 @@ import type {
   Meta,
   StoryObj,
 } from '@storybook/nextjs-vite';
-import { ExternalLink, Github, Link2 } from 'lucide-react';
+import {
+  ExternalLink,
+  Github,
+  Link2,
+  Mail,
+} from 'lucide-react';
 import '../../../app/globals.css';
-import * as Module from './ExternalLinkButton';
+import * as Module from './LinkButton';
 
-// Support default and named exports
 const Component =
-  (Module as any).default ??
-  (Module as any).ExternalLinkButton;
+  (Module as any).default ?? (Module as any).LinkButton;
 
 type T = typeof Component;
 
 const meta: Meta<T> = {
-  title: 'UI/Buttons/ExternalLinkButton',
+  title: 'UI/Buttons/LinkButton',
   component: Component as any,
   parameters: {
     layout: 'centered',
     docs: {
       description: {
         component:
-          'A button that opens the provided URL in a new tab using a secure external link (noopener, noreferrer). Optionally renders a custom icon and/or text. Extends LinkButton',
+          "Base Link button which doesn't verify external links with zod. Use for internal links or links with no validation requirement.",
       },
     },
   },
   argTypes: {
     url: {
       control: 'text',
-      description:
-        'The destination URL to open in a new browser tab',
+      description: 'The destination URL',
     },
     text: {
       control: 'text',
@@ -37,11 +39,12 @@ const meta: Meta<T> = {
         'Optional text label to render next to the icon',
     },
     Icon: {
-      options: ['ExternalLink', 'Github', 'Link2'],
+      options: ['ExternalLink', 'Github', 'Link2', 'Mail'],
       mapping: {
         ExternalLink,
         Github,
         Link2,
+        Mail,
       },
       control: {
         type: 'select',
@@ -49,6 +52,7 @@ const meta: Meta<T> = {
           ExternalLink: 'External Link',
           Github: 'GitHub',
           Link2: 'Link',
+          Mail: 'Mail',
         },
       },
       description:
@@ -67,45 +71,37 @@ type Story = StoryObj<T>;
 
 export const Default: Story = {
   args: {
-    url: 'https://example.com',
+    url: 'https://chingu.io',
   } as any,
 };
 
-export const IconOnly: Story = {
+export const WithIcon: Story = {
   args: {
-    url: 'https://example.com',
-    Icon: 'ExternalLink',
+    url: 'https://github.com',
+    Icon: 'Github',
   } as any,
 };
 
 export const WithText: Story = {
   args: {
-    url: 'https://example.com',
-    Icon: 'ExternalLink',
-    text: 'Open link',
+    url: 'https://chingu.io',
+    text: 'Visit Chingu',
   } as any,
 };
 
-export const WithCustomIcon: Story = {
+export const Full: Story = {
   args: {
-    url: 'https://github.com',
-    Icon: 'Github',
-    text: 'GitHub',
+    url: 'mailto:admin@chingu.io',
+    Icon: 'Mail',
+    text: 'Contact Us',
+    tooltip: 'Send an email to admin@chingu.io',
   } as any,
 };
 
-export const LongUrl: Story = {
+export const InternalLink: Story = {
   args: {
-    url: 'https://example.com/some/very/long/path?with=query&and=params#section',
+    url: '/dashboard',
+    text: 'Go to Dashboard',
     Icon: 'Link2',
-  } as any,
-};
-
-export const WithTooltip: Story = {
-  args: {
-    url: 'https://example.com',
-    Icon: 'ExternalLink',
-    text: 'Hover me',
-    tooltip: 'Click to open example.com',
   } as any,
 };
