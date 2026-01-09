@@ -237,7 +237,7 @@ const transformVoyageSignupRecord = (
       'Evaluation Status (from Solo Project Link)': record
         .fields[
         'Evaluation Status (from Solo Project Link)'
-      ] as string,
+      ] as string[],
       Status: record.fields['Status'] as string,
       'Status Comment': record.fields[
         'Status Comment'
@@ -254,21 +254,27 @@ const transformVoyageSignupRecord = (
       ] as string,
       'Application Link': record.fields[
         'Application Link'
-      ] as string,
+      ] as string[],
       'Solo Project Link': record.fields[
         'Solo Project Link'
-      ] as string,
+      ] as string[],
       'Confirmation Form Completed': record.fields[
         'Confirmation Form Completed'
       ] as boolean,
       'Showcase Name Permission?': record.fields[
         'Showcase Name Permission?'
       ] as boolean,
-      'Discord ID': record.fields['Discord ID'] as string,
+      'Discord ID': record.fields['Discord ID'] as string[],
       'Product (from Most Recent Subscriptions & Product Sales)':
         record.fields[
           'Product (from Most Recent Subscriptions & Product Sales)'
         ] as string,
+      'Solo Project Exceptions': record.fields[
+        'Solo Project Exceptions'
+      ] as string,
+      'Solo Project Tier (Lookup)': record.fields[
+        'Solo Project Tier (Lookup)'
+      ] as string[],
     },
   };
 };

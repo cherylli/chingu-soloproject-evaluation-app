@@ -1,6 +1,8 @@
 import AirtableLinkCell from '@/components/react-table/cells/AirtableLink';
 import Role from '@/components/react-table/cells/Role';
+import DiscordDMSheet from '@/components/soloprojects/DiscordDMSheet';
 import MemberProfileLinkButton from '@/components/ui/navigation/MemberProfileLinkButton';
+import { TierMismatchDialog } from '@/components/voyages/signups/TierMismatchDialog';
 import { VoyageSignup } from '@/types/VoyageSignupTypes';
 import { createColumnHelper } from '@tanstack/table-core';
 
@@ -27,6 +29,15 @@ export const singleVoyageColumnDef = (
       ]
     : []),
   columnHelper.display({
+    id: 'action button',
+    cell: ({ row }) => (
+      <DiscordDMSheet
+        discordId={row.original.fields['Discord ID']?.[0]}
+        style={'compact'}
+      />
+    ),
+  }),
+  columnHelper.display({
     id: 'Airtable Link',
     cell: ({ row }) => {
       return (
@@ -41,7 +52,7 @@ export const singleVoyageColumnDef = (
     id: 'Member Profile Link',
     cell: ({ row }) => (
       <MemberProfileLinkButton
-        discordId={row.original.fields['Discord ID']}
+        discordId={row.original.fields['Discord ID']?.[0]}
       />
     ),
   }),
@@ -51,6 +62,29 @@ export const singleVoyageColumnDef = (
       header: 'Discord Name',
     }
   ),
+  columnHelper.display({
+    id: 'Tier Mismatch',
+    cell: ({ row }) => {
+      const isMismatch =
+        !!row.original.fields[
+          'Solo Project Exceptions'
+        ]?.trim();
+      if (!isMismatch) return null;
+      return (
+        <TierMismatchDialog
+          recordId={row.original.id}
+          fields={row.original.fields}
+        />
+      );
+    },
+  }),
+  // TODO: make it mouseover
+  columnHelper.display({
+    id: 'Info to Share',
+    cell: ({ row }) => (
+      <span>{row.original.fields['Info to Share']}</span>
+    ),
+  }),
   columnHelper.accessor((row) => row.fields['GitHub ID'], {
     header: 'Github Id',
   }),
