@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.18.0](https://github.com/chingu-x/chingu-soloproject-evaluation-app/compare/v1.17.0...v1.18.0) (2026-01-09)
+
+
+### Features
+
+* (Voyage signup table) Tier mismatch dialog and action ([d0dccfd](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/d0dccfdc1dd9e0223afcbda9d555f8e787196216))
+* (voyage signup) add links to tier mismatch trigger ([3776af5](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/3776af57c65dc086a65eea5214fbafd2093d950b))
+* (voyage signup) add send discord message for tier mismatch ([176a211](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/176a21182018b9766f4bd0ab43968b9684ba4f8e))
+* (voyage signup) change tier on airtable for tier mismatch ([31526c0](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/31526c0c025e5dd6476a45d6a6eecb3fbacb0dcb))
+
+
+### Bug Fixes
+
+* code rabbit suggestion ([12033b8](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/12033b836ba5eb2469bfa3dcbf1fc683d6ac154b))
+
 ## [1.17.0](https://github.com/chingu-x/chingu-soloproject-evaluation-app/compare/v1.16.0...v1.17.0) (2025-12-09)
 
 
