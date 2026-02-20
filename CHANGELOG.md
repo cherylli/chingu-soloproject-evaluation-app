@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.18.1](https://github.com/chingu-x/chingu-soloproject-evaluation-app/compare/v1.18.0...v1.18.1) (2026-02-20)
+
+
+### Bug Fixes
+
+* add extra uiux role ([cacfa42](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/cacfa4240ca815cdb4e4e037567b537d7af926b0))
+
 ## [1.18.0](https://github.com/chingu-x/chingu-soloproject-evaluation-app/compare/v1.17.0...v1.18.0) (2026-01-09)
 
 
