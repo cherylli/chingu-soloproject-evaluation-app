@@ -183,6 +183,7 @@ const ProjectSubmissionDetail = ({
         return <PODetails fields={record.fields} />;
       case 'UI/UX Designer':
       case 'UI / UX Designer':
+      case 'UI/UX':
         return <UIUXDetails fields={record.fields} />;
       case 'Data Scientist':
         return <DeveloperDetails fields={record.fields} />;
