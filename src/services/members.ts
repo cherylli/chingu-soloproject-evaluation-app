@@ -153,4 +153,8 @@ export const getMemberDetailsByDiscordId = async (
       `Failed to get member details. Error: ${e}`
     );
   }
+
+  // Voyage check ins
+  // TODO: add a function in check in service to get the checkins by discordID
+  // const voyageCheckIns = await
 };

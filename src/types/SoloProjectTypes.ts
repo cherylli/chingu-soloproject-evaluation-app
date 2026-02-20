@@ -17,6 +17,7 @@ export type VoyageRole =
   | 'Developer'
   | 'UI / UX Designer'
   | 'UI/UX Designer'
+  | 'UI/UX'
   | 'Data Scientist'
   | 'Product Owner'
   | 'Scrum Master'
@@ -100,7 +101,9 @@ type SMFields = {
   SM22: string;
 };
 
-export type SoloProjectFields = BaseSoloProjectFields & POFields & SMFields;
+export type SoloProjectFields = BaseSoloProjectFields &
+  POFields &
+  SMFields;
 
 // Search Fields
 const soloProjectSearchableFields = [
@@ -108,4 +111,5 @@ const soloProjectSearchableFields = [
   'Email',
 ] as const satisfies readonly (keyof SoloProjectFields)[];
 
-export type SoloProjectSearchableFields = (typeof soloProjectSearchableFields)[number];
+export type SoloProjectSearchableFields =
+  (typeof soloProjectSearchableFields)[number];
