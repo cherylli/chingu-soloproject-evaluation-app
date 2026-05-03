@@ -63,7 +63,7 @@ const transformSoloProjectRecord = (
         'Discord Name'
       ] as string,
       'GitHub ID': record.fields['GitHub ID'] as string,
-      Timestamp: record.fields['Timestamp'] as string,
+      Timestamp: record.fields['Created'] as string,
       Tier: record.fields['Tier'] as SoloProjectTier,
       'GitHub Repo URL': record.fields[
         'GitHub Repo URL'
