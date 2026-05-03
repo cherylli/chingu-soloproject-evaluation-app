@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.18.2](https://github.com/chingu-x/chingu-soloproject-evaluation-app/compare/v1.18.1...v1.18.2) (2026-05-03)
+
+
+### Bug Fixes
+
+* update timestamp mapping to created ([c9ff6bb](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/c9ff6bb76fc9bda30463313d69e6e7257d58a10d))
+* update timestamp mapping to created ([001442d](https://github.com/chingu-x/chingu-soloproject-evaluation-app/commit/001442df7f72b4489d6e414c24b33d0096250a36))
+
 ## [1.18.1](https://github.com/chingu-x/chingu-soloproject-evaluation-app/compare/v1.18.0...v1.18.1) (2026-02-20)
 
 
