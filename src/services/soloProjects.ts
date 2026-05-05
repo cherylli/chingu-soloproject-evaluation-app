@@ -49,7 +49,7 @@ export const getSoloProjectsByStatus = async (
         recordMetadata: ['commentCount'],
         sort: [
           {
-            field: 'Timestamp',
+            field: 'Created',
             direction: 'desc',
           },
         ],
