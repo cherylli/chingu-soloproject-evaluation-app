@@ -65,10 +65,9 @@ export const singleVoyageColumnDef = (
   columnHelper.display({
     id: 'Tier Mismatch',
     cell: ({ row }) => {
-      const isMismatch =
-        !!row.original.fields[
-          'Solo Project Exceptions'
-        ]?.trim();
+      const isMismatch = !!String(
+        row.original.fields['Solo Project Exceptions']
+      )?.trim();
       if (!isMismatch) return null;
       return (
         <TierMismatchDialog

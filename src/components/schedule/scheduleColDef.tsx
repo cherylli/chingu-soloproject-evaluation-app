@@ -10,9 +10,9 @@ export const scheduleColDef = [
     header: 'Name',
     cell: ({ row }) => (
       <TooltipWithLink
-        tooltip={`Go to V${row.original.fields['Name'].slice(1)} sign ups`}
-        link={`/admin/voyage/${row.original.fields['Name'].slice(1)}/signups`}
-        linkText={`V${row.original.fields['Name'].slice(1)}`}
+        tooltip={`Go to ${row.original.fields['Name']} sign ups`}
+        link={`/admin/voyage/${row.original.fields['Name']}/signups`}
+        linkText={`${row.original.fields['Name']}`}
       />
     ),
   }),
