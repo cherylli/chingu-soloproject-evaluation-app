@@ -7,7 +7,7 @@ import { getVoyageSignupByVoyageNum } from '@/services/voyages';
 import { z } from 'zod';
 
 const paramsSchema = z.object({
-  voyageNum: z.string().regex(/^[XV]\d{2}$/, {
+  voyageNum: z.string().regex(/^[vxVX]\d{2}$/, {
     message:
       'Voyage must start with X or V and be followed by 2 digits',
   }),
@@ -21,7 +21,7 @@ const SingleVoyageSignupPage = async ({
   const parsedParams = paramsSchema.parse(await params);
 
   const signups = await getVoyageSignupByVoyageNum(
-    parsedParams.voyageNum
+    parsedParams.voyageNum.toUpperCase()
   );
 
   if (!signups.success) {
