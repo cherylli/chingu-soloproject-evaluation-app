@@ -38,6 +38,8 @@ export type VoyageSignupFields = {
   // check solo project tier
   'Solo Project Exceptions': string;
   'Solo Project Tier (Lookup)': string[]; // should match "Team Name"
+  // voyage completion
+  'Successfully Completed (from Voyage Projects)': string;
 };
 
 // Search Fields

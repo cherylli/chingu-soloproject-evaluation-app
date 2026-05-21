@@ -9,6 +9,7 @@ import { vsColDef } from '@/components/members/vsColDef';
 import StandardReactTable from '@/components/react-table/StandardReactTable';
 import PaginationButtons from '@/components/ui/buttons/PaginationButtons';
 import H1 from '@/components/ui/typography/h1';
+import { useRoleCheck } from '@/hooks/useRoleCheck';
 import { Context } from '@/types';
 import { Application } from '@/types/ApplicationTypes';
 import { FinanceRevenue } from '@/types/FinanceRevenueType';
@@ -33,6 +34,8 @@ const MemberProfile = ({
   memberDetails: MemberDetailsType;
   atBaseUrls: Partial<Record<Context, string>>;
 }) => {
+  const { isAdmin } = useRoleCheck();
+
   const [appColVis, setAppColVis] = useState({});
   const [vsColVis, setVsColVis] = useState<{}>({
     Email: false,
@@ -70,7 +73,10 @@ const MemberProfile = ({
   });
   const vsTable = useReactTable<VoyageSignup>({
     data: memberDetails.voyageSignups,
-    columns: vsColDef(atBaseUrls['voyage-signup'] ?? '#'),
+    columns: vsColDef(
+      atBaseUrls['voyage-signup'] ?? '#',
+      isAdmin
+    ),
     getCoreRowModel: getCoreRowModel<VoyageSignup>(),
     getSortedRowModel: getSortedRowModel<VoyageSignup>(),
     state: {
@@ -81,7 +87,10 @@ const MemberProfile = ({
   });
   const spTable = useReactTable<SoloProjectSubmission>({
     data: memberDetails.soloProjects,
-    columns: spColDef(atBaseUrls['solo-project'] ?? '#'),
+    columns: spColDef(
+      atBaseUrls['solo-project'] ?? '#',
+      isAdmin
+    ),
     getCoreRowModel:
       getCoreRowModel<SoloProjectSubmission>(),
     getSortedRowModel:
@@ -128,11 +137,15 @@ const MemberProfile = ({
         ]}
       />
       <StandardReactTable table={spTable} />
-      <H1>Applications</H1>
-      <StandardReactTable table={appTable} />
-      <H1>Products, Subscriptions and Donations</H1>
-      <StandardReactTable table={revenueTable} />
-      <PaginationButtons table={revenueTable} />
+      {isAdmin && (
+        <>
+          <H1>Applications</H1>
+          <StandardReactTable table={appTable} />
+          <H1>Products, Subscriptions and Donations</H1>
+          <StandardReactTable table={revenueTable} />
+          <PaginationButtons table={revenueTable} />
+        </>
+      )}
     </div>
   );
 };

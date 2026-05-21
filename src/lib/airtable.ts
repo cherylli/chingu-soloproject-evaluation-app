@@ -228,7 +228,7 @@ const transformVoyageSignupRecord = (
   return {
     id: record.id,
     fields: {
-      Timestamp: record.fields['Timestamp'] as string,
+      Timestamp: record.fields['Created Date'] as string,
       Email: record.fields['Email'] as string,
       'Discord Name': record.fields[
         'Discord Name'
@@ -275,6 +275,10 @@ const transformVoyageSignupRecord = (
       'Solo Project Tier (Lookup)': record.fields[
         'Solo Project Tier (Lookup)'
       ] as string[],
+      'Successfully Completed (from Voyage Projects)':
+        record.fields[
+          'Successfully Completed (from Voyage Projects)'
+        ] as string,
     },
   };
 };

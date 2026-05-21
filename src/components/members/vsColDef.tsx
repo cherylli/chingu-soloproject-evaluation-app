@@ -10,18 +10,25 @@ import { Clipboard, Info } from 'lucide-react';
 const columnHelper = createColumnHelper<VoyageSignup>();
 
 // voyage Signup column Definitions for Member Profile Page
-export const vsColDef = (baseURL: string) => [
-  columnHelper.display({
-    id: 'Airtable Link',
-    cell: ({ row }) => {
-      return (
-        <AirtableLinkCell
-          row={row}
-          baseUrl={baseURL}
-        />
-      );
-    },
-  }),
+export const vsColDef = (
+  baseURL: string,
+  isAdmin: boolean = false
+) => [
+  ...(isAdmin
+    ? [
+        columnHelper.display({
+          id: 'Airtable Link',
+          cell: ({ row }) => {
+            return (
+              <AirtableLinkCell
+                row={row}
+                baseUrl={baseURL}
+              />
+            );
+          },
+        }),
+      ]
+    : []),
   columnHelper.accessor((row) => row.fields['Timestamp'], {
     id: 'Timestamp',
     cell: ({ getValue }) => {
@@ -127,4 +134,13 @@ export const vsColDef = (baseURL: string) => [
   columnHelper.accessor((row) => row.fields['Role Type'], {
     id: 'Role Type',
   }),
+  columnHelper.accessor(
+    (row) =>
+      row.fields[
+        'Successfully Completed (from Voyage Projects)'
+      ],
+    {
+      id: 'Completed Voyage',
+    }
+  ),
 ];

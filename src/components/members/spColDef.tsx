@@ -15,18 +15,25 @@ import {
 const columnHelper =
   createColumnHelper<SoloProjectSubmission>();
 
-export const spColDef = (baseURL: string) => [
-  columnHelper.display({
-    id: 'Airtable Link',
-    cell: ({ row }) => {
-      return (
-        <AirtableLinkCell
-          row={row}
-          baseUrl={baseURL}
-        />
-      );
-    },
-  }),
+export const spColDef = (
+  baseURL: string,
+  isAdmin: boolean = false
+) => [
+  ...(isAdmin
+    ? [
+        columnHelper.display({
+          id: 'Airtable Link',
+          cell: ({ row }) => {
+            return (
+              <AirtableLinkCell
+                row={row}
+                baseUrl={baseURL}
+              />
+            );
+          },
+        }),
+      ]
+    : []),
   columnHelper.display({
     id: 'Solo Project Internal Link',
     cell: ({ row }) => (

@@ -27,14 +27,6 @@ const SoloProjectPage = async (props: {
     record.data.fields['Discord ID']
   );
 
-  // if (!projects.success)
-  //   return (
-  //     <div>
-  //       Error fetching other projects by the user:{' '}
-  //       {projects.message}
-  //     </div>
-  //   );
-
   return record.data.fields['Evaluation Status'] ===
     'Passed' ? (
     <ReadOnly record={record.data} />
